@@ -4,11 +4,11 @@ const { rewriteIfMatch } = require('./utils');
 describe('RewriteResponse', function() {
 
     test.each`
-    path                                                | input                             | output    | expected
-    ----------------------------------------------------|-----------------------------------|-----------|---------------------------------
-    ${"/nrl-producer-api/R4/DocumentReference"}         | ${"/nrl-producer-api/R4(/.+)"}    | ${"$1"}   | ${"/DocumentReference"}
-    ${"/nrl-consumer-api/R4/DocumentReference"}         | ${"/nrl-consumer-api/R4(/.+)"}    | ${"$1"}   | ${"/DocumentReference"}
-    ${"/nrl-consumer-api/R4/DocumentReference/_search"} | ${"/nrl-consumer-api/R4(/.+)"}    | ${"$1"}   | ${"/DocumentReference/_search"}
+    path                                                | input                             | output                | expected
+    ----------------------------------------------------|-----------------------------------|-----------------------|---------------------------------
+    ${"/nrl-producer-api/R4/DocumentReference"}         | ${"/nrl-producer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference"}
+    ${"/nrl-consumer-api/R4/DocumentReference"}         | ${"/nrl-consumer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference"}
+    ${"/nrl-consumer-api/R4/DocumentReference/_search"} | ${"/nrl-consumer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference/_search"}
     `('match: $path -> $expected', function({ path, input, output, expected }) {
         const actual = rewriteIfMatch(path, input, output);
         expect(actual).toEqual(expected);

@@ -3,7 +3,7 @@
     <DisplayName>javascript.RewritePath</DisplayName>
     <Properties>
         <Property name="input">^/nrl-producer-api/R4/(.+)$</Property>
-        <Property name="output">$1</Property>
+        <Property name="output">/production/$1</Property>
     </Properties>
     <ResourceURL>jsc://RewritePath.js</ResourceURL>
 </Javascript>
