@@ -9,6 +9,7 @@ describe('RewriteResponse', function() {
     ${"/nrl-producer-api/R4/DocumentReference"}         | ${"/nrl-producer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference"}
     ${"/nrl-consumer-api/R4/DocumentReference"}         | ${"/nrl-consumer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference"}
     ${"/nrl-consumer-api/R4/DocumentReference/_search"} | ${"/nrl-consumer-api/R4/(.+)"}    | ${"/production/$1"}   | ${"/production/DocumentReference/_search"}
+    ${"/R4/DocumentReference"}                          | ${"/R4/(.+)"}                     | ${"/production/$1"}   | ${"/production/DocumentReference"}
     `('match: $path -> $expected', function({ path, input, output, expected }) {
         const actual = rewriteIfMatch(path, input, output);
         expect(actual).toEqual(expected);
