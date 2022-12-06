@@ -1,7 +1,7 @@
 const input = properties.input;
 const output = properties.output;
 
-function rewriteIfMatch(path, input, output) {
+function rewrite(path, input, output) {
     return path.replace(RegExp("^" + input + "$"), output);
 }
 
