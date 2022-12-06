@@ -5,6 +5,6 @@ function rewrite(path, input, output) {
     return path.replace(RegExp("^" + input + "$"), output);
 }
 
-const locationHeader = context.getVariable("message.header.Location");
+const locationHeader = context.getVariable("message.path");
 const newHeader = rewrite(locationHeader, input, output);
-context.setVariable("message.header.Location", newHeader);
+context.setVariable("message.path", newHeader);
