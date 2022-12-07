@@ -8,7 +8,7 @@
         <Name>FlowCallout.ApplyRateLimiting</Name>
       </Step>
       <Step>
-        <Name>WritePathToVariable</Name>
+        <Name>javascript.WritePathToVariable</Name>
       </Step>
     </Request>
   </PreFlow>
