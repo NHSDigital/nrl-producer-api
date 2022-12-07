@@ -39,6 +39,7 @@
       <LoadBalancer>
           <Server name="nrl-producer-api"/>
       </LoadBalancer>
+      <Path>{target_path}</Path>
       <Properties>
           <Property name="keepalive.timeout.millis">20000</Property>
       </Properties>
