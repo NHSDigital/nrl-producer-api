@@ -42,6 +42,7 @@
       <LoadBalancer>
           <Server name="nrl-producer-api"/>
       </LoadBalancer>
+     <!--Set in WritePathVariable.js-->
       <Path>{target_path}</Path>
       <Properties>
           <Property name="keepalive.timeout.millis">20000</Property>
