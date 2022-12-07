@@ -37,15 +37,6 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
-    <Flow name="RewritePath">
-      <Request>
-        <Step>
-          <Name>javascript.RewritePath</Name>
-        </Step>
-      </Request>
-      <Response/>
-      <Condition/>
-    </Flow>
   </Flows>
   <PreFlow/>
   <PostClientFlow name="PostClientFlow">
