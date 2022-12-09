@@ -10,6 +10,9 @@
       <Step>
         <Name>javascript.WritePathToVariable</Name>
       </Step>
+      <Step>
+          <Name>Javascript.AddClientRPDetailsHeader</Name>
+      </Step>
     </Request>
   </PreFlow>
   <FaultRules>
