@@ -13,6 +13,9 @@
       <Step>
           <Name>Javascript.AddClientRPDetailsHeader</Name>
       </Step>
+      <Step>
+          <Name>Javascript.AddConnectionMetadataHeader</Name>
+      </Step>
     </Request>
   </PreFlow>
   <FaultRules>
@@ -24,6 +27,18 @@
         <Name>AssignMessage.OAuthPolicyErrorResponse</Name>
       </Step>
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
+    </FaultRule>
+    <FaultRule name="bad_request">
+      <Step>
+        <Name>RaiseFault.400BadRequest</Name>
+      </Step>
+      <Condition>badRequest</Condition>
+    </FaultRule>
+    <FaultRule name="forbidden">
+      <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+      </Step>
+      <Condition>forbidden</Condition>
     </FaultRule>
   </FaultRules>
   <!--

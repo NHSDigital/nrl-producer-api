@@ -10,6 +10,9 @@ steps:
       export APIGEE_ENVIRONMENT="$(ENVIRONMENT)"
       export SERVICE_BASE_PATH="$(SERVICE_BASE_PATH)"
       export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
+      export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+      export PROXY_NAME="$(SERVICE_NAME)-$(STAGE_NAME)"
+      export API_NAME="$(SERVICE_NAME)-$(STAGE_NAME)-$RANDOM"
 
       make smoketest
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
