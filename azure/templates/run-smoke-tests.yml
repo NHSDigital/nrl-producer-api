@@ -13,7 +13,8 @@ steps:
       export PROXY_NAME="$(SERVICE_NAME)-$(STAGE_NAME)"
       export API_NAME="$(SERVICE_NAME)-$(STAGE_NAME)-$RANDOM"
 
-      key=$(poetry run python otp.py ${APIGEE_USERNAME} ${APIGEE_OTP_KEY})
+      key=$(pyotp.parse_uri("otpauth://totp/${APIGEE_USERNAME}?secret=${APIGEE_OTP_KEY}"))
+      echo ${key}
 
       curl https://login.apigee.com/resources/scripts/sso-cli/ssocli-bundle.zip -O
       unzip ssocli-bundle.zip
