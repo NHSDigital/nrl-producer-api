@@ -13,13 +13,17 @@ steps:
       export PROXY_NAME="$(SERVICE_NAME)-$(STAGE_NAME)"
       export API_NAME="$(SERVICE_NAME)-$(STAGE_NAME)-$RANDOM"
 
-      key=$(pyotp.parse_uri("otpauth://totp/${APIGEE_USERNAME}?secret=${APIGEE_OTP_KEY}"))
-      echo ${key}
-
       curl https://login.apigee.com/resources/scripts/sso-cli/ssocli-bundle.zip -O
       unzip ssocli-bundle.zip
 
-      export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com ./get_token -u ${APIGEE_USERNAME}:${APIGEE_PASSWORD} -m ${key})
+      echo ${APIGEE_USERNAME}
+      echo ${APIGEE_OTP_KEY}
+
+      key=$(pyotp.parse_uri("otpauth://totp/${secrets.APIGEE_USERNAME}?secret=${secrets.APIGEE_OTP_KEY}"))
+      echo ${key}
+
+
+      export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com ./get_token -u ${secrets.APIGEE_USERNAME}:${secrets.APIGEE_PASSWORD} -m ${key})
 
       make smoketest
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
