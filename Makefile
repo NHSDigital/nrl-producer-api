@@ -48,4 +48,4 @@ release: clean publish build-proxy
 
 #Command to run end-to-end smoktests post-deployment to verify the environment is working
 smoketest:
-	poetry run pytest -v --junitxml=smoketest-report.xml -s
+	poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} 
