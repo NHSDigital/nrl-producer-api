@@ -59,7 +59,7 @@ def test_smoke(
         **nhsd_apim_auth_headers,
     }
 
-    patient_id = urllib.parse.quote(f"https://fhir.nhs.uk/Id/nhs-number|9278693472")
+    patient_id = urllib.parse.quote("https://fhir.nhs.uk/Id/nhs-number|9278693472")
     url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject={patient_id}"
     created_app_name = _create_test_app["name"]
 
