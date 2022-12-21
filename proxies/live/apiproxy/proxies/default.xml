@@ -37,7 +37,7 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
-    <Flow name="StandardEndpoint">
+    <Flow name="Raise400ForMissingODSHeader">
       <Request>
         <Step>
           <Name>RaiseFault.400BadRequest</Name>

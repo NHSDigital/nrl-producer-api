@@ -51,18 +51,15 @@ def test_smoke(
     _create_test_app,
 ):
 
-    correlation_id = f"SMOKE:{uuid4()}"
-
     headers = {
         "accept": "application/json; version=1.0",
-        "x-correlation-id": correlation_id,
+        "x-correlation-id": f"SMOKE:{uuid4()}-odsCode_{ods_code}-expected_{expected}",
         "x-request-id": f"{uuid4()}",
         "NHSD-End-User-Organisation-ODS": ods_code,
         **nhsd_apim_auth_headers,
     }
 
-    nhs_number = "9278693472"
-    patient_id = urllib.parse.quote(f"https://fhir.nhs.uk/Id/nhs-number|{nhs_number}")
+    patient_id = urllib.parse.quote(f"https://fhir.nhs.uk/Id/nhs-number|9278693472")
     url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject={patient_id}"
     created_app_name = _create_test_app["name"]
 

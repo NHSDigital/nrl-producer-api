@@ -28,19 +28,6 @@
       </Step>
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
     </FaultRule>
-    <FaultRule name="bad_request">
-      <Step>
-        <Name>RaiseFault.400BadRequest</Name>
-      </Step>
-      <Condition>badRequest</Condition>
-    </FaultRule>
-    <FaultRule name="forbidden">
-      <Step>
-        <Name>RaiseFault.403Forbidden</Name>
-      </Step>
-      <Condition>forbidden</Condition>
-    </FaultRule>
-  </FaultRules>
   <!--
     To point to a named target server as this is how it SHOULD be implemented:
     For example:
