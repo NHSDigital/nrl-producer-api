@@ -16,18 +16,15 @@ steps:
       curl https://login.apigee.com/resources/scripts/sso-cli/ssocli-bundle.zip -O
       unzip ssocli-bundle.zip
 
-      print $APIGEE_USERNAME
-      print $APIGEE_OTP_KEY
-      print $PROXY_NAME
-      print $API_NAME
-      print $secrets.APIGEE_USERNAME
-      print $secrets.APIGEE_OTP_KEY
+      printenv
+      echo $APIGEE_USERNAME
+      echo $APIGEE_PASSWORD
 
-      key=$(pyotp.parse_uri("otpauth://totp/${secrets.APIGEE_USERNAME}?secret=${secrets.APIGEE_OTP_KEY}"))
-      echo ${key}
+      key=$(poetry run python -c "import pyotp, sys; otp = pyotp.parse_uri(f'otpauth://totp/{sys.argv[1]}?secret={sys.argv[2]}'); print(otp) " $APIGEE_USERNAME $APIGEE_OTP_KEY)
+      
+      echo $key
 
-
-      export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com ./get_token -u ${secrets.APIGEE_USERNAME}:${secrets.APIGEE_PASSWORD} -m ${key})
+      export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com ./get_token -u ${APIGEE_USERNAME}:${APIGEE_PASSWORD} -m ${key})
 
       make smoketest
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
