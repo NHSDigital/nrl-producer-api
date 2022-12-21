@@ -12,19 +12,7 @@ steps:
       export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
       export PROXY_NAME="$(SERVICE_NAME)-$(STAGE_NAME)"
       export API_NAME="$(SERVICE_NAME)-$(STAGE_NAME)-$RANDOM"
-
-      curl https://login.apigee.com/resources/scripts/sso-cli/ssocli-bundle.zip -O
-      unzip ssocli-bundle.zip
-
-      printenv
-      echo $APIGEE_USERNAME
-      echo $APIGEE_PASSWORD
-
-      key=$(poetry run python -c "import pyotp, sys; otp = pyotp.parse_uri(f'otpauth://totp/{sys.argv[1]}?secret={sys.argv[2]}'); print(otp) " $APIGEE_USERNAME $APIGEE_OTP_KEY)
-      
-      echo $key
-
-      export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com ./get_token -u ${APIGEE_USERNAME}:${APIGEE_PASSWORD} -m ${key})
+      export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)
 
       make smoketest
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
