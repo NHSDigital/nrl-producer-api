@@ -47,7 +47,7 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     assert status_json["status"] == "pass"
 
 
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 @pytest.mark.parametrize(
     ["ods_code", "expected"],
     [
