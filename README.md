@@ -189,4 +189,4 @@ If you want to run the smoke tests against a particular product or app then you 
 
 Example using `nrl-producer-api-pr-15` as the app:
 
-`pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=$RANDOM`
+`pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=nrl-producer-api`

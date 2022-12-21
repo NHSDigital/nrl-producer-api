@@ -64,6 +64,9 @@ apigee:
         proxies:
           - {{ NAME }}
           - identity-service-{{ ENV.name }}
+          {% if ENV.has_mock_auth | default(false) %}
+          - identity-service-mock-{{ ENV.name }}
+          {% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
           - 'urn:nhsd:apim:user-nhs-id:aal3:{{ SERVICE_NAME }}'
