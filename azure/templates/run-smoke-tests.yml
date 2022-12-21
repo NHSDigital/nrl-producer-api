@@ -16,10 +16,12 @@ steps:
       curl https://login.apigee.com/resources/scripts/sso-cli/ssocli-bundle.zip -O
       unzip ssocli-bundle.zip
 
-      print ${APIGEE_USERNAME}
-      print ${APIGEE_OTP_KEY}
-      print ${secrets.APIGEE_USERNAME}
-      print ${secrets.APIGEE_OTP_KEY}
+      print $APIGEE_USERNAME
+      print $APIGEE_OTP_KEY
+      print $PROXY_NAME
+      print $API_NAME
+      print $secrets.APIGEE_USERNAME
+      print $secrets.APIGEE_OTP_KEY
 
       key=$(pyotp.parse_uri("otpauth://totp/${secrets.APIGEE_USERNAME}?secret=${secrets.APIGEE_OTP_KEY}"))
       echo ${key}
