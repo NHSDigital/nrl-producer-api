@@ -8,28 +8,6 @@ import json
 
 import urllib.parse
 
-from pytest_nhsd_apim.identity_service import (
-    ClientCredentialsConfig,
-    ClientCredentialsAuthenticator,
-)
-
-
-@lru_cache()
-def get_token_for_apigee_app(consumer_key, jwt_private_key, apigee_environment):
-    config = ClientCredentialsConfig(
-        environment=apigee_environment,
-        identity_service_base_url=f"https://{apigee_environment}.api.service.nhs.uk/oauth2",
-        client_id=consumer_key,
-        jwt_private_key=jwt_private_key,
-        jwt_kid="test-1",
-    )
-
-    authenticator = ClientCredentialsAuthenticator(config=config)
-
-    token_response = authenticator.get_token()
-    assert "access_token" in token_response
-    return token_response
-
 
 def test_ping_endpoint(nhsd_apim_proxy_url):
     resp = requests.get(nhsd_apim_proxy_url + "/_ping")
@@ -68,30 +46,20 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 def test_smoke(
     ods_code: str,
     expected: int,
-    _test_app_credentials,
-    _jwt_keys,
-    apigee_environment,
     nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
     _apigee_app_base_url,
     _create_test_app,
 ):
-    # 1. Set your app config
-    consumer_key = _test_app_credentials["consumerKey"]
-    jwt_private_key = _jwt_keys["private_key_pem"]
 
-    token_response = get_token_for_apigee_app(
-        consumer_key, jwt_private_key, apigee_environment
-    )
-
-    token = token_response["access_token"]
     correlation_id = f"SMOKE:{uuid4()}"
 
     headers = {
         "accept": "application/json; version=1.0",
-        "Authorization": f"Bearer {token}",
         "x-correlation-id": correlation_id,
         "x-request-id": f"{uuid4()}",
         "NHSD-End-User-Organisation-ODS": ods_code,
+        **nhsd_apim_auth_headers
     }
 
     nhs_number = "9278693472"
@@ -99,6 +67,7 @@ def test_smoke(
     url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject={patient_id}"
     created_app_name = _create_test_app["name"]
 
+    # key value map addition
     apigee_update_url = f"{_apigee_app_base_url}/{created_app_name}"
     key_value_pairs = {
         "attributes": [
