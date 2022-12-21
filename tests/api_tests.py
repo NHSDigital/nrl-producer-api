@@ -58,7 +58,7 @@ def test_smoke(
         "x-correlation-id": correlation_id,
         "x-request-id": f"{uuid4()}",
         "NHSD-End-User-Organisation-ODS": ods_code,
-        **nhsd_apim_auth_headers
+        **nhsd_apim_auth_headers,
     }
 
     nhs_number = "9278693472"
