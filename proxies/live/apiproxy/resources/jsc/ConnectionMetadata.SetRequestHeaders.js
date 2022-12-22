@@ -30,7 +30,7 @@
 
     // Read the associated `nrl-ods-<ods_code>` custom attribute from the APIGEE app
     var nrlPointerTypes = context.getVariable('app.nrl-ods-' + odsCode);
-    if (!nrlPointerTypes) {
+    if (!nrlPointerTypes || nrlPointerTypes === null) {
         context.setVariable("badRequest", true);
         return;
     }
