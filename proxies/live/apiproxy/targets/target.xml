@@ -13,6 +13,9 @@
       <Step>
           <Name>Javascript.AddClientRPDetailsHeader</Name>
       </Step>
+      <Step>
+          <Name>Javascript.AddConnectionMetadataHeader</Name>
+      </Step>
     </Request>
   </PreFlow>
   <FaultRules>

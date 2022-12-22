@@ -1,75 +1,86 @@
-from functools import partial
+import os
+from uuid import uuid4
 
 import pytest
-from aiohttp import ClientResponse
-from api_test_utils.api_session_client import APISessionClient
-from api_test_utils.api_test_session_config import APITestSessionConfig
-from api_test_utils import poll_until, env
+import requests
+import json
+
+import urllib.parse
 
 
-async def _is_deployed(resp: ClientResponse, api_test_config: APITestSessionConfig) -> bool:
-
-    if resp.status != 200:
-        return False
-    body = await resp.json()
-
-    return body.get("commitId") == api_test_config.commit_id
+def test_ping_endpoint(nhsd_apim_proxy_url):
+    resp = requests.get(nhsd_apim_proxy_url + "/_ping")
+    assert resp.status_code == 200
+    ping_data = json.loads(resp.text)
+    assert "version" in ping_data
 
 
-async def is_401(resp: ClientResponse) -> bool:
-    return resp.status == 401
-
-
-@pytest.mark.e2e
-@pytest.mark.smoketest
-def test_output_test_config(api_test_config: APITestSessionConfig):
-    print(api_test_config)
-
-
-@pytest.mark.e2e
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
-    """
-        test for _ping ..  this uses poll_until to wait until the correct SOURCE_COMMIT_ID ( from env var )
-        is available
-    """
-
-    is_deployed = partial(_is_deployed, api_test_config=api_test_config)
-
-    await poll_until(
-        make_request=lambda: api_client.get('_ping'),
-        until=is_deployed,
-        timeout=120
+def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
+    resp = requests.get(
+        nhsd_apim_proxy_url + "/_status", headers=status_endpoint_auth_headers
     )
+    status_json = resp.json()
+    assert resp.status_code == 200
+    assert status_json["status"] == "pass"
 
 
-@pytest.mark.e2e
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_check_status_is_secured(api_client: APISessionClient):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize(
+    ["ods_code", "expected"],
+    [
+        [
+            "RJ11",
+            200,
+        ],
+        [
+            "",
+            400,
+        ],
+        [
+            "VALID_ODS_CODE_BUT_NOT_GRANTED",
+            403,
+        ],
+    ],
+)
+def test_smoke(
+    ods_code: str,
+    expected: int,
+    nhsd_apim_proxy_url,
+    nhsd_apim_auth_headers,
+    _apigee_app_base_url,
+    _create_test_app,
+):
 
-    await poll_until(
-        make_request=lambda: api_client.get('_status'),
-        until=is_401,
-        timeout=120
+    headers = {
+        "accept": "application/json; version=1.0",
+        "x-correlation-id": f"SMOKE:{uuid4()}-odsCode_{ods_code}-expected_{expected}",
+        "x-request-id": f"{uuid4()}",
+        "NHSD-End-User-Organisation-ODS": ods_code,
+        **nhsd_apim_auth_headers,
+    }
+
+    patient_id = urllib.parse.quote("https://fhir.nhs.uk/Id/nhs-number|9278693472")
+    url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject={patient_id}"
+    created_app_name = _create_test_app["name"]
+
+    # key value map addition
+    apigee_update_url = f"{_apigee_app_base_url}/{created_app_name}"
+    key_value_pairs = {
+        "attributes": [
+            {
+                "name": "nrl-ods-RJ11",
+                "value": "https://snomed.info/ict|736253001\nhttps://snomed.info/ict|736253002",
+            }
+        ],
+    }
+
+    update_response = requests.put(
+        apigee_update_url,
+        json=key_value_pairs,
+        headers={"Authorization": f"Bearer {os.environ['APIGEE_ACCESS_TOKEN']}"},
     )
+    update_response.raise_for_status()
 
+    response = requests.get(url, headers=headers)
 
-@pytest.mark.e2e
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_wait_for_status(api_client: APISessionClient, api_test_config: APITestSessionConfig):
-
-    """
-        test for _status ..  this uses poll_until to wait until the correct SOURCE_COMMIT_ID ( from env var )
-        is available
-    """
-
-    is_deployed = partial(_is_deployed, api_test_config=api_test_config)
-
-    await poll_until(
-        make_request=lambda: api_client.get('_status', headers={'apikey': env.status_endpoint_api_key()}),
-        until=is_deployed,
-        timeout=120
-    )
+    assert response.status_code == expected, response.text

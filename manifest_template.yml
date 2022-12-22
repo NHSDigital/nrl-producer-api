@@ -4,10 +4,13 @@ DESCRIPTION: example description
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
+    has_mock_auth: true
   - name: internal-qa
     display_name: Internal QA
+    has_mock_auth: true
   - name: ref
     display_name: Reference
+    has_mock_auth: true
 # Enable environments when ready by uncommenting:
   # - name: internal-dev-sandbox
   #   display_name: Internal Development Sandbox
@@ -20,6 +23,9 @@ APIGEE_ENVIRONMENTS:
   #   portal_visibility: false
   # - name: int
   #   display_name: Integration Testing
+  #   has_mock_auth: true
+  # - name: prod
+  #   display_name: Prod
 ---
 meta:
   api:
@@ -64,6 +70,9 @@ apigee:
         proxies:
           - {{ NAME }}
           - identity-service-{{ ENV.name }}
+{% if ENV.has_mock_auth | default(false) %}
+          - identity-service-mock-{{ ENV.name }}
+{% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
           - 'urn:nhsd:apim:user-nhs-id:aal3:{{ SERVICE_NAME }}'

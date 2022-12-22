@@ -172,3 +172,21 @@ This file defines 2 dictionaries of fields that are required for the Apigee depl
 This template uses poetry for python dependency management, and uses these files: poetry.lock, poetry.toml, pyproject.toml.
 
 Node dependencies of this template project and some npm scripts are listed in: package.json, package-lock.json.
+
+## PLEASE UPDATE ME - how to run the tests
+
+Before you can run any tests you need to setup your Apigee token, this can be done as shown:
+
+- Install and first time setup of [Apigee’s `get_token`](https://docs.apigee.com/api-platform/system-administration/using-gettoken) (make sure to set `export SSO_LOGIN_URL=“https://login.apigee.com”` before setup, and your username and password are the same credentials you use for logging into Apigee).
+
+Then export the following env var:
+
+- export APIGEE_ACCESS_TOKEN=$(get_token)
+
+----
+
+If you want to run the smoke tests against a particular product or app then you can set up the command like this:
+
+Example using `nrl-producer-api-pr-15` as the app:
+
+`pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=nrl-producer-api`
