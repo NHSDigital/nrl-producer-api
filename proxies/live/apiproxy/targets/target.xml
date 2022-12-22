@@ -28,6 +28,7 @@
       </Step>
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
     </FaultRule>
+  </FaultRules>
   <!--
     To point to a named target server as this is how it SHOULD be implemented:
     For example:
