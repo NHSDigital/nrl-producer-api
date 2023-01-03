@@ -22,6 +22,8 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     status_json = resp.json()
     assert resp.status_code == 200
     assert status_json["status"] == "pass"
+    assert status_json["checks"]['healthcheck']["responseCode"] == 200
+    assert status_json["checks"]['healthcheck']["outcome"] == {"message": "OK"}
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
