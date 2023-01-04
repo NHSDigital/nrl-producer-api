@@ -2,19 +2,45 @@
     <Description/>
     <FaultRules/>
     <Flows/>
-    <PostFlow name="PostFlow">
+    <!-- <PostFlow name="PostFlow">
         <Request/>
         <Response/>
-    </PostFlow>
+    </PostFlow> -->
     <PreFlow name="PreFlow">
-        <Request/>
-        <Response>
+        <Request>
+          <!-- <Step>
+            <Name>OauthV2.VerifyAccessToken</Name>
+          </Step> -->
+          <Step>
+            <Name>FlowCallout.ApplyRateLimiting</Name>
+          </Step>
+          <Step>
+            <Name>javascript.WritePathToVariable</Name>
+          </Step>
+          <Step>
+              <Name>Javascript.AddClientRPDetailsHeader</Name>
+          </Step>
+          <Step>
+              <Name>Javascript.AddConnectionMetadataHeader</Name>
+          </Step>
+        </Request>
+        <!-- <Response>
           <Step>
             <Name>AssignMessage.AddCors</Name>
           </Step>
-        </Response>
+        </Response> -->
     </PreFlow>
     <HTTPTargetConnection>
-      {{ HOSTED_TARGET_CONNECTION }}
+        <SSLInfo>
+            <Enabled>true</Enabled>
+        </SSLInfo>
+        <LoadBalancer>
+            <Server name="nrl-producer-api"/>
+        </LoadBalancer>
+      <!--Set in WritePathVariable.js-->
+        <Path>{target_path}</Path>
+        <Properties>
+            <Property name="keepalive.timeout.millis">20000</Property>
+        </Properties>
     </HTTPTargetConnection>
 </TargetEndpoint>
