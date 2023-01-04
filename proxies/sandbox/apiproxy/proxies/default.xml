@@ -38,6 +38,15 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
+    <Flow name="Raise400ForMissingODSHeader">
+      <Request>
+        <Step>
+          <Name>RaiseFault.400BadRequest</Name>
+          <Message>Missing Header: NHSD-End-User-Organisation-ODS</Message>
+        </Step>
+      </Request>
+      <Condition>request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = ""</Condition>
+    </Flow>
   </Flows>
   <PreFlow/>
   <PostClientFlow name="PostClientFlow">
