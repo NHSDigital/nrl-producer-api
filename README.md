@@ -119,7 +119,7 @@ The `project.yml` file needs to be populated with your service names to make the
 
 This folder contains files relating to your Apigee API proxy.
 
-There are 2 folders `/live` and `/sandbox` allowing you to define a different proxy for sandbox use. By default, this sandbox proxy is implemented to route to the sandbox target server (code for this sandbox is found under /sandbox of this template repo)
+There are 2 folders `/live` and `/sandbox` allowing you to define a different proxy for sandbox use. By default, this sandbox proxy is implemented to route to the sandbox target server.
 
 Within the `live/apiproxy` and `sandbox/apiproxy` folders are:
 
@@ -139,10 +139,6 @@ Contains useful scripts that are used throughout the project, for example in Mak
 #### `/specification`:
 
 Create an OpenAPI Specification to document your API. For more information about developing specifications see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Documenting+your+API).
-
-#### `/tests`:
-
-End to End tests. These tests are written in Python and use the PyTest test runner. Before running these tests you will need to set environment variables. The `test_endpoint.py` file provides a template of how to set up tests which test your api endpoints. For more information about testing your API see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Testing+your+API ).
 
 #### `Makefile`:
 Useful make targets to get started including: installing dependencies and running smoke tests.
@@ -167,7 +163,7 @@ This template uses poetry for python dependency management, and uses these files
 
 Node dependencies of this template project and some npm scripts are listed in: package.json, package-lock.json.
 
-## PLEASE UPDATE ME - how to run the tests
+## How to run the tests
 
 Before you can run any tests you need to setup your Apigee token, this can be done as shown:
 
@@ -188,3 +184,17 @@ Example using for the current product deployed to `internal-dev`:
 Example using the product deployed for GitHub pull request 15:
 
 `pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=nrl-producer-api`
+
+
+## Sandbox data
+
+The public sandbox ("Try this API") endpoints come with:
+
+* Pre-loaded data: see [cron/seed_sandbox/data/document-pointer.json](https://github.com/NHSDigital/NRLF/blob/main/cron/seed_sandbox/data/document-pointer.json)
+* Pre-configured organization permissions: [ConnectionMetadata.SetRequestHeaders.js](proxies/sandbox/apiproxy/resources/jsc/ConnectionMetadata.SetRequestHeaders.js)
+
+Developers should make sure that these align according to any user journeys that they envisage.
+
+Additionally, and less importantly, there are:
+
+* Fixed organization details: see [ClientRPDetailsHeader.SetRequestHeaders.js](proxies/sandbox/apiproxy/resources/jsc/ClientRPDetailsHeader.SetRequestHeaders.js)
