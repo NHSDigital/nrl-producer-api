@@ -16,9 +16,9 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="nrl-producer-api"/>
+            <Server name="record-locator"/>
         </LoadBalancer>
-        <Path>/production/_status</Path>
+        <Path>/producer/_status</Path>
     </HTTPTargetConnection>
     <Timeout>20000</Timeout>
 </ServiceCallout>
