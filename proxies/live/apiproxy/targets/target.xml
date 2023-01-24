@@ -29,24 +29,12 @@
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
     </FaultRule>
   </FaultRules>
-  <!--
-    To point to a named target server as this is how it SHOULD be implemented:
-    For example:
-    <HTTPTargetConnection>
-      <SSLInfo>
-        <Enabled>true</Enabled>
-      </SSLInfo>
-      <LoadBalancer>
-        <Server name="nrl-producer-api" />
-      </LoadBalancer>
-    </HTTPTargetConnection>
-  -->
   <HTTPTargetConnection>
       <SSLInfo>
           <Enabled>true</Enabled>
       </SSLInfo>
       <LoadBalancer>
-          <Server name="nrl-producer-api"/>
+          <Server name="record-locator"/>
       </LoadBalancer>
      <!--Set in WritePathVariable.js-->
       <Path>{target_path}</Path>

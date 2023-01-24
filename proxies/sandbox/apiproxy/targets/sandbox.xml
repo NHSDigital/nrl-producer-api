@@ -35,7 +35,7 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="nrl-producer-api"/>
+            <Server name="record-locator"/>
         </LoadBalancer>
       <!--Set in WritePathVariable.js-->
         <Path>{target_path}</Path>
