@@ -5,15 +5,19 @@ APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
     has_mock_auth: true
+    approval_type: auto
   - name: internal-qa
     display_name: Internal QA
     has_mock_auth: true
+    approval_type: auto
   - name: ref
     display_name: Reference
     has_mock_auth: true
+    approval_type: auto
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
     portal_visibility: false
+    approval_type: auto
 # Enable environments when ready by uncommenting:
   # - name: internal-qa-sandbox
   #   display_name: Internal QA Sandbox
@@ -21,9 +25,10 @@ APIGEE_ENVIRONMENTS:
   # - name: sandbox
   #   display_name: Sandbox
   #   portal_visibility: false
-  # - name: int
-  #   display_name: Integration Testing
-  #   has_mock_auth: true
+  - name: int
+    display_name: Integration Testing
+    has_mock_auth: true
+    approval_type: manual
   # - name: prod
   #   display_name: Prod
 ---
@@ -39,10 +44,11 @@ apigee:
 {% for ENV in APIGEE_ENVIRONMENTS %}
 {% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
 {% set NAME = SERVICE_NAME + '-' + ENV.name %}
+{% set APPROVAL_TYPE = ENV.APPROVAL_TYPE | default('manual' if ENV.name == 'prod' else 'auto') %}
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
-        approvalType: auto
+        approvalType: {{ APPROVAL_TYPE }}
         attributes:
           - name: access
             value: public
