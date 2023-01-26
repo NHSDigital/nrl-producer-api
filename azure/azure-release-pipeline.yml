@@ -34,24 +34,25 @@ extends:
       - environment: internal-dev
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
-      # - environment: internal-dev-sandbox
-      #   proxy_path: sandbox
-      #   post_deploy:
-      #     - template: ./templates/run-smoke-tests.yml
-      # - environment: internal-qa
-      #   post_deploy:
-      #     - template: ./templates/run-smoke-tests.yml
-      # - environment: internal-qa-sandbox
-      #   proxy_path: sandbox
-      #   post_deploy:
-      #     - template: ./templates/run-smoke-tests.yml
-      - environment: ref
+      - environment: internal-dev-sandbox
+        proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+      - environment: internal-qa
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+      - environment: internal-qa-sandbox
+        proxy_path: sandbox
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+      # - environment: ref
+      #   post_deploy:
+      #     - template: ./templates/run-smoke-tests.yml
       - environment: sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+      # Enable int environment when ready by uncommenting:
       - environment: int
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
