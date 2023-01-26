@@ -38,23 +38,23 @@ extends:
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
-    #   - environment: internal-qa
-    #     post_deploy:
-    #       - template: ./templates/run-smoke-tests.yml
-    #   - environment: internal-qa-sandbox
-    #     proxy_path: sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-smoke-tests.yml
-    #   - environment: ref
-    #     depends_on:
-    #       - internal-dev # default was: internal_qa
-    #       - internal-dev-sandbox # default was: internal_qa_sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-smoke-tests.yml
-    #   - environment: sandbox
-    #     proxy_path: sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-smoke-tests.yml
+      - environment: internal-qa
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+      - environment: internal-qa-sandbox
+        proxy_path: sandbox
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+      - environment: ref
+        depends_on:
+          - internal-dev # default was: internal_qa
+          - internal-dev-sandbox # default was: internal_qa_sandbox
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+      - environment: sandbox
+        proxy_path: sandbox
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
     # Enable int environment when ready by uncommenting:
       - environment: int
         depends_on:
