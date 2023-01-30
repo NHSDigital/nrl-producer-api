@@ -31,9 +31,9 @@ APIGEE_ENVIRONMENTS:
     display_name: Integration Testing
     has_mock_auth: true
     approval_type: manual
-  # - name: prod
-  #   display_name: Prod
-  #   approval_type: manual
+  - name: prod
+    display_name: Prod
+    approval_type: manual
 ---
 meta:
   api:
