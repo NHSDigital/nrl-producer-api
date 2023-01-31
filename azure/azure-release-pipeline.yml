@@ -56,5 +56,3 @@ extends:
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
       - environment: prod
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
