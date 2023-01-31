@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b503cff1-8a65-48c0-8479-58900a1c6350",
+		"_postman_id": "00be85ae-f312-4582-af2e-5e3365fa5c2f",
 		"name": "National Record Locator Producer Sandbox",
 		"description": "Sandbox example requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -19,12 +19,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -50,7 +50,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567892\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"final\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}"
+					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567892\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"final\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference",
@@ -84,12 +89,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -114,19 +119,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference/RY26A-1234567892",
-					"protocol": "https",
+					"raw": "{{base_url}}/DocumentReference/RY26A-1234567892",
 					"host": [
-						"sandbox",
-						"api",
-						"service",
-						"nhs",
-						"uk"
+						"{{base_url}}"
 					],
 					"path": [
-						"nrl-producer-api",
-						"FHIR",
-						"R4",
 						"DocumentReference",
 						"RY26A-1234567892"
 					]
@@ -146,12 +143,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -176,19 +173,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference?subject=https://fhir.nhs.uk/Id/nhs-number|3495456481",
-					"protocol": "https",
+					"raw": "{{base_url}}/DocumentReference?subject=https://fhir.nhs.uk/Id/nhs-number|3495456481",
 					"host": [
-						"sandbox",
-						"api",
-						"service",
-						"nhs",
-						"uk"
+						"{{base_url}}"
 					],
 					"path": [
-						"nrl-producer-api",
-						"FHIR",
-						"R4",
 						"DocumentReference"
 					],
 					"query": [
@@ -213,12 +202,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -244,22 +233,19 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567892\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"preliminary\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLDetailReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}"
+					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567892\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"preliminary\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLDetailReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference/RY26A-1234567892",
-					"protocol": "https",
+					"raw": "{{base_url}}/DocumentReference/RY26A-1234567892",
 					"host": [
-						"sandbox",
-						"api",
-						"service",
-						"nhs",
-						"uk"
+						"{{base_url}}"
 					],
 					"path": [
-						"nrl-producer-api",
-						"FHIR",
-						"R4",
 						"DocumentReference",
 						"RY26A-1234567892"
 					]
@@ -279,12 +265,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -310,22 +296,19 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567893\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"final\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"relatesTo\": [\n          {\n            \"code\": \"replaces\",\n            \"target\": {\n              \"type\": \"DocumentReference\",\n              \"identifier\": {\n                \"value\": \"RY26A-1234567892\"\n              }\n            }\n          }\n    ],\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}"
+					"raw": "{\n    \"resourceType\": \"DocumentReference\",\n    \"id\": \"RY26A-1234567893\",\n    \"meta\": {\n        \"profile\": [\n            \"http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0\"\n        ]\n    },\n    \"masterIdentifier\": {\n        \"system\": \"urn:ietf:rfc:3986\",\n        \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7\"\n    },\n    \"identifier\": [\n        {\n            \"system\": \"urn:ietf:rfc:3986\",\n            \"value\": \"urn:oid:1.3.6.1.4.1.21367.2005.3.7.1234\"\n        }\n    ],\n    \"status\": \"current\",\n    \"docStatus\": \"final\",\n    \"type\": {\n        \"coding\": [\n            {\n                \"system\": \"https://snomed.info/ict\",\n                \"code\": \"861421000000109\",\n                \"display\": \"End of life care coordination summary\"\n            }\n        ]\n    },\n    \"category\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://loinc.org\",\n                    \"code\": \"55112-7\",\n                    \"display\": \"Document summary\"\n                }\n            ]\n        }\n    ],\n    \"subject\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/nhs-number\",\n            \"value\": \"3495456481\"\n        }\n    },\n    \"date\": \"2022-12-21T10:45:41+11:00\",\n    \"author\": [\n        {\n            \"identifier\": {\n                \"value\": \"Practitioner/A985657ZA\"\n            }\n        }\n    ],\n    \"authenticator\": {\n        \"identifier\": {\n            \"value\": \"Organization/RY26A\"\n        }\n    },\n    \"custodian\": {\n        \"identifier\": {\n            \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n            \"value\": \"RY26A\"\n        }\n    },\n    \"relatesTo\": [\n        {\n            \"code\": \"replaces\",\n            \"target\": {\n                \"type\": \"DocumentReference\",\n                \"identifier\": {\n                    \"value\": \"RY26A-1234567892\"\n                }\n            }\n        }\n    ],\n    \"description\": \"Physical\",\n    \"securityLabel\": [\n        {\n            \"coding\": [\n                {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-Confidentiality\",\n                    \"code\": \"V\",\n                    \"display\": \"very restricted\"\n                }\n            ]\n        }\n    ],\n    \"content\": [\n        {\n            \"attachment\": {\n                \"contentType\": \"application/pdf\",\n                \"language\": \"en-US\",\n                \"url\": \"https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf\",\n                \"size\": 3654,\n                \"hash\": \"2jmj7l5rSw0yVb/vlWAYkK/YBwk=\",\n                \"title\": \"Physical\",\n                \"creation\": \"2022-12-21T10:45:41+11:00\"\n            },\n            \"format\": {\n                \"system\": \"urn:oid:1.3.6.1.4.1.19376.1.2.3\",\n                \"code\": \"urn:ihe:pcc:cm:2008\",\n                \"display\": \"Care Management\"\n            }\n        }\n    ],\n    \"context\": {\n        \"encounter\": [\n            {\n                \"identifier\": {\n                    \"value\": \"Encounter/3495456481\"\n                }\n            }\n        ],\n        \"event\": [\n            {\n                \"coding\": [\n                    {\n                        \"system\": \"http://snomed.info/sct\",\n                        \"code\": \"713058002\",\n                        \"display\": \"End of life care planning\"\n                    }\n                ]\n            }\n        ],\n        \"period\": {\n            \"start\": \"2022-12-21T09:00:41+11:00\",\n            \"end\": \"2022-12-21T10:45:41+11:00\"\n        },\n        \"facilityType\": {\n            \"coding\": [\n                {\n                    \"system\": \"http://snomed.info/sct\",\n                    \"code\": \"73770003\",\n                    \"display\": \"Hospital-based outpatient emergency care center\"\n                }\n            ]\n        },\n        \"sourcePatientInfo\": {\n            \"identifier\": {\n                \"value\": \"Patient/3495456481\"\n            }\n        },\n        \"related\": [\n            {\n                \"identifier\": {\n                    \"system\": \"https://fhir.nhs.uk/Id/accredited-system-id\",\n                    \"value\": \"TRAFFORD GENERAL HOSPITAL\"\n                }\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference",
-					"protocol": "https",
+					"raw": "{{base_url}}/DocumentReference",
 					"host": [
-						"sandbox",
-						"api",
-						"service",
-						"nhs",
-						"uk"
+						"{{base_url}}"
 					],
 					"path": [
-						"nrl-producer-api",
-						"FHIR",
-						"R4",
 						"DocumentReference"
 					]
 				}
@@ -344,12 +327,12 @@
 				"header": [
 					{
 						"key": "nhsd-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
 						"key": "x-correlation-id",
-						"value": "nrl-consumer-api-sandbox",
+						"value": "nrl-producer-api-sandbox",
 						"type": "text"
 					},
 					{
@@ -374,25 +357,44 @@
 					}
 				],
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference/RY26A-1234567893",
-					"protocol": "https",
+					"raw": "{{base_url}}/DocumentReference/RY26A-1234567893",
 					"host": [
-						"sandbox",
-						"api",
-						"service",
-						"nhs",
-						"uk"
+						"{{base_url}}"
 					],
 					"path": [
-						"nrl-producer-api",
-						"FHIR",
-						"R4",
 						"DocumentReference",
 						"RY26A-1234567893"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4",
+			"type": "string"
 		}
 	]
 }
