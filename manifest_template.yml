@@ -34,8 +34,8 @@ APIGEE_ENVIRONMENTS:
   - name: prod
     display_name: Production
     approval_type: manual
-    ratelimit: '500pm'
-    quota: '500'
+    ratelimit: '30000pm'
+    quota: '30000'
 ---
 meta:
   api:
