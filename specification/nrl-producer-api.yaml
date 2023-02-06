@@ -158,6 +158,8 @@ paths:
           $ref: "#/components/responses/Success"
       requestBody:
         $ref: "#/components/requestBodies/DocumentReference"
+      parameters:
+        - $ref: "#/components/parameters/odsCode"
     get:
       tags:
         - NRLF Producer
@@ -166,7 +168,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/subject"
         - $ref: "#/components/parameters/custodian"
-        - $ref: "#/components/parameters/snomedCode"
+        - $ref: "#/components/parameters/type"
+        - $ref: "#/components/parameters/odsCode"
       responses:
         "200":
           description: Search DocumentReference operation successful
@@ -182,6 +185,7 @@ paths:
       operationId: readDocumentReference
       parameters:
         - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/odsCode"
       responses:
         "200":
           description: Read DocumentReference operation successful
@@ -196,6 +200,7 @@ paths:
       operationId: updateDocumentReference
       parameters:
         - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/odsCode"
       responses:
         "200":
           description: Update DocumentReference operation successful
@@ -212,6 +217,7 @@ paths:
       operationId: deleteDocumentReference
       parameters:
         - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/odsCode"
       responses:
         "204":
           description: Delete DocumentReference operation successful
@@ -2022,6 +2028,13 @@ components:
           $ref: "#/components/schemas/DocumentId"
       required:
         - id
+    RequestHeader:
+      type: object
+      properties:
+        odsCode:
+          $ref: "#/components/schemas/RequestHeaderOdsCode"
+      required:
+        - odsCode
     RequestParams:
       type: object
       properties:
@@ -2040,6 +2053,8 @@ components:
     RequestQueryType:
       type: string
       pattern: ^http\:\/\/snomed\.info\/sct\|(\d+)
+    RequestHeaderOdsCode:
+      type: string
   securitySchemes: {}
   parameters:
     id:
@@ -2059,11 +2074,18 @@ components:
       in: query
       schema:
         $ref: "#/components/schemas/RequestQueryCustodian"
-    snomedCode:
+    type:
       name: type.identifier
       in: query
       schema:
         $ref: "#/components/schemas/RequestQueryType"
+    odsCode:
+      name: NHSD-End-User-Organisation-ODS
+      description: ODS Code for Organisation
+      in: header
+      schema:
+        $ref: "#/components/schemas/RequestHeaderOdsCode"
+      required: true
   responses:
     Success:
       description: Success Response
