@@ -50,9 +50,9 @@ release: clean publish build-proxy
 smoketest:
 	@if [[ "${PROXY_NAME}" == *sandbox ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not smoketest";\	
-	elif [[! -z "${APIGEE_APP_ID}"]]; then\
-		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
+	elif [[ -z "${APIGEE_APP_ID}" ]]; then\
+		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not sandbox";\
 	fi;
 	else\
-		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not sandbox";\
+		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
 	fi;
