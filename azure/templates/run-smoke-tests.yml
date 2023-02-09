@@ -15,7 +15,7 @@ steps:
           export APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
         ;;
       \*)
-        export APIGEE_APP_ID=""
+        export APIGEE_APP_ID="not set"
       esac
 
       
