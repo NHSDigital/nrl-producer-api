@@ -9,16 +9,18 @@ steps:
 
       case "$(ENVIRONMENT)" in
         "prod")
+          export APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
         ;;
         "int")
+          export APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
         ;;
-        "internal-dev")
-        echo "hello internal-dev"
-        ;;
+      \*)
+        export APIGEE_APP_ID=""
+      esac
+
       
       export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
       export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)
-      export APIGEE_APP_ID="$(APIGEE_APP_ID)"
       export RELEASE_RELEASEID=$(Build.BuildId)
       export SOURCE_COMMIT_ID=$(Build.SourceVersion)
       export APIGEE_ENVIRONMENT="$(ENVIRONMENT)"
