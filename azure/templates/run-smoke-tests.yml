@@ -7,8 +7,7 @@ steps:
 
   - bash: |
 
-      function set_apigee_app_id()
-      {
+      function set_apigee_app_id(){
         case "$(ENVIRONMENT)" in
           "prod")
           ;;
@@ -16,8 +15,8 @@ steps:
           ;;
           "internal-dev")
           echo "hello internal-dev"
-          ;;
-      }
+          ;;}
+      
 
       export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
       export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)
