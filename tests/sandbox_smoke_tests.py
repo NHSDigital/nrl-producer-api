@@ -35,6 +35,6 @@ def test_smoke(ods_code: str, expected: int, nhsd_apim_proxy_url):
     }
 
     patient_id = urllib.parse.quote("https://fhir.nhs.uk/Id/nhs-number|9278693472")
-    url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject={patient_id}"
+    url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject.identifier={patient_id}"
     response = requests.get(url, headers=headers)
     assert response.status_code == expected, response.text
