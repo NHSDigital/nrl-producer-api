@@ -6,19 +6,6 @@ steps:
     condition: always()
 
   - bash: |
-
-      case "$(ENVIRONMENT)" in
-        "prod")
-          export APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
-        ;;
-        "int")
-          export APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
-        ;;
-      \*)
-        export APIGEE_APP_ID="not set"
-      esac
-
-      
       export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
       export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)
       export RELEASE_RELEASEID=$(Build.BuildId)
