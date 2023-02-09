@@ -50,6 +50,7 @@ release: clean publish build-proxy
 smoketest:
 	echo "Entered smoketest"\
 	echo "PROXY_NAME ${PROXY_NAME}"\
+	echo "ENVIRONMENT ${ENVIRONMENT}"\
 	if [[ "${PROXY_NAME}" == *sandbox ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not smoketest";\
 	elif [[ ! -z "${APIGEE_APP_ID}" ]]; then\
