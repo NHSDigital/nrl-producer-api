@@ -48,16 +48,11 @@ release: clean publish build-proxy
 
 #Command to run end-to-end smoktests post-deployment to verify the environment is working
 smoketest:
-	PROD='prod'\
-	PROD_APIGEE_APP_ID='881f4128-2dcd-4a61-90a6-33af19c3c202'\
-	INT='int'\
-	INT_APIGEE_APP_ID='7a4ad8c7-3927-4259-af7b-ac9d305a86ad'\
-
 	if [[ "${PROXY_NAME}" == *sandbox ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not smoketest";\
-	elif [[ "${ENVIRONMENT}" == ${PROD}  ]]; then\
+	elif [[ "${ENVIRONMENT}" == prod  ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${PROD_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
-	elif [[ "${ENVIRONMENT}" == ${INT}  ]]; then\
+	elif [[ "${ENVIRONMENT}" == int  ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${INT_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
 	else\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not sandbox";\
