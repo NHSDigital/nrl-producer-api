@@ -51,9 +51,9 @@ smoketest:
 	@if [[ "${PROXY_NAME}" == *sandbox ]]; then\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not smoketest";\
 	elif [[ ${ENVIRONMENT} == prod  ]]; then\
-		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${PROD_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
+		poetry run pytest -v --junitxml=smoketest-report.xml -s --apigee-app-id=${PROD_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
 	elif [[ ${ENVIRONMENT} == int  ]]; then\
-		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} --apigee-app-id=${INT_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
+		poetry run pytest -v --junitxml=smoketest-report.xml -s --apigee-app-id=${INT_APIGEE_APP_ID} --status-endpoint-api-key=${STATUS_ENDPOINT_API_KEY} -m "not sandbox";\
 	else\
 		poetry run pytest -v --junitxml=smoketest-report.xml -s --proxy-name=${PROXY_NAME} --api-name=${API_NAME} -m "not sandbox";\
 	fi;
