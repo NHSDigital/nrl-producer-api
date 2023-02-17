@@ -1,7 +1,11 @@
 <ProxyEndpoint name="default">
   <Flows>
     <Flow name="OptionsPreFlight">
-      <Request/>
+      <Request>
+        <Step>
+          <Name>AssignMessage.AddSandboxAuthorization</Name>
+        </Step>
+      </Request>
       <Response>
         <Step>
           <Name>AssignMessage.AddCors</Name>
