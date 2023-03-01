@@ -1,5 +1,11 @@
 steps:
   - bash: |
+      time sleep 5 && echo "Hopefully Apigee has finished deploying"
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Give the Apigee deployment 5 seconds
+    condition: always()
+
+  - bash: |
       make install-python
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Setup pytests
