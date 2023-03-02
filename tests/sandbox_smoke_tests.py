@@ -6,6 +6,7 @@ import requests
 import urllib.parse
 
 
+@pytest.mark.skip(reason="Producing inconsistent results due to race condition with APIGEE API & NHS Login")
 @pytest.mark.sandbox
 @pytest.mark.parametrize(
     ["ods_code", "expected"],

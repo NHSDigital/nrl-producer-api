@@ -19,6 +19,7 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     assert status_json["checks"]['healthcheck']["outcome"] == {"message": "OK"}
 
 
+@pytest.mark.skip(reason="Producing inconsistent results due to race condition with APIGEE API & NHS Login")
 @pytest.mark.smoketest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 @pytest.mark.parametrize(
