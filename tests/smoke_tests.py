@@ -66,7 +66,7 @@ def test_smoke(
         "attributes": [
             {
                 "name": "nrl-ods-RJ11",
-                "value": "https://snomed.info/ict|736253001\nhttps://snomed.info/ict|736253002",
+                "value": "http://snomed.info/sct|736253001\nhttp://snomed.info/sct|736253002",
             }
         ],
     }
