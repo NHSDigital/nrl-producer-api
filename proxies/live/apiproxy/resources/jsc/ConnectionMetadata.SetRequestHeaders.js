@@ -8,14 +8,14 @@
  * e.g.
  * 
  * HTTP Request Header          = ods_code: RJ11
- * APIGEE App Custom Attribute  = nrl-ods-RJ11: https://snomed.info/ict|736253001\nhttps://snomed.info/ict|736253002\n
+ * APIGEE App Custom Attribute  = nrl-ods-RJ11: http://snomed.info/sct|736253001\nhttp://snomed.info/sct|736253002\n
  * 
  * Http Response Header = NHSD-Connection-Metadata: 
  *  {
  *      "nrl.ods-code": "RJ11",
  *      "nrl.pointer-types": [
- *          "https://snomed.info/ict|736253001",
- *          "https://snomed.info/ict|736253002"
+ *          "http://snomed.info/sct|736253001",
+ *          "http://snomed.info/sct|736253002"
  *      ]
  *  }
  */
