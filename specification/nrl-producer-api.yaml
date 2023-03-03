@@ -246,7 +246,7 @@ paths:
         - $ref: "#/components/parameters/correlationId"
       responses:
         "200":
-          description: Search successful response
+          description: Read successful response
           content:
             application/fhir+json:
               schema:
@@ -272,7 +272,7 @@ paths:
         - $ref: "#/components/parameters/correlationId"
       responses:
         "200":
-          description: Search successful response
+          description: Update successful response
           $ref: "#/components/responses/Success"
           content:
             application/fhir+json:
@@ -288,7 +288,7 @@ paths:
     delete:
       tags:
         - NRLF Producer
-      summary: Read
+      summary: Delete
       operationId: deleteDocumentReference
       parameters:
         - $ref: "#/components/parameters/id"
@@ -301,7 +301,7 @@ paths:
           $ref: "#/components/responses/Success"
         "200":
           $ref: "#/components/responses/Success"
-          description: Search successful response
+          description: Delete successful response
           content:
             application/fhir+json:
               example:
