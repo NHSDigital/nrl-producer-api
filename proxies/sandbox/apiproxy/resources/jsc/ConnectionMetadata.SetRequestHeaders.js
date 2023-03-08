@@ -16,7 +16,9 @@ const nrlPointers = {
   // These ones are needed for the Seed data
   "Y05868": [
     "http://snomed.info/sct|736253002",
-    "http://snomed.info/sct|887701000000100"
+    "http://snomed.info/sct|887701000000100",
+    "http://snomed.info/sct|1363501000000100",
+    "http://snomed.info/sct|861421000000109"
   ],
   "8J008": [
     "http://snomed.info/sct|1363501000000100"
