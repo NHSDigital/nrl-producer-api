@@ -207,14 +207,14 @@ paths:
         * `type` MUST match one of the Document Types agreed during on-boarding.
         * `content` MUST have at least one entry.
         * `content[].format[]` SHOULD indicate the mechanism for accessing documents, e.g.
-        ** `{ "code": "ssp", "display": "Spine Secure Proxy" }`
-        ** Further standards to be agreed.
+          * `{ "code": "ssp", "display": "Spine Secure Proxy" }`
+          * Further standards to be agreed.
 
         To supersede existing pointers you must specify:
         * at least one existing pointer in the `relatesTo` with a `target` or `replaces`.
         * The following fields MUST match the pointers being superseded:
-        ** `subject`
-        ** `type`
+          * `subject`
+          * `type`
 
         This will cause a new pointer to be created and superseded pointers to be deleted.  Multiple documents can
         be superseded.
