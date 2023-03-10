@@ -1,14 +1,5 @@
 <ProxyEndpoint name="default">
   <Flows>
-    <Flow name="OptionsPreFlight">
-      <Request/>
-      <Response>
-        <Step>
-          <Name>AssignMessage.AddCors</Name>
-        </Step>
-      </Response>
-      <Condition>(request.verb = "OPTIONS") and (request.header.origin != null) and (request.header.Access-Control-Request-Method != null)</Condition>
-    </Flow>
     <Flow name="AddPayloadToPing">
       <Description/>
       <Request/>
@@ -45,6 +36,15 @@
         </Step>
       </Request>
       <Condition>request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = ""</Condition>
+    </Flow>
+    <Flow name="CorsHeaders">
+      <!-- This must be the last item in the flow -->
+      <Request/>
+      <Response>
+        <Step>
+          <Name>AssignMessage.AddCors</Name>
+        </Step>
+      </Response>
     </Flow>
   </Flows>
   <PreFlow/>
