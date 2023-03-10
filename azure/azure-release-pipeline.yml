@@ -30,6 +30,7 @@ extends:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
+    prod_requires_approval: true
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
@@ -53,5 +54,6 @@ extends:
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
       - environment: prod
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
+        depends_on:
+          - internal-qa
+          - internal-qa-sandbox
