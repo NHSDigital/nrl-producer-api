@@ -37,7 +37,8 @@
       </Request>
       <Condition>request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = ""</Condition>
     </Flow>
-    <Flow name="OptionsPreFlight">
+    <Flow name="CorsHeaders">
+      <!-- This must be the last item in the flow -->
       <Request/>
       <Response>
         <Step>
