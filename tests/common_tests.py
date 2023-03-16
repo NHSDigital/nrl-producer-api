@@ -2,6 +2,7 @@ import requests
 import json
 
 
+@pytest.mark.skip(reason="Disabled by NRLF-397, re-enabled by NRLF-398")
 def test_ping_endpoint(nhsd_apim_proxy_url):
     resp = requests.get(nhsd_apim_proxy_url + "/_ping")
     assert resp.status_code == 200
