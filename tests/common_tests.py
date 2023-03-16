@@ -1,5 +1,6 @@
 import requests
 import json
+import pytest
 
 
 @pytest.mark.skip(reason="Disabled by NRLF-397, re-enabled by NRLF-398")
