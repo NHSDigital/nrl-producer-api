@@ -3,10 +3,10 @@ from uuid import uuid4
 
 import pytest
 import requests
-
 import urllib.parse
 
 
+@pytest.mark.skip(reason="Disabled by NRLF-397, re-enabled by NRLF-398")
 @pytest.mark.smoketest
 def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     resp = requests.get(
