@@ -158,11 +158,11 @@ info:
     url: "https://digital.nhs.uk/developer/help-and-support"
     email: api.management@nhs.net
 servers:
-  - url: "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4"
+  - url: https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4
     description: Sandbox environment.
-  - url: "https://int.api.service.nhs.uk/nrl-producer-api/FHIR/R4"
+  - url: https://int.api.service.nhs.uk/nrl-producer-api/FHIR/R4
     description: Integration test environment.
-  - url: "https://api.service.nhs.uk/nrl-producer-api/FHIR/R4"
+  - url: https://api.service.nhs.uk/nrl-producer-api/FHIR/R4
     description: Production environment.
 paths:
   /DocumentReference:
@@ -223,6 +223,7 @@ paths:
         - $ref: "#/components/parameters/subject"
         - $ref: "#/components/parameters/custodian"
         - $ref: "#/components/parameters/type"
+        - $ref: "#/components/parameters/nextPageToken"
         - $ref: "#/components/parameters/odsCode"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
@@ -803,7 +804,7 @@ components:
   requestBodies:
     DocumentReference:
       content:
-        application/fhir+json:
+        application/fhir+json;version=1:
           schema:
             $ref: "#/components/schemas/DocumentReference"
       required: true
@@ -1503,6 +1504,8 @@ components:
           $ref: "#/components/schemas/RequestQuerySubject"
         type.identifier:
           $ref: "#/components/schemas/RequestQueryType"
+        next-page-token:
+          $ref: "#/components/schemas/NextPageToken"
     RequestQuerySubject:
       type: string
       pattern: ^https\:\/\/fhir\.nhs\.uk\/Id\/nhs-number\|(\d+)$
@@ -1515,6 +1518,8 @@ components:
       type: string
       pattern: ^http\:\/\/snomed\.info\/sct\|(\d+)$
       example: "http://snomed.info/sct|736253002"
+    NextPageToken:
+      type: string
     RequestHeaderOdsCode:
       type: string
     RequestHeaderRequestId:
@@ -1546,6 +1551,9 @@ components:
       schema:
         $ref: "#/components/schemas/RequestQuerySubject"
       examples:
+        none:
+          summary: None
+          value: ""
         valid_1:
           summary: "Valid #1"
           value: https://fhir.nhs.uk/Id/nhs-number|4409815415
@@ -1561,6 +1569,9 @@ components:
       schema:
         $ref: "#/components/schemas/RequestQueryCustodian"
       examples:
+        none:
+          summary: None
+          value: ""
         valid:
           summary: Valid
           value: https://fhir.nhs.uk/Id/ods-organization-code|Y05868
@@ -1573,6 +1584,9 @@ components:
       schema:
         $ref: "#/components/schemas/RequestQueryType"
       examples:
+        none:
+          summary: None
+          value: ""
         SNOMED_CODES_MENTAL_HEALTH_CRISIS_PLAN:
           summary: Mental Health Crisis Plan
           value: http://snomed.info/sct|736253002
@@ -1588,6 +1602,15 @@ components:
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
+    nextPageToken:
+      name: next-page-token
+      in: query
+      description: |
+        A token that can be sent as either a query parameter or in the post body parameter to retrieve the next set of 20 records.
+
+        This token is returned in the meta.tag field.
+      schema:
+        $ref: "#/components/schemas/NextPageToken"
     odsCode:
       name: NHSD-End-User-Organisation-ODS
       description: ODS Code for Organisation
@@ -1598,10 +1621,10 @@ components:
       examples:
         valid:
           summary: Valid
-          value: https://fhir.nhs.uk/Id/ods-organization-code|Y05868
+          value: Y05868
         invalid:
           summary: Unknown
-          value: https://fhir.nhs.uk/Id/ods-organization-code|XYZ
+          value: XYZ
     requestId:
       name: X-Request-ID
       description: |
@@ -1635,7 +1658,7 @@ components:
         X-Request-Id:
           $ref: "#/components/headers/RequestId"
       content:
-        application/fhir+json:
+        application/fhir+json;version=1:
           schema:
             $ref: "#/components/schemas/OperationOutcome"
     Error:
@@ -1646,7 +1669,7 @@ components:
         X-Request-Id:
           $ref: "#/components/headers/RequestId"
       content:
-        application/fhir+json:
+        application/fhir+json;version=1:
           schema:
             $ref: "#/components/schemas/OperationOutcome"
   headers:
