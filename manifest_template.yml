@@ -31,6 +31,8 @@ APIGEE_ENVIRONMENTS:
     display_name: Integration Testing
     has_mock_auth: true
     approval_type: manual
+    ratelimit: '30000pm'
+    quota: '30000'
   - name: prod
     display_name: Production
     approval_type: manual
