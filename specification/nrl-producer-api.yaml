@@ -4,157 +4,7 @@ openapi: 3.0.0
 # owned by NHS Digital (https://digital.nhs.uk/)
 info:
   title: National Record Locator Producer - FHIR API
-  description: |
-    ## Overview
-
-    The National Record Locator (NRL) enables organisations to share Patient data nationwide.  It acts as an Index, or
-    Directory, of patient data.  Rather than handling the data itself it shares pointers held in partner systems, using
-    the [FHIR R4 DocumentReference](http://hl7.org/fhir/documentreference.html) standard.
-
-    ![National Record Locator](https://raw.githubusercontent.com/NHSDigital/nrl-producer-api/master/specification/nrl.png)
-
-    Users of the service fall into the categories of:
-
-    * Producers - capable of creating and managing pointers
-    * Consumers - capable of searching and reading pointers
-
-    The service removes the need for organisations to create duplicate copies of information across systems and
-    organisations, by enabling access to up-to-date information directly from the source.
-
-    It can be used to store and publish pointers to patient data held in health systems across England and to look up
-    where relevant patient data is held.
-
-    There is a growing list of health and social care organisations authorised to share records using NRL.
-
-    ### As a Producer
-
-    * Create pointers, restricted to document types agreed during the on-boarding process
-    * Replace your pointers with a newer versions, superseding the old one
-    * Update the metadata associated with your pointers
-    * Delete pointers
-    * Search all pointers you created
-    * Read any pointer you created
-
-    ### What has changed?
-
-    This service is a replacement for the existing [National Record Locator (NRL)](https://digital.nhs.uk/services/national-record-locator).
-
-    * Upgraded from FHIR STU3 to R4.
-    * Improved performance and scalability.
-    * Improved on-boarding experience.
-    * Authenticated using [signed JWT](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) rather than mTLS
-    * Greater flexibility, by wider support of the FHIR R4 DocumentReference resource.
-
-    ### Data availability, timing and quality
-
-    Pointers are available to be consumed almost immediately after they have been produced by the provider.
-
-    Pointers are immediately available to authorised providers and consumers after successful creation.
-
-    ## Who can use this API
-
-    This API:
-    - is only for use by patient-facing applications
-    - is only for non-clinical use
-    - can only be used where there is a legal basis to do so
-
-    You can not currently use this API to retrieve pointers for:
-    - mental health crisis plans
-    - end of life plans
-    - emergency care plans (eRedbags)
-    - national early warning scores (NEWS)
-    - urgent care plan
-
-    Make sure you have a valid use case before you go too far with your development.
-    To do this, [contact us](https://digital.nhs.uk/developer/help-and-support).
-
-    You must do this before you can go live (see ‘Onboarding’ below).
-
-    ## API status and roadmap
-
-    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
-
-    To see our roadmap, or to suggest, comment or vote on features for this API, see our [interactive product backlog](https://nhs-digital-api-management.featureupvote.com/?tag=national-record-locator-api).
-
-    If you have any other queries, [contact us](https://digital.nhs.uk/developer/help-and-support).
-
-    ## Service level
-
-    This API is a bronze service, meaning it is operational and supported only during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
-
-    For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
-
-    ## Technology
-
-    This API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).
-
-    It conforms to the [FHIR](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir) global standard for health care data exchange, specifically to [FHIR R4 (v4.0.1)](https://hl7.org/fhir/r4/), except that it does not support the [capabilities](http://hl7.org/fhir/R4/http.html#capabilities) interaction.
-
-    It includes some country-specific FHIR extensions, which conform to [FHIR UK Core](https://digital.nhs.uk/services/fhir-uk-core), specifically [fhir.r4.ukcore.stu1 0.5.1](https://simplifier.net/packages/fhir.r4.ukcore.stu1/0.5.1).
-
-    You do not need to know much about FHIR to use this API - FHIR APIs are just RESTful APIs that follow specific rules.
-
-    In particular:
-
-    * resource names are capitalised and singular, and use US spellings, for example `Organization` not `organisations`
-    * array names are singular, for example `entry` not `entries` for address lines
-    * data items that are country-specific and thus not included in the FHIR global base resources are usually wrapped in an `extension` object
-
-    There are [libraries and SDKs available](https://digital.nhs.uk/developer/guides-and-documentation/api-technologies-at-nhs-digital#fhir-libraries-and-sdks) to help with FHIR API integration.
-
-    ## Network access
-
-    This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
-
-    For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
-
-    ## Security and authorisation
-
-    This API uses the following access modes:
-
-    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication)
-
-    ## Environments and testing
-
-    | Environment       | Base URL                                                       |
-    | ----------------- | ---------------------------------------------------------------|
-    | Sandbox           | `https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/` |
-    | Integration test  | `https://int.api.service.nhs.uk/nrl-producer-api/FHIR/R4/`     |
-
-    ### Sandbox testing
-
-    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
-    * is for early developer testing
-    * only covers a limited set of scenarios
-    * is open access, so does not allow you to test authorisation
-
-    For details of sandbox test scenarios, or to try out the sandbox using our 'Try this API' feature, see the documentation for each endpoint.
-
-    Alternatively, you can try out the sandbox using our Postman collection:
-
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/TBC)
-
-    ### Integration testing
-
-    Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
-    * is for formal integration testing
-    * includes authorisation
-
-    It also includes ready-to-use TBC test data
-
-    For more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).
-
-    ## Onboarding
-
-    You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
-
-    This API uses our online digital onboarding process.
-
-    As part of this process, you need to demonstrate that you can manage risks and that your software conforms technically with the requirements for this API.
-
-    Information on this page might impact the design of your software. For details, see [Onboarding support information](https://digital.nhs.uk/developer/api-catalogue/national-record-locator-producer-api/onboarding-support-information).
-
-    To get started, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding#using-the-digital-onboarding-portal).
+  description: "## Overview\n\nThe National Record Locator (NRL) enables organisations to share patient data nationwide.  Rather than storing the\ndata itself, it is used to share pointers to the data, held in provider systems.  It acts as an index and not a data\nrepository.  Each document pointer is defined using the \n[FHIR R4 DocumentReference](http://hl7.org/fhir/documentreference.html) standard.\n\n![National Record Locator](https://raw.githubusercontent.com/NHSDigital/nrl-producer-api/master/specification/nrl.png)\n\nUsers of the service fall into the categories of:\n\n* Producers - capable of creating and managing pointers\n* Consumers - capable of searching and reading pointers\n\nThe service removes the need for organisations to create duplicate copies of information across systems and\norganisations, by enabling access to up-to-date information directly from the source.\n\nIt can be used to store and publish pointers to patient data held in health systems across England and to look up\nwhere relevant patient data is held.\n\nThere is a growing list of health and social care organisations authorised to share records using NRL, and presently\nthe pointers are classified into the following types.\n\n* [Mental Health Crisis Plan](http://snomed.info/sct/736253002)\n* [Emergency Healthcare Plan](http://snomed.info/sct/887701000000100)\n* [End of Life Care Coordination Summary](http://snomed.info/sct|861421000000109)\n* [National Early Warning Code 2](http://snomed.info/sct|1363501000000100)\n\n### As a Producer\n\n* Create pointers, restricted to document types agreed during the [on-boarding](#api-description__onboarding) process\n* Replace your pointers with a newer versions, superseding the old one\n* Update the metadata associated with your pointers\n* Delete pointers\n* Search all pointers you created\n* Read any pointer you created\n\n### What has changed?\n\nThis service is a replacement for the existing [National Record Locator (NRL)](https://digital.nhs.uk/services/national-record-locator).\n\n* Upgraded from FHIR STU3 to R4.\n* Improved performance and scalability.\n* Improved onboarding experience.\n* Authenticated using [signed JWT](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) rather than mTLS\n* Greater flexibility, by wider support of the [FHIR R4 DocumentReference](http://hl7.org/fhir/documentreference.html) resource.\n\n### Data availability, timing and quality\n\nPointers are available to be consumed almost immediately after they have been produced by the provider.\n\nPointers are immediately available to authorised providers and consumers after successful creation.\n\n## Who can use this API\n\nThis API can only be used where there is a legal basis to do so\n\nYou cannot currently use this API to retrieve pointers for:\n\n* mental health crisis plans\n* end of life plans\n* emergency care plans (eRedbags)\n* national early warning scores (NEWS)\n* urgent care plan\n\nMake sure you have a valid use case before you go too far with your development.\nTo do this, [contact us](https://digital.nhs.uk/developer/help-and-support).\n\nYou must do this before you can go live (see ‘[Onboarding](#api-description__onboarding)’ below).\n\n## API status and roadmap\n\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).\n\nTo see our roadmap, or to suggest, comment or vote on features for this API, see our [interactive product backlog](https://nhs-digital-api-management.featureupvote.com/?tag=national-record-locator-api).\n\nIf you have any other queries, [contact us](https://digital.nhs.uk/developer/help-and-support).\n\n## Service level\n\nThis API is a bronze service, meaning it is operational and supported only during business hours (8am to 6pm), Monday to Friday excluding bank holidays.\n\nFor more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).\n\n## Technology\n\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\nIt conforms to the [FHIR](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#fhir) global standard for health care data exchange, specifically to [FHIR R4 (v4.0.1)](https://hl7.org/fhir/r4/), except that it does not support the [capabilities](http://hl7.org/fhir/R4/http.html#capabilities) interaction.\n\nIt includes some country-specific FHIR extensions, which conform to [FHIR UK Core](https://digital.nhs.uk/services/fhir-uk-core), specifically [fhir.r4.ukcore.stu1 0.5.1](https://simplifier.net/packages/fhir.r4.ukcore.stu1/0.5.1).\n\nYou do not need to know much about FHIR to use this API - FHIR APIs are just RESTful APIs that follow specific rules.\n\nIn particular:\n\n* resource names are capitalised and singular, and use US spellings, for example `Organization` not `organisations`\n* array names are singular, for example `entry` not `entries` for address lines\n* data items that are country-specific and thus not included in the FHIR global base resources are usually wrapped in an `extension` object\n\nThere are [libraries and SDKs available](https://digital.nhs.uk/developer/guides-and-documentation/api-technologies-at-nhs-digital#fhir-libraries-and-sdks) to help with FHIR API integration.\n\n## Network access\n\nThis API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API uses the following access modes:\n\n* [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication)\n\n## Environments and testing\n\n| Environment       | Base URL                                                       |\n| ----------------- | ---------------------------------------------------------------|\n| Sandbox           | `https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/` |\n| Integration test  | `https://int.api.service.nhs.uk/nrl-producer-api/FHIR/R4/`     |\n\n### Sandbox testing\n\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\nFor details of sandbox test scenarios, or to try out the sandbox using our 'Try this API' feature, see the documentation for each endpoint.\n\nAlternatively, you can try out the sandbox using our Postman collection:\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/TBC)\n\n### Integration testing\n\nOur [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):\n* is for formal integration testing\n* includes authorisation\n\nIt also includes ready-to-use test data and scenarios.  For details please [contact us](https://digital.nhs.uk/developer/help-and-support).\n\nFor more details see [integration testing with our RESTful APIs](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing-with-our-restful-apis).\n\n## Onboarding\n\nYou need to get your software approved by us before it can go live with this API. We call this onboarding. The \n[on-boarding](#api-description__onboarding) process can sometimes be quite long, so it’s worth planning well ahead.\n\nThis API uses our online digital [on-boarding](#api-description__onboarding) process.\n\nAs part of this process, you need to demonstrate that you can manage risks and that your software conforms \ntechnically with the requirements for this API.\n\n!!! TODO !!! Fix this hyperlink !!!\nInformation on this page might impact the design of your software. For details, see \n[Onboarding support information](https://digital.nhs.uk/developer/api-catalogue/national-record-locator-producer-api/onboarding-support-information).\n\nTo get started, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding#using-the-digital-onboarding-portal).\n"
   version: 1.0.0
   license:
     name: MIT
@@ -222,7 +72,7 @@ paths:
             }
           },
           ```
-        * `custodian` MUST be an `Organization` reference using a valid ODS code, agreed during [on-boarding](#onboarding). e.g.
+        * `custodian` MUST be an `Organization` reference using a valid ODS code, agreed during [onboarding](#api-description__onboarding). e.g.
           ```
           "custodian": {
             "identifier": {
@@ -231,7 +81,7 @@ paths:
             }
           }
           ```
-        * `type` MUST match one of the Document Types agreed during [on-boarding](#onboarding). e.g.
+        * `type` MUST match one of the Document Types agreed during [onboarding](#api-description__onboarding). e.g.
           ```
           "type": {
             "coding\": [
@@ -763,7 +613,7 @@ paths:
       description: |
         Read a single document pointer by specifying the `DocumentReference.id`.  Note that you will only be able to
         retrieve document pointers that have been created by the organisation specified in the `ODS-End-User-Organisation-ODS`
-        header, and agreed during [on-boarding](#onbaroding).
+        header, and agreed during [onboarding](#onbaroding).
     put:
       summary: Update a single document pointer
       operationId: updateDocumentReference
