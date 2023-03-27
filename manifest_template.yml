@@ -6,18 +6,38 @@ APIGEE_ENVIRONMENTS:
     display_name: Internal Development
     has_mock_auth: true
     approval_type: auto
+    ratelimiting:
+      quota:
+        enabled: false
+      spikeArrest:
+        enabled: false
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
     portal_visibility: false
     approval_type: auto
+    ratelimiting:
+      quota:
+        enabled: false
+      spikeArrest:
+        enabled: false
   - name: internal-qa
     display_name: Internal QA
     has_mock_auth: true
     approval_type: auto
+    ratelimiting:
+      quota:
+        enabled: false
+      spikeArrest:
+        enabled: false
   - name: internal-qa-sandbox
     display_name: Internal QA Sandbox
     portal_visibility: false
     approval_type: auto
+    ratelimiting:
+      quota:
+        enabled: false
+      spikeArrest:
+        enabled: false
   # We use `internal-qa` rather than `ref`
   # - name: ref
   #   display_name: Reference
@@ -27,15 +47,40 @@ APIGEE_ENVIRONMENTS:
     display_name: Sandbox
     portal_visibility: false
     approval_type: auto
+    ratelimiting:
+      quota:
+        enabled: true
+        limit: 300 # 5/s
+        interval: 1
+        timeunit: minute
+      spikeArrest:
+        enabled: true
+        ratelimit: '300pm' # 5/s
   - name: int
     display_name: Integration Testing
     has_mock_auth: true
     approval_type: manual
+    ratelimiting:
+      quota:
+        enabled: true
+        limit: 30000  # 500/s
+        interval: 1
+        timeunit: minute
+      spikeArrest:
+        enabled: true
+        ratelimit: '30000pm' # 500/s
   - name: prod
     display_name: Production
     approval_type: manual
-    ratelimit: '30000pm'
-    quota: '30000'
+    ratelimiting:
+      quota:
+        enabled: true
+        limit: 30000 # 500/s
+        interval: 1
+        timeunit: minute
+      spikeArrest:
+        enabled: true
+        ratelimit: '30000pm' # 500/s
 ---
 meta:
   api:
@@ -63,13 +108,21 @@ apigee:
             value:
               {{ NAME }}:
                 quota:
+{% if ENV.ratelimiting.quota.enabled | default(true) %}
                   enabled: true
-                  limit: 300
-                  interval: 1
-                  timeunit: minute
+                  limit: {{ ENV.ratelimiting.quota.limit | default(300) }}
+                  interval: {{ ENV.ratelimiting.quota.interval | default(1) }}
+                  timeunit: {{ ENV.ratelimiting.quota.timeunit | default('minute') }}
+{% else %}
+                  enabled: false
+{% endif %}
                 spikeArrest:
+{% if ENV.ratelimiting.spikeArrest.enabled | default(true) %}
                   enabled: true
-                  ratelimit: 600pm # 10 requests per second
+                  ratelimit: {{ ENV.ratelimiting.spikeArrest.ratelimit | default('300pm') }}
+{% else %}
+                  enabled: false
+{% endif %}
               app:
                 quota:
                   enabled: false
