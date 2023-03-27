@@ -15,8 +15,8 @@ steps:
       export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
       export API_NAME="$(SERVICE_NAME)"
 
-      export PROD="prod"
-      export PROD_APIGEE_APP_ID="881f4128-2dcd-4a61-90a6-33af19c3c202"
+      export APP_NAME="NRL DDA"
+
       export INT="int"
       export INT_APIGEE_APP_ID="7a4ad8c7-3927-4259-af7b-ac9d305a86ad"
 

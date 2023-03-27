@@ -19,7 +19,6 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     assert status_json["checks"]['healthcheck']["outcome"] == {"message": "OK"}
 
 
-@pytest.mark.skip(reason="Producing inconsistent results due to race condition with APIGEE API & NHS Login")
 @pytest.mark.smoketest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 @pytest.mark.parametrize(
@@ -45,7 +44,6 @@ def test_smoke(
     nhsd_apim_proxy_url,
     nhsd_apim_auth_headers,
     _apigee_app_base_url,
-    _create_test_app,
 ):
 
     headers = {
@@ -58,10 +56,10 @@ def test_smoke(
 
     patient_id = urllib.parse.quote("https://fhir.nhs.uk/Id/nhs-number|9278693472")
     url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject.identifier={patient_id}"
-    created_app_name = _create_test_app["name"]
+    app_name = os.environ['APP_NAME']
 
     # key value map addition
-    apigee_update_url = f"{_apigee_app_base_url}/{created_app_name}"
+    apigee_update_url = f"{_apigee_app_base_url}/{app_name}"
     key_value_pairs = {
         "attributes": [
             {
@@ -70,6 +68,8 @@ def test_smoke(
             }
         ],
     }
+
+
 
     update_response = requests.put(
         apigee_update_url,
