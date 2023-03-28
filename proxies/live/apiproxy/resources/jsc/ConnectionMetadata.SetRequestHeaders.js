@@ -36,7 +36,7 @@
     }
 
     // Convert it into a complex object
-    var lines = nrlPointerTypes.split('\n');
+    var lines = nrlPointerTypes.split(' ');
     var pointerTypes = [];
     for (var i=0;i<lines.length;i++) {
         var line = lines[i];
