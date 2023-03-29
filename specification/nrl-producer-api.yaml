@@ -1586,7 +1586,7 @@ components:
     RequestParams:
       type: object
       properties:
-        subject.identifier:
+        patient:identifier:
           $ref: "#/components/schemas/RequestQuerySubject"
         type:identifier:
           $ref: "#/components/schemas/RequestQueryType"
@@ -1631,7 +1631,7 @@ components:
           summary: Unknown
           value: Y05861-1234567800
     subject:
-      name: subject.identifier
+      name: patient:identifier
       in: query
       schema:
         $ref: "#/components/schemas/RequestQuerySubject"
