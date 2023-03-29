@@ -57,7 +57,7 @@ def test_smoke(
     }
 
     patient_id = urllib.parse.quote("https://fhir.nhs.uk/Id/nhs-number|9278693472")
-    url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?subject.identifier={patient_id}"
+    url = f"{nhsd_apim_proxy_url}/FHIR/R4/DocumentReference?patient:identifier={patient_id}"
     created_app_name = _create_test_app["name"]
 
     # key value map addition
