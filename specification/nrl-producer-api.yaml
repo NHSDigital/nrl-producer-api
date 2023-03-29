@@ -477,7 +477,7 @@ paths:
         Results are restricted to pointers you created, but can be further filtered by `subject` and `type`.
 
         Results are limited to 20 records per request, and further records are available by submitting subsequent
-        requests with the `next-page-token` found in the `meta` portion of the response.
+        requests with the `_next-page-token` found in the `meta` portion of the response.
 
         This operation is also available as a http POST, which is the preferred method (see below).
   /DocumentReference/_search:
@@ -673,7 +673,7 @@ paths:
         Results are restricted to pointers you created, but can be further filtered by `subject` and `type`.
 
         Results are limited to 20 records per request, and further records are available by submitting subsequent
-        requests with the `next-page-token` found in the `meta` portion of the response.
+        requests with the `_next-page-token` found in the `meta` portion of the response.
 
         This operation is also available as a http GET for convenience (see above), but POST is preferred for the
         following reasons.
@@ -1588,9 +1588,9 @@ components:
       properties:
         subject.identifier:
           $ref: "#/components/schemas/RequestQuerySubject"
-        type.identifier:
+        type:identifier:
           $ref: "#/components/schemas/RequestQueryType"
-        next-page-token:
+        _next-page-token:
           $ref: "#/components/schemas/NextPageToken"
     RequestQuerySubject:
       type: string
@@ -1649,7 +1649,7 @@ components:
           summary: Unknown
           value: https://fhir.nhs.uk/Id/nhs-number|3495456001
     custodian:
-      name: custodian.identifier
+      name: custodian:identifier
       in: query
       schema:
         $ref: "#/components/schemas/RequestQueryCustodian"
@@ -1664,7 +1664,7 @@ components:
           summary: Unknown
           value: https://fhir.nhs.uk/Id/ods-organization-code|XYZ
     type:
-      name: type.identifier
+      name: type:identifier
       in: query
       schema:
         $ref: "#/components/schemas/RequestQueryType"
@@ -1688,7 +1688,7 @@ components:
           summary: Unknown
           value: http://snomed.info/sct|410970009
     nextPageToken:
-      name: next-page-token
+      name: _next-page-token
       in: query
       description: |
         A token that can be sent as either a query parameter or in the post body parameter to retrieve the next set of 20 records.
