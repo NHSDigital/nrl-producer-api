@@ -179,11 +179,11 @@ If you want to run the smoke tests against a particular product or app then you 
 
 Example using for the current product deployed to `internal-dev`:
 
-`pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-internal-dev" --api-name=nrl-producer-api`
+`pytest tests/smoke_tests.py::test_smoke --proxy-name="nrl-producer-api-internal-dev" --api-name=nrl-producer-api`
 
 Example using the product deployed for GitHub pull request 15:
 
-`pytest tests/api_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=nrl-producer-api`
+`pytest tests/smoke_tests.py::test_smoke --proxy-name="nrl-producer-api-pr-15" --api-name=nrl-producer-api`
 
 
 ## Sandbox data
