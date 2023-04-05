@@ -58,7 +58,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4/DocumentReference",
+					"raw": "https://sandbox.api.service.nhs.uk/record-locator/producer/FHIR/R4/DocumentReference",
 					"protocol": "https",
 					"host": [
 						"sandbox",
@@ -68,7 +68,7 @@
 						"uk"
 					],
 					"path": [
-						"nrl-producer-api",
+						"record-locator/producer",
 						"FHIR",
 						"R4",
 						"DocumentReference"
@@ -393,7 +393,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://sandbox.api.service.nhs.uk/nrl-producer-api/FHIR/R4",
+			"value": "https://sandbox.api.service.nhs.uk/record-locator/producer/FHIR/R4",
 			"type": "string"
 		}
 	]

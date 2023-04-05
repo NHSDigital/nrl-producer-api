@@ -4,8 +4,8 @@
   "description": "OAS (Swagger v3) API Definition for Template API",
   "scripts": {
     "test": "jest",
-    "lint": "node_modules/.bin/openapi-generator-cli validate -i specification/nrl-producer-api.yaml",
-    "publish": "./node_modules/.bin/openapi-generator-cli generate -i specification/nrl-producer-api.yaml --generator-key v3.0  -g openapi -o build && rm openapitools.json && mv build/openapi.json build/nrl-producer-api.json",
+    "lint": "node_modules/.bin/openapi-generator-cli validate -i specification/record-locator/producer.yaml",
+    "publish": "./node_modules/.bin/openapi-generator-cli generate -i specification/record-locator/producer.yaml --generator-key v3.0  -g openapi -o build && rm openapitools.json && mv build/openapi.json build/nrl-producer-api.json",
     "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL"
   },
   "author": "NHS Digital",
