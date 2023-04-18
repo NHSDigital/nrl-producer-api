@@ -38,13 +38,13 @@ const nrlPointers = {
     "request.header.NHSD-End-User-Organisation-ODS"
   );
   if (!odsCode || odsCode.trim().length === 0) {
-    context.setVariable("badRequest", true);
+    //This will trigger RaiseFault.400BadRequest.xml - see proxies/deafult.xml in the DefaultFaultRules
     return;
   }
 
   var nrlPointerTypes = nrlPointers[odsCode];
   if (!nrlPointerTypes) {
-    context.setVariable("badRequest", true);
+     //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
     return;
   }
 

@@ -26,6 +26,10 @@
           <Step>
               <Name>Javascript.AddConnectionMetadataHeader</Name>
           </Step>
+          <Step>
+              <Condition>request.header.NHSD-Connection-Metadata = null</Condition>
+              <Name>RaiseFault.403NoPointers</Name>
+          </Step>
         </Request>
         <!-- <Response>
           <Step>
