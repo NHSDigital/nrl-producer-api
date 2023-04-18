@@ -1,0 +1,28 @@
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403NoPointers">
+    <FaultResponse>
+        <Set>
+        <Payload contentType="application/json"> {
+            "resourceType": "OperationOutcome",
+            "issue": [
+                {
+                "severity": "error",
+                "code": "403",
+                "details": {
+                    "coding": [
+                    {
+                        "code": "403",
+                        "display": "Forbidden"
+                    }
+                    ]
+                },
+                "diagnostics": "Provided ODS code has no pointers within requesting app"
+                }
+            ]
+        }</Payload>
+            <StatusCode>403</StatusCode>
+            <ReasonPhrase>Forbidden</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <DisplayName>RaiseFault.403NoPointers</DisplayName>
+</RaiseFault>
