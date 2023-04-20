@@ -48,8 +48,13 @@ const nrlPointers = {
     return;
   }
 
+  var odsCodeExtension = context.getVariable(
+    "request.header.NHSD-End-User-Organisation"
+  );
+
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
+    "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": nrlPointerTypes,
   };
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
