@@ -48,6 +48,16 @@ const nrlPointers = {
     return;
   }
 
+   // Convert it into a complex object
+   var lines = nrlPointerTypes.split(/\s+/);
+   var pointerTypes = [];
+   for (var i=0;i<lines.length;i++) {
+       var line = lines[i];
+       if (line && line.trim().length !== 0) {
+           pointerTypes.push(line);
+       }
+   }
+
   var odsCodeExtension = context.getVariable(
     "request.header.NHSD-End-User-Organisation"
   );
@@ -55,7 +65,7 @@ const nrlPointers = {
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
-    "nrl.pointer-types": nrlPointerTypes,
+    "nrl.pointer-types": pointerTypes,
   };
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
     connectionMetadata;
