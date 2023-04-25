@@ -45,9 +45,14 @@
         }
     }
 
+    var odsCodeExtension = context.getVariable(
+        "request.header.NHSD-End-User-Organisation"
+    );
+
     // Build the response
     var connectionMetadata = {
         "nrl.ods-code": odsCode,
+        "nrl.ods-code-extension": odsCodeExtension,
         "nrl.pointer-types": pointerTypes,
     };
     context.targetRequest.headers['NHSD-Connection-Metadata'] = connectionMetadata;
