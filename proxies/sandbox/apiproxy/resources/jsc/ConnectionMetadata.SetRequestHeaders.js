@@ -52,11 +52,18 @@ const nrlPointers = {
     "request.header.NHSD-End-User-Organisation"
   );
 
+  var oneDirectionalSync = context.getVariable(
+    "request.header.NHSD-One-Directional-Sync"
+);
+
+  // Build the response
   var connectionMetadata = {
-    "nrl.ods-code": odsCode,
-    "nrl.ods-code-extension": odsCodeExtension,
-    "nrl.pointer-types": nrlPointerTypes,
+      "nrl.ods-code": odsCode,
+      "nrl.ods-code-extension": odsCodeExtension,
+      "nrl.pointer-types": pointerTypes,
+      "nrl.one-directional-sync": oneDirectionalSync
   };
+  
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
     connectionMetadata;
 })();
