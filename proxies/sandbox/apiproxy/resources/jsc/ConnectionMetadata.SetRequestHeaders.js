@@ -9,29 +9,28 @@
 //---- CHANGE AVAILABLE POINTER TYPES FOR EACH ORGANISATION HERE ----//
 const nrlPointers = {
   // This one is needed for Smoke Tests
-  "RJ11": [
-        "http://snomed.info/sct|736253001",
-        "http://snomed.info/sct|736253002"
+  RJ11: [
+    "http://snomed.info/sct|736253001",
+    "http://snomed.info/sct|736253002",
   ],
   // These ones are needed for the Seed data
-  "Y05868": [
+  Y05868: [
     "http://snomed.info/sct|736253002",
     "http://snomed.info/sct|887701000000100",
     "http://snomed.info/sct|1363501000000100",
-    "http://snomed.info/sct|861421000000109"
+    "http://snomed.info/sct|861421000000109",
   ],
-  "8J008": [
-    "http://snomed.info/sct|1363501000000100"
-  ],
-  "RY26A": [
-    "http://snomed.info/sct|861421000000109"
-  ],
-  "RM559":[
-    "http://snomed.info/sct|736253002"
-  ]
-
+  "8J008": ["http://snomed.info/sct|1363501000000100"],
+  RY26A: ["http://snomed.info/sct|861421000000109"],
+  RM559: ["http://snomed.info/sct|736253002"],
 };
 //-------------------------------------------------------------------//
+
+
+const permissions = [
+  "supersede-ignore-delete-fail",
+  "audit-dates-from-payload",
+]
 
 (function () {
   var odsCode = context.getVariable(
@@ -44,7 +43,7 @@ const nrlPointers = {
 
   var nrlPointerTypes = nrlPointers[odsCode];
   if (!nrlPointerTypes) {
-     //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
+    //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
     return;
   }
 
@@ -52,18 +51,13 @@ const nrlPointers = {
     "request.header.NHSD-End-User-Organisation"
   );
 
-  var oneDirectionalSync = context.getVariable(
-    "request.header.NHSD-One-Directional-Sync"
-);
-
-  // Build the response
   var connectionMetadata = {
-      "nrl.ods-code": odsCode,
-      "nrl.ods-code-extension": odsCodeExtension,
-      "nrl.pointer-types": pointerTypes,
-      "nrl.one-directional-sync": oneDirectionalSync
+    "nrl.ods-code": odsCode,
+    "nrl.ods-code-extension": odsCodeExtension,
+    "nrl.pointer-types": nrlPointerTypes,
+    "nrl.permissions": permissions,
   };
-  
+
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
     connectionMetadata;
 })();

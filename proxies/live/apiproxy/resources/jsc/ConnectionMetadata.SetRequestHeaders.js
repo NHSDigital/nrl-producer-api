@@ -49,16 +49,24 @@
         "request.header.NHSD-End-User-Organisation"
     );
 
-    var oneDirectionalSync = context.getVariable(
-        "request.header.NHSD-One-Directional-Sync"
-    );
+    var nrlPermissions = context.getVariable('app.nrl-permissions');
+
+    // Convert it into a complex object
+    var permissionLines = nrlPermissions.split(/\s+/);
+    var permissions = [];
+    for (var i=0;i<permissionLines.length;i++) {
+        var permissionLine = permissionLines[i];
+        if (permissionLine && permissionLine.trim().length !== 0) {
+            permissions.push(permissionLine);
+        }
+    }
 
     // Build the response
     var connectionMetadata = {
         "nrl.ods-code": odsCode,
         "nrl.ods-code-extension": odsCodeExtension,
         "nrl.pointer-types": pointerTypes,
-        "nrl.one-directional-sync": oneDirectionalSync
+        "nrl.permissions": permissions,
     };
     context.targetRequest.headers['NHSD-Connection-Metadata'] = connectionMetadata;
 })();
