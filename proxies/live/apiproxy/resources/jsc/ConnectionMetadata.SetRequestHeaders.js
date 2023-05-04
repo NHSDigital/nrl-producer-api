@@ -56,7 +56,6 @@
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": pointerTypes,
-    "nrl.permissions": permissions,
   };
 
   var nrlPermissions = context.getVariable("app.nrl-permissions");
