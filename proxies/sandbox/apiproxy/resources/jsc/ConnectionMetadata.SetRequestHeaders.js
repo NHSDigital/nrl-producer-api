@@ -33,6 +33,8 @@ const nrlPointers = {
 };
 //-------------------------------------------------------------------//
 
+const permissions = ["audit-dates-from-payload"]
+
 (function () {
   var odsCode = context.getVariable(
     "request.header.NHSD-End-User-Organisation-ODS"
@@ -44,7 +46,7 @@ const nrlPointers = {
 
   var nrlPointerTypes = nrlPointers[odsCode];
   if (!nrlPointerTypes) {
-     //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
+    //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
     return;
   }
 
@@ -56,7 +58,9 @@ const nrlPointers = {
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": nrlPointerTypes,
+    "nrl.permissions": permissions,
   };
+
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
     connectionMetadata;
 })();
