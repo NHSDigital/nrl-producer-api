@@ -26,7 +26,10 @@ const nrlPointers = {
 };
 //-------------------------------------------------------------------//
 
-const permissions = ["audit-dates-from-payload"];
+const permissions = [
+  "audit-dates-from-payload",
+  "supersede-ignore-delete-fail",
+];
 
 (function () {
   var odsCode = context.getVariable(
