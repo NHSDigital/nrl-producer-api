@@ -913,7 +913,7 @@ paths:
         Delete a single document pointer that your created.
   /DocumentReference/_count:
     get:
-      summary: Count DocumentReference resources
+      summary: Count document pointers
       operationId: countDocumentReference
       parameters:
         - $ref: "#/components/parameters/subject"
