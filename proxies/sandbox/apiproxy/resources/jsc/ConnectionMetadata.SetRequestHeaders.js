@@ -26,7 +26,7 @@ const nrlPointers = {
 };
 //-------------------------------------------------------------------//
 
-const permissions = ["audit-dates-from-payload"];
+const permissions = [];
 
 (function () {
   var odsCode = context.getVariable(
