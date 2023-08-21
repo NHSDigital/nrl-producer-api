@@ -40,7 +40,6 @@
     </Flow>
     <Flow name="CorsHeaders">
       <!-- This must be the last item in the flow -->
-      <Request/>
       <Response>
         <Step>
           <Name>AssignMessage.AddCors</Name>
