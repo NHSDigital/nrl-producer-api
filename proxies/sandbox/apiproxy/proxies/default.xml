@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="default">
   <Flows>
-      <Flow name="AddPayloadToPing">
-          <Description/>
-          <Request/>
-          <Response>
-              <Step>
-                  <Name>AssignMessage.AddPayloadToPing</Name>
-              </Step>
-          </Response>
-          <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
-      </Flow>
-      <Flow name="StatusEndpoint">
-          <Request>
-              <Step>
-                  <Condition>request.header.apikey = null or private.common.status-endpoint-api-key != request.header.apikey</Condition>
-                  <Name>RaiseFault.401Unauthorized</Name>
-              </Step>
-              <Step>
-                  <Name>ServiceCallout.CallHealthcheckEndpoint</Name>
-              </Step>
-          </Request>
-          <Response>
-              <Step>
-                  <Name>javascript.SetStatusResponse</Name>
-              </Step>
-          </Response>
-          <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
-      </Flow>
-      <Flow name="Raise400ForMissingODSHeader">
-          <Request>
-              <Step>
-                  <Name>RaiseFault.400BadRequest</Name>
-                  <Message>Missing Header: NHSD-End-User-Organisation-ODS</Message>
-              </Step>
-          </Request>
-          <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
-      </Flow>
-      <Flow name="CorsHeaders">
-          <!-- This must be the last item in the flow -->
-          <Response>
-              <Step>
-                  <Name>AssignMessage.AddCors</Name>
-              </Step>
-          </Response>
-      </Flow>
+    <Flow name="AddPayloadToPing">
+        <Description/>
+        <Request/>
+        <Response>
+            <Step>
+                <Name>AssignMessage.AddPayloadToPing</Name>
+            </Step>
+        </Response>
+        <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+    </Flow>
+    <Flow name="StatusEndpoint">
+        <Request>
+            <Step>
+                <Condition>request.header.apikey = null or private.common.status-endpoint-api-key != request.header.apikey</Condition>
+                <Name>RaiseFault.401Unauthorized</Name>
+            </Step>
+            <Step>
+                <Name>ServiceCallout.CallHealthcheckEndpoint</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>javascript.SetStatusResponse</Name>
+            </Step>
+        </Response>
+        <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+    </Flow>
+    <Flow name="Raise400ForMissingODSHeader">
+        <Request>
+            <Step>
+                <Name>RaiseFault.400BadRequest</Name>
+                <Message>Missing Header: NHSD-End-User-Organisation-ODS</Message>
+            </Step>
+        </Request>
+        <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
+    </Flow>
+    <Flow name="CorsHeaders">
+        <!-- This must be the last item in the flow -->
+        <Response>
+            <Step>
+                <Name>AssignMessage.AddCors</Name>
+            </Step>
+        </Response>
+    </Flow>
   </Flows>
   <PreFlow>
-      <Request>
-          <Step>
-              <Name>AssignMessage.SetApimGuids</Name>
-          </Step>
-      </Request>
+    <Request>
+      <Step>
+        <Name>AssignMessage.SetApimGuids</Name>
+      </Step>
+    </Request>
   </PreFlow>
   <PostClientFlow name="PostClientFlow">
-      <Response>
-          <Step>
-              <Name>FlowCallout.LogToSplunk</Name>
-          </Step>
-      </Response>
+    <Response>
+      <Step>
+        <Name>FlowCallout.LogToSplunk</Name>
+      </Step>
+    </Response>
   </PostClientFlow>
   <HTTPProxyConnection>
-      <BasePath>record-locator/producer-pr-117</BasePath>
-      <VirtualHost>secure</VirtualHost>
+    <BasePath>record-locator/producer-pr-117</BasePath>
+    <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
   <RouteRule name="NoRoutePing">
-      <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+    <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
   <RouteRule name="NoRouteStatus">
-      <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+    <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
   <RouteRule name="NoRoute">
-      <Condition>(request.verb = "OPTIONS")</Condition>
+    <Condition>(request.verb = "OPTIONS")</Condition>
   </RouteRule>
   <RouteRule name="sandbox">
-      <TargetEndpoint>sandbox</TargetEndpoint>
+    <TargetEndpoint>sandbox</TargetEndpoint>
   </RouteRule>
   <DefaultFaultRule>
-      <AlwaysEnforce>true</AlwaysEnforce>
-      <Step>
-          <Name>AssignMessage.AddCors</Name>
-      </Step>
-      <Step>
-          <Name>AssignMessage.Errors.CatchAllMessage</Name>
-          <Condition>(response.content NOT Like "*OperationOutcome*")</Condition>
-      </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+    <Step>
+      <Name>AssignMessage.AddCors</Name>
+    </Step>
+    <Step>
+      <Name>AssignMessage.Errors.CatchAllMessage</Name>
+      <Condition>(response.content NOT Like "*OperationOutcome*")</Condition>
+    </Step>
   </DefaultFaultRule>
 </ProxyEndpoint>
