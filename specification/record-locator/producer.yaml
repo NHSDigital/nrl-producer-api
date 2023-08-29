@@ -234,7 +234,7 @@ paths:
                           code: RESOURCE_CREATED
                           display: Resource created
                     diagnostics: Resource created
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
@@ -534,7 +534,7 @@ paths:
               $ref: "#/components/headers/CorrelationId"
             X-Request-Id:
               $ref: "#/components/headers/RequestId"
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
@@ -763,7 +763,7 @@ paths:
               $ref: "#/components/headers/CorrelationId"
             X-Request-Id:
               $ref: "#/components/headers/RequestId"
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
@@ -898,7 +898,7 @@ paths:
               $ref: "#/components/headers/CorrelationId"
             X-Request-Id:
               $ref: "#/components/headers/RequestId"
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
@@ -983,7 +983,7 @@ paths:
                           code: RESOURCE_UPDATED
                           display: Resource updated
                     diagnostics: Resource updated
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
@@ -1083,7 +1083,7 @@ paths:
                           code: RESOURCE_REMOVED
                           display: Resource removed
                     diagnostics: Resource removed
-        "4xx":
+        "4XX":
           description: |
             An error occurred as follows:
 
