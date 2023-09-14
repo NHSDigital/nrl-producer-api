@@ -40,7 +40,6 @@
     </Flow>
     <Flow name="CorsHeaders">
       <!-- This must be the last item in the flow -->
-      <Request/>
       <Response>
         <Step>
           <Name>AssignMessage.AddCors</Name>
@@ -73,8 +72,13 @@
     <TargetEndpoint>sandbox</TargetEndpoint>
   </RouteRule>
   <DefaultFaultRule>
+    <AlwaysEnforce>true</AlwaysEnforce>
+    <Step>
+      <Name>AssignMessage.AddCors</Name>
+    </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
+      <Condition>(response.content NOT Like "*OperationOutcome*")</Condition>
     </Step>
   </DefaultFaultRule>
 </ProxyEndpoint>
