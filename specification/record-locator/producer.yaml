@@ -1143,7 +1143,6 @@ components:
       content:
         application/fhir+json;version=1:
           schema:
-            $ref: "#/components/schemas/DocumentReference"
             example:
               resourceType: DocumentReference
               id: RJ11-120171475
