@@ -1222,6 +1222,7 @@ components:
                   - identifier:
                       system: https://fhir.nhs.uk/Id/accredited-system-id
                       value: TRAFFORD GENERAL HOSPITAL
+          $ref: "#/components/schemas/DocumentReference"
       required: true
   schemas:
     OperationOutcome:
