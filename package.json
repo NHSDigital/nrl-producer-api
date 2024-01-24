@@ -12,7 +12,6 @@
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/nrl-producer-api",
   "dependencies": {
-    "newman-reporter-htmlextra": "^1.22.11"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.5.1",
