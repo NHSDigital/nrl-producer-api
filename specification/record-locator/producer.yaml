@@ -341,7 +341,7 @@ paths:
         * `category` SHOULD indicate the broader class of the Document Type as agreed during [onboarding](#api-description__onboarding). e.g.
           ```
           "type": {
-            "coding\": [
+            "coding": [
               {
                 "system": "http://snomed.info/sct",
                 "code": "1102421000000108",
