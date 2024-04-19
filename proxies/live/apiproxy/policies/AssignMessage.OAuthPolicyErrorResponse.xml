@@ -11,13 +11,13 @@
             "details": {
               "coding": [
                 {
-                  "system": "https://fhir.nhs.uk/R4/CodeSystem/Spine-ErrorOrWarningCode",
-                  "version": "1",
+                  "system": "https://fhir.nhs.uk/spine-error-or-warning-code-1",
                   "code": "ACCESS_DENIED",
-                  "display": "{faultstring}"
+                  "display": "Access has been denied to process this request"
                 }
               ]
-            }
+            },
+            "disagnostics": "{faultstring}"
           }
         ]
       }

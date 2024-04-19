@@ -32,8 +32,7 @@
     <Flow name="Raise400ForMissingODSHeader">
       <Request>
         <Step>
-          <Name>RaiseFault.400BadRequest</Name>
-          <Message>Missing Header: NHSD-End-User-Organisation-ODS</Message>
+          <Name>RaiseFault.400MissingODSHeader</Name>
         </Step>
       </Request>
       <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
@@ -78,7 +77,7 @@
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
-      <Condition>(response.content NOT Like "*OperationOutcome*")</Condition>
+      <Condition>(response.content NOT Like "*OperationOutcome*") and (error.content NOT Like "*OperationOutcome*")</Condition>
     </Step>
   </DefaultFaultRule>
 </ProxyEndpoint>
