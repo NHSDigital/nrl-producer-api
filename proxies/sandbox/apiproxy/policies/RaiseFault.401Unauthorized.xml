@@ -5,7 +5,7 @@
     <FaultResponse>
         <Set>
             <Headers/>
-            <Payload contentType="text/plain">
+            <Payload contentType="application/json">
             {
                 "resourceType": "OperationOutcome",
                 "issue": [ {

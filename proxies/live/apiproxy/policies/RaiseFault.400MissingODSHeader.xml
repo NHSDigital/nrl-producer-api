@@ -1,7 +1,7 @@
 <RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400MissingODSHeader">
     <FaultResponse>
         <Set>
-            <Payload contentType="text/plain">
+            <Payload contentType="application/json">
             {
                 "resourceType": "OperationOutcome",
                 "issue": [ {
