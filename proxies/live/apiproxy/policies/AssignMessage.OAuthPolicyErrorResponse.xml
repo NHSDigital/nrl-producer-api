@@ -14,7 +14,7 @@
                   "display": "Access has been denied to process this request"
               } ]
             },
-            "disagnostics": "{faultstring}"
+            "diagnostics": "{faultstring}"
           } ]
       }
     </Payload>
