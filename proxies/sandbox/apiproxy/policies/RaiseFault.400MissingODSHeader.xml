@@ -1,4 +1,4 @@
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403NoPointers">
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400MissingODSHeader">
     <FaultResponse>
         <Set>
             <Payload contentType="application/json">
@@ -6,22 +6,21 @@
                 "resourceType": "OperationOutcome",
                 "issue": [ {
                     "severity": "error",
-                    "code": "forbidden",
+                    "code": "required",
                     "details": {
                         "coding": [ {
                             "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
-                            "code": "ACCESS_DENIED",
-                            "display": "Access has been denied to process this request"
+                            "code": "PRECONDITION_FAILED",
+                            "display": "Preconition failed"
                         } ]
                     },
-                    "diagnostics": "Provided ODS code has no pointers within requesting app"
+                    "diagnostics": "The NHSD-End-User-Organisation-ODS header is missing or invalid"
                 } ]
             }
             </Payload>
-            <StatusCode>403</StatusCode>
-            <ReasonPhrase>Forbidden</ReasonPhrase>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
         </Set>
     </FaultResponse>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-    <DisplayName>RaiseFault.403NoPointers</DisplayName>
 </RaiseFault>

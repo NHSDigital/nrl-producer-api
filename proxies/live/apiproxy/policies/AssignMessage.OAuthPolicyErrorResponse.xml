@@ -4,22 +4,18 @@
     <Payload contentType="application/json">
       {
         "resourceType": "OperationOutcome",
-        "issue": [
-          {
+        "issue": [ {
             "severity": "error",
             "code": "forbidden",
             "details": {
-              "coding": [
-                {
-                  "system": "https://fhir.nhs.uk/R4/CodeSystem/Spine-ErrorOrWarningCode",
-                  "version": "1",
+              "coding": [ {
+                  "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
                   "code": "ACCESS_DENIED",
-                  "display": "{faultstring}"
-                }
-              ]
-            }
-          }
-        ]
+                  "display": "Access has been denied to process this request"
+              } ]
+            },
+            "diagnostics": "{faultstring}"
+          } ]
       }
     </Payload>
   </Set>

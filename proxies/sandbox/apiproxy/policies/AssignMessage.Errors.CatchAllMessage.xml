@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.Errors.CatchAllMessage">
   <Set>
-    <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">
+    <Payload contentType="application/json">
     {
         "resourceType": "OperationOutcome",
-        "issue": [
-            {
+        "issue": [ {
             "severity": "error",
-            "code": "%error.status.code#",
+            "code": "exception",
             "details": {
-                "coding": [
-                {
-                    "code": "%error.status.code#",
-                    "display": "%error.reason.phrase#"
-                }
-                ]
+                "coding": [ {
+                    "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
+                    "code": "FAILURE_TO_PROCESS_MESSAGE	"
+                    "display": "Failure to process message"
+                } ]
             },
-            "diagnostics": "%error.content#"
-            }
-        ]
+            "diagnostics": "{error.content}"
+        } ]
     }
     </Payload>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
