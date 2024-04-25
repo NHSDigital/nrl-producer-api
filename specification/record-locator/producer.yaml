@@ -1334,8 +1334,8 @@ components:
                   value: "6700028191"
               related:
                 - identifier:
-                  system: https://fhir.nhs.uk/Id/nhsSpineASID
-                  value: "012345678910"
+                    system: https://fhir.nhs.uk/Id/nhsSpineASID
+                    value: "012345678910"
       required: true
   schemas:
     OperationOutcome:
