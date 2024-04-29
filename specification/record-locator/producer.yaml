@@ -504,6 +504,9 @@ paths:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/ods-organization-code
                               value: ROYAL COLLEGE OF PHYSICIANS OF LONDON
+                          - identifier:
+                              system: https://fhir.nhs.uk/Id/nhsSpineASID
+                              value: "012345678910"
                   - resource:
                       resourceType: DocumentReference
                       id: Y05868-1234567891
@@ -586,6 +589,9 @@ paths:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/ods-organization-code
                               value: TRAFFORD GENERAL HOSPITAL
+                          - identifier:
+                              system: https://fhir.nhs.uk/Id/nhsSpineASID
+                              value: "012345678910"
           headers:
             X-Correlation-Id:
               $ref: "#/components/headers/CorrelationId"
@@ -831,6 +837,9 @@ paths:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/ods-organization-code
                               value: ROYAL COLLEGE OF PHYSICIANS OF LONDON
+                          - identifier:
+                              system: https://fhir.nhs.uk/Id/nhsSpineASID
+                              value: "012345678910"
                   - resource:
                       resourceType: DocumentReference
                       id: Y05868-1234567891
@@ -913,6 +922,9 @@ paths:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/ods-organization-code
                               value: TRAFFORD GENERAL HOSPITAL
+                          - identifier:
+                              system: https://fhir.nhs.uk/Id/nhsSpineASID
+                              value: "012345678910"
           headers:
             X-Correlation-Id:
               $ref: "#/components/headers/CorrelationId"
@@ -1048,6 +1060,9 @@ paths:
                     - identifier:
                         system: https://fhir.nhs.uk/Id/ods-organization-code
                         value: EMERGENCY DEPT PRIMARY CARE STREAMING
+                    - identifier:
+                        system: https://fhir.nhs.uk/Id/nhsSpineASID
+                        value: "012345678910"
           headers:
             X-Correlation-Id:
               $ref: "#/components/headers/CorrelationId"
@@ -1334,8 +1349,8 @@ components:
                   value: "6700028191"
               related:
                 - identifier:
-                  system: https://fhir.nhs.uk/Id/nhsSpineASID
-                  value: "012345678910"
+                    system: https://fhir.nhs.uk/Id/nhsSpineASID
+                    value: "012345678910"
       required: true
   schemas:
     OperationOutcome:
