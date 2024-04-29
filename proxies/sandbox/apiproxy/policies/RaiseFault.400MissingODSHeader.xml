@@ -11,7 +11,7 @@
                         "coding": [ {
                             "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
                             "code": "PRECONDITION_FAILED",
-                            "display": "Preconition failed"
+                            "display": "Precondition failed"
                         } ]
                     },
                     "diagnostics": "The NHSD-End-User-Organisation-ODS header is missing or invalid"
