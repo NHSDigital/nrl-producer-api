@@ -42,18 +42,36 @@ extends:
       - environment: internal-qa
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+        #depends_on:
+        #  - internal_dev
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+        #depends_on:
+        #  - internal_dev_sandbox
+
+      - environment: ref
+        post_deploy:
+          - template: ./templates/run-smoke-tests.yml
+        #depends_on:
+        # - internal_qa
+
       - environment: sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+        #depends_on:
+        #  - internal_qa_sandbox
       - environment: int
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+        #depends_on:
+        #  - internal_qa
+
       - environment: prod
         depends_on:
           - internal_qa
           - internal_qa_sandbox
+        #  - ref
+        #  - int
