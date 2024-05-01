@@ -44,9 +44,13 @@ APIGEE_ENVIRONMENTS:
     approval_type: auto
     ratelimiting:
       quota:
-        enabled: false
+        enabled: true
+        limit: 30000 # 500/s
+        interval: 1
+        timeunit: minute
       spikeArrest:
-        enabled: false
+        enabled: true
+        ratelimit: '30000pm' # 500/s
   - name: sandbox
     display_name: Sandbox
     portal_visibility: false
