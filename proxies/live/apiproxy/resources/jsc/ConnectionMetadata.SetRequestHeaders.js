@@ -48,7 +48,7 @@
 
   var pointerTypes = [];
   var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
-  // If it's not a 1D sync request, check auth lookup first
+  // If it's not a 1D sync request, check auth lookup first then ods code pointer types otherwise skip it
   if (!permissions.includes("allow-all-pointer-types")){
     if(enableAuthorizationLookup == "true") {
       enableAuthorizationLookup = true
