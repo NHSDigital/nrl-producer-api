@@ -70,19 +70,20 @@
       //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
       return;
     }
-  }
+    if (nrlPointerTypes){
+      // Convert it into a complex object
+      var lines = nrlPointerTypes.split(/\s+/);
 
-  if (nrlPointerTypes){
-    // Convert it into a complex object
-    var lines = nrlPointerTypes.split(/\s+/);
-
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
-      if (line && line.trim().length !== 0) {
-        pointerTypes.push(line);
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        if (line && line.trim().length !== 0) {
+          pointerTypes.push(line);
+        }
       }
     }
   }
+
+
 
 
   var odsCodeExtension = context.getVariable(
