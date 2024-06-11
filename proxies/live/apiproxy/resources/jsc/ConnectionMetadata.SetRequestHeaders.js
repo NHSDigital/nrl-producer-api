@@ -31,7 +31,7 @@
   }
 
   var nrlPermissions = context.getVariable("app.nrl-permissions");
-
+  var hasAllPointersPermission = false;
   if (nrlPermissions != null) {
     // Convert it into a complex object
     var permissionLines = nrlPermissions.split(/\s+/);
@@ -40,6 +40,9 @@
       var permissionLine = permissionLines[i];
       if (permissionLine && permissionLine.trim().length !== 0) {
         permissions.push(permissionLine);
+        if (permissionLine.trim() === "allow-all-pointer-types") {
+          hasAllPointersPermission = true;
+        }
       }
     }
 
@@ -49,7 +52,7 @@
   var pointerTypes = [];
   var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
   // If it's not a 1D sync request, check auth lookup first then ods code pointer types otherwise skip it
-  if (!permissions.includes("allow-all-pointer-types")){
+  if (hasAllPointersPermission === false){
     if(enableAuthorizationLookup == "true") {
       enableAuthorizationLookup = true
     } else if (enableAuthorizationLookup === null) {
