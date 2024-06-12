@@ -31,7 +31,8 @@
   }
 
   var nrlPermissions = context.getVariable("app.nrl-permissions");
-
+  var hasSkipAuthLookup = false;
+  
   if (nrlPermissions != null) {
     // Convert it into a complex object
     var permissionLines = nrlPermissions.split(/\s+/);
@@ -39,6 +40,9 @@
     for (var i = 0; i < permissionLines.length; i++) {
       var permissionLine = permissionLines[i];
       if (permissionLine && permissionLine.trim().length !== 0) {
+        if (permissionLine.trim() == "allow-all-pointer-types"){
+            hasSkipAuthLookup = true;
+        }
         permissions.push(permissionLine);
       }
     }
@@ -52,11 +56,11 @@
   var nrlPointerTypes = context.getVariable("app.nrl-ods-" + odsCode);
   var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
   // If it's not a 1D sync request, check auth lookup first then ods code pointer types otherwise skip it
-  if (!permissions.includes("allow-all-pointer-types")){
+  if (!hasSkipAuthLookup){
     if(enableAuthorizationLookup == "true") {
-      enableAuthorizationLookup = true
+      enableAuthorizationLookup = true;
     } else if (enableAuthorizationLookup === null) {
-      enableAuthorizationLookup = false
+      enableAuthorizationLookup = false;
     } else {
       //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
       return;
@@ -72,8 +76,8 @@
     // Convert it into a complex object
     var lines = nrlPointerTypes.split(/\s+/);
 
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
+    for (var x = 0; x < lines.length; x++) {
+      var line = lines[x];
       if (line && line.trim().length !== 0) {
         pointerTypes.push(line);
       }
