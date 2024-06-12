@@ -31,6 +31,7 @@
   }
 
   var nrlPermissions = context.getVariable("app.nrl-permissions");
+  var hasAllPointerPermissions = false;
 
   if (nrlPermissions != null) {
     // Convert it into a complex object
@@ -42,30 +43,30 @@
         permissions.push(permissionLine);
       }
     }
+    if (nrlPermissions.includes("allow-all-pointer-types") === true) {
+      hasAllPointerPermissions = true;
+    }
+    nrlPermissions = permissions;
+  }
 
-    connectionMetadata["nrl.permissions"] = permissions;
+  var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
+  if(enableAuthorizationLookup == "true") {
+    enableAuthorizationLookup = true
+  } else if (enableAuthorizationLookup === null  || enableAuthorizationLookup == "false") {
+    enableAuthorizationLookup = false
+  } else {
+    //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
+    return;
   }
 
   var pointerTypes = [];
-
   // Read the associated `nrl-ods-<ods_code>` custom attribute from the APIGEE app
   var nrlPointerTypes = context.getVariable("app.nrl-ods-" + odsCode);
-  var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
-  // If it's not a 1D sync request, check auth lookup first then ods code pointer types otherwise skip it
-  if (!permissions.includes("allow-all-pointer-types")){
-    if(enableAuthorizationLookup == "true") {
-      enableAuthorizationLookup = true
-    } else if (enableAuthorizationLookup === null) {
-      enableAuthorizationLookup = false
-    } else {
-      //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
-      return;
-    }
 
-    if ((enableAuthorizationLookup === true && nrlPointerTypes) || (enableAuthorizationLookup === false && !nrlPointerTypes)) {
-      //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
-      return;
-    }
+  if (!hasAllPointerPermissions && ((enableAuthorizationLookup && nrlPointerTypes)
+    || (!enableAuthorizationLookup && !nrlPointerTypes))) {
+   //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
+   return;
   }
 
   if (nrlPointerTypes){
@@ -80,7 +81,6 @@
     }
   }
 
-
   var odsCodeExtension = context.getVariable(
     "request.header.NHSD-End-User-Organisation"
   );
@@ -90,7 +90,8 @@
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": pointerTypes,
-    "nrl.enable-authorization-lookup": enableAuthorizationLookup
+    "nrl.enable-authorization-lookup": enableAuthorizationLookup,
+    "nrl.permissions": nrlPermissions
   };
 
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
