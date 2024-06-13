@@ -91,8 +91,10 @@
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": pointerTypes,
     "nrl.enable-authorization-lookup": enableAuthorizationLookup,
-    "nrl.permissions": nrlPermissions
   };
+  if (permissions.length > 0) {
+    connectionMetadata["nrl.permissions"] = permissions;
+  }
 
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
     connectionMetadata;
