@@ -40,9 +40,6 @@
     for (var i = 0; i < permissionLines.length; i++) {
       var permissionLine = permissionLines[i];
       if (permissionLine && permissionLine.trim().length !== 0) {
-        if (permissionLine.trim() == "allow-all-pointer-types"){
-            hasSkipAuthLookup = true;
-        }
         permissions.push(permissionLine);
       }
     }
@@ -76,8 +73,8 @@
     // Convert it into a complex object
     var lines = nrlPointerTypes.split(/\s+/);
 
-    for (var x = 0; x < lines.length; x++) {
-      var line = lines[x];
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
       if (line && line.trim().length !== 0) {
         pointerTypes.push(line);
       }
