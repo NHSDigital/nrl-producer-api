@@ -92,8 +92,8 @@
     "nrl.pointer-types": pointerTypes,
     "nrl.enable-authorization-lookup": enableAuthorizationLookup
   };
-  if (nrlPermissions.length > 0) {
-    connectionMetadata["nrl.permissions"] = permissions;
+  if (nrlPermissions != null) {
+    connectionMetadata["nrl.permissions"] = nrlPermissions;
   }
 
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
