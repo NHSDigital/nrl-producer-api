@@ -30,39 +30,55 @@
     return;
   }
 
-  var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
+  var nrlPermissions = context.getVariable("app.nrl-permissions");
+  var hasAllPointerPermissions = false;
 
+  if (nrlPermissions != null) {
+    // Convert it into a complex object
+    var permissionLines = nrlPermissions.split(/\s+/);
+    var permissions = [];
+    for (var i = 0; i < permissionLines.length; i++) {
+      var permissionLine = permissionLines[i];
+      if (permissionLine && permissionLine.trim().length !== 0) {
+        permissions.push(permissionLine);
+      }
+    }
+    if (nrlPermissions.includes("allow-all-pointer-types") === true) {
+      hasAllPointerPermissions = true;
+    }
+    nrlPermissions = permissions;
+  }
+
+  var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
   if(enableAuthorizationLookup == "true") {
     enableAuthorizationLookup = true
-  } else if (enableAuthorizationLookup === null) {
+  } else if (enableAuthorizationLookup === null  || enableAuthorizationLookup == "false") {
     enableAuthorizationLookup = false
   } else {
     //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
     return;
   }
 
-  
   var pointerTypes = [];
   // Read the associated `nrl-ods-<ods_code>` custom attribute from the APIGEE app
   var nrlPointerTypes = context.getVariable("app.nrl-ods-" + odsCode);
 
-  if ((enableAuthorizationLookup === true && nrlPointerTypes) || (enableAuthorizationLookup === false && !nrlPointerTypes)) {
-    //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
-    return;
+  if (!hasAllPointerPermissions && (!enableAuthorizationLookup && !nrlPointerTypes)) {
+   //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
+   return;
   }
 
   if (nrlPointerTypes){
     // Convert it into a complex object
     var lines = nrlPointerTypes.split(/\s+/);
-  
+
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
       if (line && line.trim().length !== 0) {
         pointerTypes.push(line);
       }
     }
-  } 
-
+  }
 
   var odsCodeExtension = context.getVariable(
     "request.header.NHSD-End-User-Organisation"
@@ -75,21 +91,8 @@
     "nrl.pointer-types": pointerTypes,
     "nrl.enable-authorization-lookup": enableAuthorizationLookup
   };
-
-  var nrlPermissions = context.getVariable("app.nrl-permissions");
-
   if (nrlPermissions != null) {
-    // Convert it into a complex object
-    var permissionLines = nrlPermissions.split(/\s+/);
-    var permissions = [];
-    for (var i = 0; i < permissionLines.length; i++) {
-      var permissionLine = permissionLines[i];
-      if (permissionLine && permissionLine.trim().length !== 0) {
-        permissions.push(permissionLine);
-      }
-    }
-
-    connectionMetadata["nrl.permissions"] = permissions;
+    connectionMetadata["nrl.permissions"] = nrlPermissions;
   }
 
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
