@@ -90,9 +90,9 @@
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": pointerTypes,
-    "nrl.enable-authorization-lookup": enableAuthorizationLookup,
+    "nrl.enable-authorization-lookup": enableAuthorizationLookup
   };
-  if (permissions.length > 0) {
+  if (nrlPermissions.length > 0) {
     connectionMetadata["nrl.permissions"] = permissions;
   }
 
