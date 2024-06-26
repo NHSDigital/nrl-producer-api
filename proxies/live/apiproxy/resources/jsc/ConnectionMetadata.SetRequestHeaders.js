@@ -50,6 +50,8 @@
   }
 
   var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
+  var nrlAppID = context.getVariable("app.nrl-app-id");
+
   if(enableAuthorizationLookup == "true") {
     enableAuthorizationLookup = true
   } else if (enableAuthorizationLookup === null  || enableAuthorizationLookup == "false") {
@@ -89,7 +91,8 @@
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": pointerTypes,
-    "nrl.enable-authorization-lookup": enableAuthorizationLookup
+    "nrl.enable-authorization-lookup": enableAuthorizationLookup,
+    "nrl.app-id": nrlAppID
   };
   if (nrlPermissions != null) {
     connectionMetadata["nrl.permissions"] = nrlPermissions;
