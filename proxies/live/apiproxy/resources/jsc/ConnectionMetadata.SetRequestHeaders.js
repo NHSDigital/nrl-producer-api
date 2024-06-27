@@ -59,7 +59,6 @@
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
-    "nrl.enable-authorization-lookup": enableAuthorizationLookup,
     "nrl.app-id": nrlAppID
   };
   if (nrlPermissions != null) {
