@@ -49,38 +49,7 @@
     nrlPermissions = permissions;
   }
 
-  var enableAuthorizationLookup = context.getVariable("app.enable-authorization-lookup");
   var nrlAppID = context.getVariable("app.nrl-app-id");
-
-  if(enableAuthorizationLookup == "true") {
-    enableAuthorizationLookup = true
-  } else if (enableAuthorizationLookup === null  || enableAuthorizationLookup == "false") {
-    enableAuthorizationLookup = false
-  } else {
-    //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
-    return;
-  }
-
-  var pointerTypes = [];
-  // Read the associated `nrl-ods-<ods_code>` custom attribute from the APIGEE app
-  var nrlPointerTypes = context.getVariable("app.nrl-ods-" + odsCode);
-
-  if (!hasAllPointerPermissions && (!enableAuthorizationLookup && !nrlPointerTypes)) {
-   //This will trigger RaiseFault.403NoPointers.xml - see targets/target.xml
-   return;
-  }
-
-  if (nrlPointerTypes){
-    // Convert it into a complex object
-    var lines = nrlPointerTypes.split(/\s+/);
-
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
-      if (line && line.trim().length !== 0) {
-        pointerTypes.push(line);
-      }
-    }
-  }
 
   var odsCodeExtension = context.getVariable(
     "request.header.NHSD-End-User-Organisation"
@@ -90,7 +59,6 @@
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
     "nrl.ods-code-extension": odsCodeExtension,
-    "nrl.pointer-types": pointerTypes,
     "nrl.enable-authorization-lookup": enableAuthorizationLookup,
     "nrl.app-id": nrlAppID
   };
