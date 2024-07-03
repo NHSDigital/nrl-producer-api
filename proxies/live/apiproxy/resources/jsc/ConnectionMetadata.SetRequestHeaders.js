@@ -50,7 +50,10 @@
   }
 
   var nrlAppID = context.getVariable("app.nrl-app-id");
-
+  if (!nrlAppID || nrlAppID.trim().length === 0) {
+    //This will trigger RaiseFault.403MissingNRLAppID.xml - see proxies/default.xml in the DefaultFaultRules
+    return;
+  }
   var odsCodeExtension = context.getVariable(
     "request.header.NHSD-End-User-Organisation"
   );

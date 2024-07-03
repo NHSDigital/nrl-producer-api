@@ -1,0 +1,26 @@
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403MissingNRLAppID">
+    <FaultResponse>
+        <Set>
+            <Payload contentType="application/json">
+            {
+                "resourceType": "OperationOutcome",
+                "issue": [ {
+                    "severity": "error",
+                    "code": "required",
+                    "details": {
+                        "coding": [ {
+                            "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
+                            "code": "PRECONDITION_FAILED",
+                            "display": "Precondition failed"
+                        } ]
+                    },
+                    "diagnostics": "The "nrl-app-id" custom attribute for your application is missing or invalid"
+                } ]
+            }
+            </Payload>
+            <StatusCode>403</StatusCode>
+            <ReasonPhrase>Forbidden</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
