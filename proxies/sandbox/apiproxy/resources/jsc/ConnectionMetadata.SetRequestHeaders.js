@@ -52,6 +52,7 @@ const permissions = [];
     "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": nrlPointerTypes,
     "nrl.permissions": permissions,
+    "nrl.app-id": "NRL-SANDBOX-APP",
   };
 
   context.targetRequest.headers["NHSD-Connection-Metadata"] =
