@@ -36,8 +36,8 @@ info:
     * [End of Life Care Coordination Summary](http://snomed.info/sct/861421000000109)
     * [Emergency Health Care Plans](http://snomed.info/sct/887701000000100)
     * [Lloyd George record folder](http://snomed.info/sct|16521000000101)
-    * [Advanced Care Plan](http://snomed.info/sct/736366004)
-    * [Treatment Escalation Plan](http://snomed.info/sct|735324008)
+    * [Advanced care plan](http://snomed.info/sct/736366004)
+    * [Treatment escalation plan](http://snomed.info/sct|735324008)
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -2140,6 +2140,12 @@ components:
         SNOMED_CODES_LLOYD_GEORGE_RECORD_FOLDER:
           summary: Lloyd George record folder
           value: http://snomed.info/sct|16521000000101
+        SNOMED_CODES_ADVANCED_CARE_PLAN:
+          summary: Advanced care plan
+          value: http://snomed.info/sct/736366004
+        SNOMED_CODES_TREATMENT_ESCALATION_PLAN:
+          summary: Treatment escalation plan
+          value: http://snomed.info/sct|735324008
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
