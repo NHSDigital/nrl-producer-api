@@ -2117,19 +2117,19 @@ components:
           summary: None
           value: ""
         SNOMED_CODES_MENTAL_HEALTH_CRISIS_PLAN:
-          summary: Mental Health Crisis Plan
+          summary: Mental health crisis plan
           value: http://snomed.info/sct|736253002
         SNOMED_CODES_EMERGENCY_HEALTH_CARE_PLAN:
-          summary: Emergency Healthcare Plan
+          summary: Emergency healthcare plan
           value: http://snomed.info/sct|887701000000100
         SNOMED_CODES_END_OF_LIFE_CARE_COORDINATION_SUMMARY:
-          summary: End of Life Care Coordination Summary
+          summary: End of life care coordination summary
           value: http://snomed.info/sct|861421000000109
         SNOMED_CODES_RESPECT_FORM:
           summary: ReSPECT form
           value: http://snomed.info/sct|1382601000000107
         SNOMED_CODES_NEWS2_CHART:
-          summary: Royal College of Physicians NEWS2
+          summary: Royal College of Physicians NEWS2 chart
           value: http://snomed.info/sct|1363501000000100
         SNOMED_CODES_CONTINGENCY_PLAN:
           summary: Contingency plan
@@ -2142,7 +2142,7 @@ components:
           value: http://snomed.info/sct|16521000000101
         SNOMED_CODES_ADVANCED_CARE_PLAN:
           summary: Advanced care plan
-          value: http://snomed.info/sct/736366004
+          value: http://snomed.info/sct|736366004
         SNOMED_CODES_TREATMENT_ESCALATION_PLAN:
           summary: Treatment escalation plan
           value: http://snomed.info/sct|735324008
