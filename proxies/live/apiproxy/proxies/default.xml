@@ -28,6 +28,14 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
+    <Flow name="Raise400ForMissingRequestIdHeader">
+      <Request>
+        <Step>
+          <Name>RaiseFault.400MissingRequestIdHeader</Name>
+        </Step>
+      </Request>
+      <Condition>request.verb != "OPTIONS" and (request.header.X-Request-Id = null or request.header.X-Request-Id = "")</Condition>
+    </Flow>
     <Flow name="Raise400ForMissingODSHeader">
       <Request>
         <Step>
