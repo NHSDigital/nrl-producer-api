@@ -1,0 +1,26 @@
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400MissingRequestIdHeader">
+    <FaultResponse>
+        <Set>
+            <Payload contentType="application/json">
+            {
+                "resourceType": "OperationOutcome",
+                "issue": [ {
+                    "severity": "error",
+                    "code": "invalid",
+                    "details": {
+                        "coding": [ {
+                            "system": "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode",
+                            "code": "MISSING_OR_INVALID_HEADER",
+                            "display": "There is a required header missing or invalid"
+                        } ]
+                    },
+                    "diagnostics": "The X-Request-Id header is missing or invalid"
+                } ]
+            }
+            </Payload>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
