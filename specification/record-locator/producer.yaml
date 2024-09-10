@@ -96,7 +96,7 @@ info:
 
     ## Service level
 
-    This API is a bronze service, meaning it is operational and supported only during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
+    This API is a gold service, meaning it is operational and supported 24 hours a day, 365 days a year.
 
     For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
