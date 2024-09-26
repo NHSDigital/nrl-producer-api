@@ -14,7 +14,7 @@
                             "display": "Precondition failed"
                         } ]
                     },
-                    "diagnostics": "The "nrl-app-id" custom attribute for your application is missing or invalid"
+                    "diagnostics": "The "nrl-app-id" custom attribute for your application is missing or invalid. Please contact onboarding team to resolve the issue."
                 } ]
             }
             </Payload>
