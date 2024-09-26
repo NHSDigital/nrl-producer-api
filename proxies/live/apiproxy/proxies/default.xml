@@ -44,14 +44,6 @@
       </Request>
       <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
     </Flow>
-    <Flow name="Raise403ForMissingNRLAppID">
-      <Request>
-        <Step>
-          <Name>RaiseFault.403MissingNRLAppID</Name>
-        </Step>
-      </Request>
-      <Condition>app.nrl-app-id = null or app.nrl-app-id = ""</Condition>
-    </Flow>
     <Flow name="CorsHeaders">
       <!-- This must be the last item in the flow -->
       <Response>
