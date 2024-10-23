@@ -1465,7 +1465,7 @@ components:
             description: Other identifiers associated with the document, including version independent identifiers.
         status:
           type: string
-          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          pattern: "^current$"
           description: The status of this document reference.
         docStatus:
           type: string
