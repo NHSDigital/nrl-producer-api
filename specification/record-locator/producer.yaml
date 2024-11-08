@@ -361,7 +361,7 @@ paths:
             }
           ]
           ```
-        * `author` SHOULD have an entry with an `Organization` reference using a valid ODS code.
+        * `author` MUST have an entry with an `Organization` reference using a valid ODS code.
           ```
           "author": [
             {
@@ -466,7 +466,7 @@ paths:
                       date: "2022-12-22T11:45:41+11:00"
                       author:
                         - identifier:
-                            value: Practitioner/A782161SZ
+                            value: Organisation/Y05868
                       authenticator:
                         identifier:
                           value: Organization/Y05868
@@ -544,7 +544,7 @@ paths:
                       date: "2022-12-21T10:45:41+11:00"
                       author:
                         - identifier:
-                            value: Practitioner/A985657ZA
+                            value: Organization/Y05868
                       authenticator:
                         identifier:
                           value: Organization/Y05868
@@ -799,7 +799,7 @@ paths:
                       date: "2022-12-22T11:45:41+11:00"
                       author:
                         - identifier:
-                            value: Practitioner/A782161SZ
+                            value: Organization/Y05868
                       authenticator:
                         identifier:
                           value: Organization/Y05868
@@ -877,7 +877,7 @@ paths:
                       date: "2022-12-21T10:45:41+11:00"
                       author:
                         - identifier:
-                            value: Practitioner/A985657ZA
+                            value: Organization/Y05868
                       authenticator:
                         identifier:
                           value: Organization/Y05868
@@ -1022,7 +1022,7 @@ paths:
                 date: "2022-12-22T11:45:41+11:00"
                 author:
                   - identifier:
-                      value: Practitioner/A985657ZA
+                      value: Organization/Y05868
                 authenticator:
                   identifier:
                     value: Organization/Y05868
@@ -1465,7 +1465,7 @@ components:
             description: Other identifiers associated with the document, including version independent identifiers.
         status:
           type: string
-          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          pattern: "^current$"
           description: The status of this document reference.
         docStatus:
           type: string
@@ -1490,7 +1490,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Reference"
-            description: Identifies who is responsible for adding the information to the document.
+            description: Identifies the organization or group who is responsible for adding the information to the document.
         authenticator:
           $ref: "#/components/schemas/Reference"
           description: Which person or organization authenticates that this document is valid.
