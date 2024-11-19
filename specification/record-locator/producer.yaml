@@ -641,7 +641,7 @@ paths:
       description: |
         Search through document pointers.
 
-        Results are restricted to pointers you created, but can be further filtered by `subject` and `type`.
+        Results are restricted to pointers you created, but can be further filtered by `subject`, `category`, and `type`.
 
         Results are limited to 20 records per request, and further records are available by submitting subsequent
         requests with the `next-page-token` found in the `meta` portion of the response.
@@ -976,7 +976,7 @@ paths:
       description: |
         Search through document pointers.
 
-        Results are restricted to pointers you created, but can be further filtered by `subject` and `type`.
+        Results are restricted to pointers you created, but can be further filtered by `subject`, `category`, and `type`.
 
         Results are limited to 20 records per request, and further records are available by submitting subsequent
         requests with the `next-page-token` found in the `meta` portion of the response.
@@ -2073,7 +2073,7 @@ components:
       example: "http://snomed.info/sct|736253002"
     RequestQueryCategory:
         type: string
-        example: "http://snomed.info/sct|103693007"
+        example: "http://snomed.info/sct|734163000"
     NextPageToken:
       type: string
     RequestHeaderOdsCode:
