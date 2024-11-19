@@ -2073,7 +2073,7 @@ components:
       example: "http://snomed.info/sct|736253002"
     RequestQueryCategory:
         type: string
-        example: "http://snomed.info/sct|103693007"
+        example: "http://snomed.info/sct|734163000"
     NextPageToken:
       type: string
     RequestHeaderOdsCode:
