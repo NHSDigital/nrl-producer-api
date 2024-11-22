@@ -379,8 +379,8 @@ paths:
               "coding": [
                 {
                   "system": "http://snomed.info/sct",
-                  "code": "390826005",
-                  "display": "Mental health caregiver support"
+                  "code": "788002001",
+                  "display": "Adult mental health service"
                 }
               ]
             },
@@ -517,8 +517,8 @@ paths:
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "390826005"
-                              display: Mental health caregiver support
+                              code: "788002001"
+                              display: Adult mental health service
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -599,8 +599,8 @@ paths:
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "390826005"
-                              display: Mental health caregiver support
+                              code: "788002001"
+                              display: Adult mental health service
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -847,8 +847,8 @@ paths:
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "390826005"
-                              display: Mental health caregiver support
+                              code: "788002001"
+                              display: Adult mental health service
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -929,8 +929,8 @@ paths:
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "390826005"
-                              display: Mental health caregiver support
+                              code: "788002001"
+                              display: Adult mental health service
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -1067,8 +1067,8 @@ paths:
                   practiceSetting:
                     coding:
                       - system: http://snomed.info/sct
-                        code: "390826005"
-                        display: Mental health caregiver support
+                        code: "788002001"
+                        display: Adult mental health service
                   related:
                     - identifier:
                         system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -1364,8 +1364,8 @@ components:
               practiceSetting:
                 coding:
                   - system: http://snomed.info/sct
-                    code: "390826005"
-                    display: Mental health caregiver support
+                    code: "788002001"
+                    display: Adult mental health service
               related:
                 - identifier:
                     system: https://fhir.nhs.uk/Id/nhsSpineASID
