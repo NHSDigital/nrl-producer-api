@@ -458,7 +458,7 @@ paths:
                         - system: urn:ietf:rfc:3986
                           value: urn:oid:1.3.6.1.4.1.21367.2005.3.7.1134
                       status: current
-                      docStatus: "preliminary "
+                      docStatus: preliminary
                       type:
                         coding:
                           - system: http://snomed.info/sct
@@ -788,7 +788,7 @@ paths:
                         - system: urn:ietf:rfc:3986
                           value: urn:oid:1.3.6.1.4.1.21367.2005.3.7.1134
                       status: current
-                      docStatus: "preliminary "
+                      docStatus: preliminary
                       type:
                         coding:
                           - system: http://snomed.info/sct
@@ -1482,7 +1482,7 @@ components:
           description: The status of this document reference.
         docStatus:
           type: string
-          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          pattern: "^(entered-in-error|amended|preliminary|final)$"
           description: The status of the underlying document.
         type:
           $ref: "#/components/schemas/CodeableConcept"
