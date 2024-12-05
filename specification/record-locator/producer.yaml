@@ -351,7 +351,7 @@ paths:
           ]
           ```
         * `content` MUST have at least one entry.
-        * `content[].format` SHOULD indicate whether the data is structured or not, e.g.
+        * `content[].format` MUST indicate whether the data is structured or not, e.g.
           ```
           "format": 
             {
