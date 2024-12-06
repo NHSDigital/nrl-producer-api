@@ -351,13 +351,40 @@ paths:
           ]
           ```
         * `content` MUST have at least one entry.
-        * `content[].format[]` SHOULD indicate whether the data is structured or not, e.g.
+        * `content` MUST include an `attachment` entry.
+        * `content` MUST include a `format` entry. (https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode)
+        * `content` MUST include the content stability extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability).
+        * `content[].attachment` MUST include a `url` to the document.
+        * `content[].attachment` MUST include a `contentType` and be a valid MIME type, specifically `application/pdf` for documents or `text/html` for contact details.
+        * `content[].format` MUST indicate whether the data is structured or not
+        * Example of the content section:
           ```
-          "format": [
+          "content": [
             {
-              "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode",
-              "code": "urn:nhs-ic:unstructured"
-              "display": "Unstructured document"
+              "attachment": {
+                "contentType": "application/pdf",
+                "url": "https://provider-ods-code.thirdparty.nhs.uk/path/to/document.pdf",
+                "creation": "2022-12-22T09:45:41+11:00"
+              },
+              "format": {
+                  "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode",
+                  "code": "urn:nhs-ic:unstructured"
+                  "display": "Unstructured Document"
+              },
+              "extension": [
+                {
+                  "url": "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability",
+                        "code": "static",
+                        "display": "Static"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           ]
           ```
@@ -1346,7 +1373,7 @@ components:
                 format:
                   system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
                   code: "urn:nhs-ic:unstructured"
-                  display: Unstructured document
+                  display: Unstructured Document
             context:
               event:
                 - coding:
@@ -1759,10 +1786,19 @@ components:
           $ref: "#/components/schemas/Attachment"
           description: The document or URL of the document along with critical metadata to prove content has integrity.
         format:
-          $ref: "#/components/schemas/Coding"
+          $ref: "#/components/schemas/NRLFormatCode"
           description: An identifier of the document encoding, structure, and template that the document conforms to beyond the base format indicated in the mimeType.
+        extension:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentStabilityExtension"
+            description: Additional extension for content stability.
+          minItems: 1
+          maxItems: 1
       required:
         - attachment
+        - format
+        - extension
     DocumentReferenceRelatesTo:
       type: object
       properties:
@@ -1819,6 +1855,69 @@ components:
           type: string
           pattern: ([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?
           description: The date that the attachment was first created.
+      required:
+        - contentType
+        - url
+    ContentStabilityExtension:
+      type: object
+      properties:
+        url:
+          type: string
+          enum:
+            - "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability"
+        valueCodeableConcept:
+          type: object
+          properties:
+            coding:
+              type: array
+              items:
+                type: object
+                properties:
+                  system:
+                    type: string
+                    enum:
+                      - "https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability"
+                  code:
+                    type: string
+                    enum: ["static", "dynamic"]
+                  display:
+                    type: string
+                    enum: ["Static", "Dynamic"]
+                required:
+                  - system
+                  - code
+                  - display
+              minItems: 1
+              maxItems: 1
+          required:
+            - coding
+      required:
+        - url
+        - valueCodeableConcept
+    NRLFormatCode:
+      type: object
+      properties:
+        system:
+          type: string
+          enum:
+            - "https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode"
+          description: The system URL for the NRLF Format Code.
+        code:
+          type: string
+          enum:
+            - "urn:nhs-ic:record-contact"
+            - "urn:nhs-ic:unstructured"
+          description: The code representing the format of the document.
+        display:
+          type: string
+          enum:
+            - "Contact details (HTTP Unsecured)"
+            - "Unstructured Document"
+          description: The display text for the code.
+      required:
+        - system
+        - code
+        - display
     CodeableConcept:
       type: object
       properties:
