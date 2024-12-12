@@ -1900,6 +1900,16 @@ components:
         userSelected:
           type: boolean
           description: Indicates that this coding was chosen by a user directly &ndash; e.g. off a pick list of available items (codes or displays).
+    Extension:
+      type: object
+      properties:
+        valueCodeableConcept:
+          $ref: "#/components/schemas/CodeableConcept"
+          description: A name which details the functional use for this link &ndash; see [http://www.iana.org/assignments/link&ndash;relations/link&ndash;relations.xhtml#link&ndash;relations&ndash;1](http://www.iana.org/assignments/link&ndash;relations/link&ndash;relations.xhtml#link&ndash;relations&ndash;1).
+        url:
+          type: string
+          pattern: \S*
+          description: The reference details for the link.
     ContentStabilityExtension:
       allOf:
         - $ref: "#/components/schemas/Extension"
