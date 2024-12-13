@@ -36,7 +36,7 @@ info:
     * [End of Life Care Coordination Summary](http://snomed.info/sct/861421000000109)
     * [Emergency health care plan](http://snomed.info/sct/887701000000100)
     * [Lloyd George record folder](http://snomed.info/sct/16521000000101)
-    * [Advanced care plan](http://snomed.info/sct/736366004)
+    * [Advance care plan](http://snomed.info/sct/736366004)
     * [Treatment escalation plan](http://snomed.info/sct/735324008)
     * [Summary record]("http://snomed.info/sct|824321000000109")
     * [Personalised Care and Support Plan]("http://snomed.info/sct|2181441000000107")
@@ -2283,8 +2283,8 @@ components:
         SNOMED_CODES_LLOYD_GEORGE_RECORD_FOLDER:
           summary: Lloyd George record folder
           value: http://snomed.info/sct|16521000000101
-        SNOMED_CODES_ADVANCED_CARE_PLAN:
-          summary: Advanced care plan
+        SNOMED_CODES_ADVANCE_CARE_PLAN:
+          summary: Advance care plan
           value: http://snomed.info/sct|736366004
         SNOMED_CODES_TREATMENT_ESCALATION_PLAN:
           summary: Treatment escalation plan
