@@ -386,6 +386,7 @@ paths:
                 }
               ]
             }
+          ]
           ```
         * `author` MUST have an entry with an `Organization` reference using a valid ODS code.
           ```
