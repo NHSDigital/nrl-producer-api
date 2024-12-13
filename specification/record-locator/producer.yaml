@@ -351,15 +351,14 @@ paths:
           ]
           ```
         * `content` MUST have at least one entry.
-        * `content[].format[]` SHOULD indicate whether the data is structured or not, e.g.
+        * `content[].format` MUST indicate whether the data is structured or not, e.g.
           ```
-          "format": [
+          "format": 
             {
               "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode",
               "code": "urn:nhs-ic:unstructured"
               "display": "Unstructured document"
             }
-          ]
           ```
         * `author` MUST have an entry with an `Organization` reference using a valid ODS code.
           ```
