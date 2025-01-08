@@ -14,7 +14,7 @@
                     "display": "Failure to process message"
                 } ]
             },
-            "diagnostics": "{error.content}"
+            "diagnostics": "{escapeJSON(error.content)}"
         } ]
     }
     </Payload>
