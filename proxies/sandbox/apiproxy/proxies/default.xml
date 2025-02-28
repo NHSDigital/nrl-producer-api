@@ -46,12 +46,12 @@
       <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
     </Flow>
     <Flow name="CorsHeaders">
-      <!-- This must be the last item in the flow -->
       <Response>
         <Step>
           <Name>AssignMessage.AddCors</Name>
         </Step>
       </Response>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
@@ -82,6 +82,7 @@
     <AlwaysEnforce>true</AlwaysEnforce>
     <Step>
       <Name>AssignMessage.AddCors</Name>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>

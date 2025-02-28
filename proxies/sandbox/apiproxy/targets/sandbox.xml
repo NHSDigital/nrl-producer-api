@@ -2,15 +2,8 @@
     <Description/>
     <FaultRules/>
     <Flows/>
-    <!-- <PostFlow name="PostFlow">
-        <Request/>
-        <Response/>
-    </PostFlow> -->
     <PreFlow name="PreFlow">
         <Request>
-          <!-- <Step>
-            <Name>OauthV2.VerifyAccessToken</Name>
-          </Step> -->
           <Step>
             <Name>AssignMessage.AddSandboxAuthorization</Name>
           </Step>
@@ -31,11 +24,6 @@
               <Name>RaiseFault.403NoPointers</Name>
           </Step>
         </Request>
-        <!-- <Response>
-          <Step>
-            <Name>AssignMessage.AddCors</Name>
-          </Step>
-        </Response> -->
     </PreFlow>
     <HTTPTargetConnection>
         <SSLInfo>
@@ -44,7 +32,7 @@
         <LoadBalancer>
             <Server name="record-locator"/>
         </LoadBalancer>
-      <!--Set in WritePathVariable.js-->
+        <!--Set in WritePathVariable.js-->
         <Path>{target_path}</Path>
         <Properties>
             <Property name="keepalive.timeout.millis">20000</Property>
