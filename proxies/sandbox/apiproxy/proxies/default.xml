@@ -51,7 +51,7 @@
           <Name>AssignMessage.AddCors</Name>
         </Step>
       </Response>
-      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
@@ -73,7 +73,7 @@
     <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
   <RouteRule name="NoRoute">
-    <Condition>(request.verb = "OPTIONS")</Condition>
+    <Condition>(request.verb == "OPTIONS")</Condition>
   </RouteRule>
   <RouteRule name="sandbox">
     <TargetEndpoint>sandbox</TargetEndpoint>
@@ -82,7 +82,7 @@
     <AlwaysEnforce>true</AlwaysEnforce>
     <Step>
       <Name>AssignMessage.AddCors</Name>
-      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null</Condition>
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
