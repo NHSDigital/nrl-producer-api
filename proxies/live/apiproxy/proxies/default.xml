@@ -51,7 +51,7 @@
           <Name>AssignMessage.AddCors</Name>
         </Step>
       </Response>
-      <Condition>request.verb == "OPTIONS" AND (request.header.origin != null OR request.header.origin != request.header.host) AND request.header.Access-Control-Request-Method != null</Condition>
+      <Condition>request.verb == "OPTIONS" AND (request.header.origin != null OR (request.header.origin != request.header.host)) AND request.header.Access-Control-Request-Method != null</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
@@ -82,7 +82,7 @@
     <AlwaysEnforce>true</AlwaysEnforce>
     <Step>
       <Name>AssignMessage.AddCors</Name>
-      <Condition>request.verb == "OPTIONS" AND (request.header.origin != null OR request.header.origin != request.header.host) AND request.header.Access-Control-Request-Method != null</Condition>
+      <Condition>request.verb == "OPTIONS" AND (request.header.origin != null OR (request.header.origin != request.header.host)) AND request.header.Access-Control-Request-Method != null</Condition>
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
