@@ -58,7 +58,7 @@
           <Name>AssignMessage.AddCors</Name>
         </Step>
       </Response>
-      <Condition>request.Sec-Fetch-Site == "cross-site"</Condition>
+      <Condition>request.header.sec-fetch-site == "cross-site"</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
