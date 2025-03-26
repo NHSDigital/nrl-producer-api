@@ -1,4 +1,4 @@
-<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddCors">
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddCorsPreflight">
     <FaultRules/>
     <Properties/>
     <Set>
