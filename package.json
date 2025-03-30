@@ -14,7 +14,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.5.1",
+    "@openapitools/openapi-generator-cli": "^2.15.3",
     "apigeetool": "^0.16.1",
     "license-checker": "^25.0.1",
     "minimist": "^1.2.7"
