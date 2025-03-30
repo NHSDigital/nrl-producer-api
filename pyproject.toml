@@ -29,7 +29,7 @@ semver = "^2.9.0"
 gitpython = "^3.1.41"
 pytest = "^8.2.0"
 coverage = "^5.5"
-aiohttp = "^3.10.2"
+aiohttp = "^3.10.11"
 pytest-asyncio = "^0.14.0"
 
 [tool.poetry.scripts]
