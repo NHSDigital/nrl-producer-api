@@ -34,6 +34,9 @@ publish: clean
 build-proxy:
 	scripts/build_proxy.sh
 
+run:
+	sudo docker run -e SWAGGER_JSON=/swagger.json -v ./build/nrl-producer-api.json:/swagger.json -p 8080:8080 docker.io/swaggerapi/swagger-ui
+
 #Files to loop over in release
 _dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests"
 

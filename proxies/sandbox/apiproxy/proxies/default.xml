@@ -45,12 +45,21 @@
       </Request>
       <Condition>request.verb != "OPTIONS" and (request.header.NHSD-End-User-Organisation-ODS = null or request.header.NHSD-End-User-Organisation-ODS = "")</Condition>
     </Flow>
+    <Flow name="CorsHeadersPreflight">
+      <Response>
+        <Step>
+          <Name>AssignMessage.AddCorsPreflight</Name>
+        </Step>
+      </Response>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+    </Flow>
     <Flow name="CorsHeaders">
       <Response>
         <Step>
           <Name>AssignMessage.AddCors</Name>
         </Step>
       </Response>
+      <Condition>request.header.sec-fetch-site == "cross-site"</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
@@ -80,7 +89,12 @@
   <DefaultFaultRule>
     <AlwaysEnforce>true</AlwaysEnforce>
     <Step>
+      <Name>AssignMessage.AddCorsPreflight</Name>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+    </Step>
+    <Step>
       <Name>AssignMessage.AddCors</Name>
+      <Condition>request.header.sec-fetch-site == "cross-site"</Condition>
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
