@@ -236,7 +236,6 @@ paths:
       responses:
         "201":
           description: Create / Supersede successful response
-          $ref: "#/components/responses/Success"
           content:
             application/fhir+json;version=1:
               schema:
@@ -996,7 +995,6 @@ paths:
       responses:
         "200":
           description: Successful response
-          $ref: "#/components/responses/Success"
           content:
             application/fhir+json;version=1:
               example:
@@ -1071,7 +1069,6 @@ paths:
       responses:
         "204":
           description: Successful response
-          $ref: "#/components/responses/Success"
           content:
             application/fhir+json;version=1:
               example:
@@ -1090,7 +1087,6 @@ paths:
                           display: Resource removed
                     diagnostics: Resource removed
         "200":
-          $ref: "#/components/responses/Success"
           description: Successful response
           content:
             application/fhir+json;version=1:
@@ -1652,6 +1648,17 @@ components:
           description: Plain text name of the organisation referenced.
       required:
         - identifier
+    SubjectReference:
+      type: object
+      description: The patient to whom the document pertains, referenced by NHS number.
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        identifier:
+          $ref: "#/components/schemas/SubjectIdentifier"
+      required:
+        - identifier
     OdsCodeIdentifier:
       type: object
       properties:
@@ -1674,9 +1681,28 @@ components:
         period:
           $ref: "#/components/schemas/Period"
           description: Time period during which identifier is/was valid for use.
-        assigner:
-          $ref: "#/components/schemas/Reference"
-          description: Organization that issued/manages the identifier.
+      required:
+        - system
+        - value
+    SubjectIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        use:
+          type: string
+          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          description: The purpose of this identifier.
+        system:
+          type: string
+          enum:
+            - "https://fhir.nhs.uk/Id/nhs-number"
+          description: Must be the NHS number URL.
+        value:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: Must be a valid NHS number.
       required:
         - system
         - value
@@ -1686,7 +1712,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         contentType:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
