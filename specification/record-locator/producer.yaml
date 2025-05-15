@@ -214,6 +214,10 @@ info:
         </div>
     </div>
 
+    ## Change log
+
+    For details of how this API has changed over time, see the [release history](https://github.com/NHSDigital/NRLF/releases)
+
   version: 1.0.0
   license:
     name: MIT
