@@ -38,8 +38,8 @@ info:
     * [Lloyd George record folder](http://snomed.info/sct/16521000000101)
     * [Advance care plan](http://snomed.info/sct/736366004)
     * [Treatment escalation plan](http://snomed.info/sct/735324008)
-    * [Summary record]("http://snomed.info/sct|824321000000109")
-    * [Personalised Care and Support Plan]("http://snomed.info/sct|2181441000000107")
+    * [Summary record](http://snomed.info/sct|824321000000109)
+    * [Personalised Care and Support Plan](http://snomed.info/sct|2181441000000107)
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -262,13 +262,12 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
+            | 400         | MESSAGE_NOT_WELL_FORMED    | Message not well formed                                                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
+            | 422         | UNPROCESSABLE_ENTITY       | Unprocessable Entity                                                                                                                       |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
@@ -621,13 +620,10 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
@@ -835,13 +831,10 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
@@ -960,12 +953,9 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
@@ -1023,12 +1013,11 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
+            | 400         | MESSAGE_NOT_WELL_FORMED    | Message not well formed                                                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
+            | 422         | UNPROCESSABLE_ENTITY       | Unprocessable Entity                                                                                                                       |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
@@ -1071,25 +1060,6 @@ paths:
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       responses:
-        "204":
-          description: Successful response
-          content:
-            application/fhir+json;version=1:
-              example:
-                resourceType: OperationOutcome
-                id: c6113a50-70bf-436e-b417-7c8024d2e8bf
-                meta:
-                  profile:
-                    - https://fhir.nhs.uk/StructureDefinition/NHSDigital-OperationOutcome
-                issue:
-                  - severity: information
-                    code: informational
-                    details:
-                      coding:
-                        - system: https://fhir.nhs.uk/CodeSystem/NRLF-SuccessCode
-                          code: RESOURCE_REMOVED
-                          display: Resource removed
-                    diagnostics: Resource removed
         "200":
           description: Successful response
           content:
@@ -1116,10 +1086,8 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
-            | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
 
             The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
