@@ -40,6 +40,7 @@ info:
     * [Treatment escalation plan](http://snomed.info/sct/735324008)
     * [Summary record](http://snomed.info/sct|824321000000109)
     * [Personalised Care and Support Plan](http://snomed.info/sct|2181441000000107)
+    * [Appointment](http://snomed.info/sct|749001000000101) 
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -2191,6 +2192,9 @@ components:
         SNOMED_CODES_PERSONALISED_CARE_AND_SUPPORT_PLAN:
           summary: Personalised Care and Support Plan
           value: http://snomed.info/sct|2181441000000107
+        SNOMED_CODES_APPOINTMENT:
+          summary: Appointment
+          value: http://snomed.info/sct|749001000000101
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2218,6 +2222,9 @@ components:
         SNOMED_CODES_DIAGNOSTIC_PROCEDURE:
           summary: Diagnostic procedure
           value: http://snomed.info/sct|103693007
+        SNOMED_CODES_RECORD_ARTIFACT:
+          summary: Record artifact
+          value: http://snomed.inf/sct|419891008
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
