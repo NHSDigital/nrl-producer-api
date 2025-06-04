@@ -38,8 +38,9 @@ info:
     * [Lloyd George record folder](http://snomed.info/sct/16521000000101)
     * [Advance care plan](http://snomed.info/sct/736366004)
     * [Treatment escalation plan](http://snomed.info/sct/735324008)
-    * [Summary record]("http://snomed.info/sct|824321000000109")
-    * [Personalised Care and Support Plan]("http://snomed.info/sct|2181441000000107")
+    * [Summary record](http://snomed.info/sct|824321000000109)
+    * [Personalised Care and Support Plan](http://snomed.info/sct|2181441000000107)
+    * [Appointment](http://snomed.info/sct|749001000000101) 
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -69,8 +70,6 @@ info:
     * the application only supports json type FHIR, not XML
 
     ### Data availability, timing and quality
-
-    Pointers are available to be consumed almost immediately after they have been produced by the provider.
 
     Pointers are immediately available to authorised providers and consumers after successful creation.
 
@@ -140,7 +139,7 @@ info:
     * 400 to 499 if it failed because of a client error by your application
     * 500 to 599 if it failed because of an error on our server
 
-    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+    Errors specific to each operation are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
     ## Open source
 
@@ -151,8 +150,6 @@ info:
     | NRL v3 API                | Source code for the core API and sandbox                  | [GitHub repo](https://github.com/NHSDigital/nrlf)                 |
     | NRL v3 Producer API       | Source code for the producer API proxy and specification. | [GitHub repo](https://github.com/NHSDigital/nrl-producer-api)     |
     | NRL v3 Consumer API       | Source code for the consumer API proxy and specification. | [GitHub repo](https://github.com/NHSDigital/nrl-consumer-api)     |
-    | Lambda Pipeline Package   | Source code for the lambda pipeline utility               | [GitHub repo](https://github.com/NHSDigital/nrlf-lambda-pipeline) |
-    | Lambda Logging Package    | Source code for the lambda logging utility                | [GitHub repo](https://github.com/NHSDigital/nrlf-lambda-logging)  |
 
     We currently don't have any open source client libraries or sample code for this API. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/107439/client-libraries-and-reference-implementations).
 
@@ -220,7 +217,8 @@ info:
 
     ## Change log
 
-    For details of how this API has changed over time, see the [change log](https://github.com/NHSDigital/NRLF/blob/main/CHANGELOG.md).
+    For details of how this API has changed over time, see the [release history](https://github.com/NHSDigital/NRLF/releases)
+
   version: 1.0.0
   license:
     name: MIT
@@ -243,24 +241,21 @@ paths:
       responses:
         "201":
           description: Create / Supersede successful response
-          $ref: "#/components/responses/Success"
           content:
             application/fhir+json;version=1:
+              schema:
+                $ref: "#/components/schemas/OperationOutcome"
               example:
                 resourceType: OperationOutcome
-                id: 76db24dc-324a-468a-bf02-c06e82279488
-                meta:
-                  profile:
-                    - https://fhir.nhs.uk/StructureDefinition/NHSDigital-OperationOutcome
                 issue:
                   - severity: information
                     code: informational
                     details:
                       coding:
-                        - system: https://fhir.nhs.uk/CodeSystem/NRLF-SuccessCode
+                        - system: "https://fhir.nhs.uk/CodeSystem/NRLF-ResponseCode"
                           code: RESOURCE_CREATED
                           display: Resource created
-                    diagnostics: Resource created
+                    diagnostics: The document has been created
         "4XX":
           description: |
             An error occurred as follows:
@@ -268,15 +263,14 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
+            | 400         | MESSAGE_NOT_WELL_FORMED    | Message not well formed                                                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
+            | 422         | UNPROCESSABLE_ENTITY       | Unprocessable Entity                                                                                                                       |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -288,16 +282,15 @@ paths:
                     code: value
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
+                          code: INVALID_RESOURCE
+                          display: Invalid validation of resource
+                    diagnostics: Category code is not valid
       requestBody:
         $ref: "#/components/requestBodies/DocumentReference"
       parameters:
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       description: |
@@ -456,7 +449,6 @@ paths:
         - $ref: "#/components/parameters/type"
         - $ref: "#/components/parameters/category"
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       responses:
@@ -474,9 +466,6 @@ paths:
                   - resource:
                       resourceType: DocumentReference
                       id: Y05868-1834567891
-                      meta:
-                        profile:
-                          - http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0
                       masterIdentifier:
                         system: urn:ietf:rfc:3986
                         value: urn:oid:1.3.6.1.4.1.21367.2004.3.7
@@ -492,9 +481,9 @@ paths:
                             display: Royal College of Physicians NEWS2 (National Early Warning Score 2) chart
                       category:
                         - coding:
-                            - system: http://loinc.org
-                              code: 34769-0
-                              display: General medicine Physician attending Note
+                            - system: http://snomed.info/sct
+                              code: "1102421000000108"
+                              display: Observations
                       subject:
                         identifier:
                           system: https://fhir.nhs.uk/Id/nhs-number
@@ -503,10 +492,11 @@ paths:
                       author:
                         - identifier:
                             system: https://fhir.nhs.uk/Id/ods-organization-code
-                            value: Organisation/Y05868
+                            value: Y05868
                       authenticator:
                         identifier:
-                          value: Organization/Y05868
+                          system: https://fhir.nhs.uk/Id/ods-organization-code
+                          value: 8HV66
                       custodian:
                         identifier:
                           system: https://fhir.nhs.uk/Id/ods-organization-code
@@ -519,13 +509,20 @@ paths:
                       content:
                         - attachment:
                             contentType: application/pdf
-                            language: en-US
+                            language: en-UK
                             url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
                             creation: "2022-12-22T09:45:41+11:00"
                           format:
-                            system: urn:oid:1.3.6.1.4.1.19376.1.2.3
-                            code: urn:ihe:pcc:handp:2008
-                            display: History and Physical Specification
+                            system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
+                            code: urn:nhs-ic:unstructured
+                            display: Unstructured Document
+                          extension:
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability,
+                                    code: static
+                                    display: Static
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                       context:
                         event:
                           - coding:
@@ -538,23 +535,20 @@ paths:
                         facilityType:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "82242000"
-                              display: Children's hospital
+                              code: "46111000"
+                              display: Secondary care hospital
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "788002001"
-                              display: Adult mental health service
+                              code: "409971007"
+                              display: Emergency medical services
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
                               value: "200000000610"
                   - resource:
                       resourceType: DocumentReference
-                      id: Y05868-1234567891
-                      meta:
-                        profile:
-                          - http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0
+                      id: Y05868-837826318432
                       masterIdentifier:
                         system: urn:ietf:rfc:3986
                         value: urn:oid:1.3.6.1.4.1.21367.2005.3.7
@@ -570,9 +564,9 @@ paths:
                             display: End of life care coordination summary
                       category:
                         - coding:
-                            - system: http://loinc.org
-                              code: 55112-7
-                              display: Document summary
+                            - system: http://snomed.info/sct
+                              code: "734163000"
+                              display: Care plan
                       subject:
                         identifier:
                           system: https://fhir.nhs.uk/Id/nhs-number
@@ -581,52 +575,36 @@ paths:
                       author:
                         - identifier:
                             system: https://fhir.nhs.uk/Id/ods-organization-code
-                            value: Organization/Y05868
-                      authenticator:
-                        identifier:
-                          value: Organization/Y05868
+                            value: Y05868
                       custodian:
                         identifier:
                           system: https://fhir.nhs.uk/Id/ods-organization-code
                           value: Y05868
-                      description: Physical
-                      securityLabel:
-                        - coding:
-                            - system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality
-                              code: V
-                              display: very restricted
+                      description: Example DocRef for EOL care coordination summary
                       content:
                         - attachment:
                             contentType: application/pdf
-                            language: en-US
+                            language: en-UK
                             url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
-                            size: 3654
-                            hash: 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-                            title: Physical
+                            title: EOL care coordination plan summary
                             creation: "2022-12-21T10:45:41+11:00"
                           format:
-                            system: urn:oid:1.3.6.1.4.1.19376.1.2.3
-                            code: urn:ihe:pcc:cm:2008
-                            display: Care Management
+                            system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
+                            code: urn:nhs-ic:unstructured
+                            display: Unstructured Document
+                          extension:
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability,
+                                    code: static
+                                    display: Static
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                       context:
-                        event:
-                          - coding:
-                              - system: http://snomed.info/sct
-                                code: "445627002"
-                                display: Assessment using adult early warning scoring system
-                        period:
-                          start: "2022-12-20T09:00:41+11:00"
-                          end: "2022-12-20T09:45:41+11:00"
-                        facilityType:
-                          coding:
-                            - system: http://snomed.info/sct
-                              code: "82242000"
-                              display: Children's hospital
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "788002001"
-                              display: Adult mental health service
+                              code: "395092004"
+                              display: Specialist palliative care
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -643,15 +621,12 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -660,125 +635,26 @@ paths:
                 resourceType: OperationOutcome
                 issue:
                   - severity: error
-                    code: value
+                    code: invalid
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
+                          code: INVALID_PARAMETER
+                          display: Invalid parameter
+                    diagnostics: "Invalid query parameter"
       description: |
         Search through document pointers.
 
         Results are restricted to pointers you created, but can be further filtered by `subject`, `category`, and `type`.
 
         This operation is also available as a http POST, which is the preferred method (see below).
-    put:
-      summary: Create document pointers with a specific id
-      operationId: upsertDocumentReference
-      parameters:
-        - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
-        - $ref: "#/components/parameters/requestId"
-        - $ref: "#/components/parameters/correlationId"
-      responses:
-        "201":
-          $ref: "#/components/responses/Success"
-          description: Create / Supersede successful response
-          content:
-            application/fhir+json;version=1:
-              example:
-                resourceType: OperationOutcome
-                id: 76db24dc-324a-468a-bf02-c06e82279488
-                meta:
-                  profile:
-                    - https://fhir.nhs.uk/StructureDefinition/NHSDigital-OperationOutcome
-                issue:
-                  - severity: information
-                    code: informational
-                    details:
-                      coding:
-                        - system: https://fhir.nhs.uk/CodeSystem/NRLF-SuccessCode
-                          code: RESOURCE_CREATED
-                          display: Resource created
-                    diagnostics: Resource created
-        "4XX":
-          description: |
-            An error occurred as follows:
-
-            | HTTP status | Error code                 | Description                                                                                                                                |
-            | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-            | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
-            | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
-            | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
-            | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
-            | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
-
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
-          content:
-            application/fhir+json;version=1:
-              schema:
-                $ref: "#/components/schemas/OperationOutcome"
-              example:
-                resourceType: OperationOutcome
-                issue:
-                  - severity: error
-                    code: value
-                    details:
-                      coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
-                          version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
-      requestBody:
-        $ref: "#/components/requestBodies/DocumentReference"
-      description: |
-        Create a new pointer with a unique identifier that you specify. This is the "upsert" or "update as create" functionality in the FHIR R4 REST standard.
-
-        In addition to the criteria for DocumentReference validity detailed in the POST interaction, you must ensure:
-
-        * `id` is a composite of the ODS Code and an identifier that is locally unique to your system.  NRL does not
-          generate globally unique ids, instead relies on producers to provide a locally unique id prefixed with their
-          ODS code, making it globally unique. e.g.
-          ```
-          XYZ-1234567890
-          ```
-
-        To supersede existing pointers you must further specify:
-
-        * at least one existing pointer in the `relatesTo` with a `code` of `replaces`.
-          ```
-          [
-            {
-              "code": "replaces",
-              "target": {
-                "type": "DocumentReference",
-                "identifier": {
-                  "value": "XYZ-1234567890"
-                }
-              }
-            }
-          ]
-          ```
-
-        * the following fields MUST match the pointers being superseded:
-          * `subject`
-          * `type`
-
-        This will cause a new pointer to be created and superseded pointers to be deleted.  Multiple documents can
-        be superseded.
   /DocumentReference/_search:
     post:
       summary: Retrieve document pointers (POST)
       operationId: searchPostDocumentReference
       parameters:
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       requestBody:
@@ -801,9 +677,6 @@ paths:
                   - resource:
                       resourceType: DocumentReference
                       id: Y05868-1834567891
-                      meta:
-                        profile:
-                          - http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0
                       masterIdentifier:
                         system: urn:ietf:rfc:3986
                         value: urn:oid:1.3.6.1.4.1.21367.2004.3.7
@@ -819,9 +692,9 @@ paths:
                             display: Royal College of Physicians NEWS2 (National Early Warning Score 2) chart
                       category:
                         - coding:
-                            - system: http://loinc.org
-                              code: 34769-0
-                              display: General medicine Physician attending Note
+                            - system: http://snomed.info/sct
+                              code: "1102421000000108"
+                              display: Observations
                       subject:
                         identifier:
                           system: https://fhir.nhs.uk/Id/nhs-number
@@ -830,10 +703,11 @@ paths:
                       author:
                         - identifier:
                             system: https://fhir.nhs.uk/Id/ods-organization-code
-                            value: Organization/Y05868
+                            value: Y05868
                       authenticator:
                         identifier:
-                          value: Organization/Y05868
+                          system: https://fhir.nhs.uk/Id/ods-organization-code
+                          value: 8HV66
                       custodian:
                         identifier:
                           system: https://fhir.nhs.uk/Id/ods-organization-code
@@ -846,13 +720,20 @@ paths:
                       content:
                         - attachment:
                             contentType: application/pdf
-                            language: en-US
+                            language: en-UK
                             url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
                             creation: "2022-12-22T09:45:41+11:00"
                           format:
-                            system: urn:oid:1.3.6.1.4.1.19376.1.2.3
-                            code: urn:ihe:pcc:handp:2008
-                            display: History and Physical Specification
+                            system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
+                            code: urn:nhs-ic:unstructured
+                            display: Unstructured Document
+                          extension:
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability,
+                                    code: static
+                                    display: Static
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                       context:
                         event:
                           - coding:
@@ -865,23 +746,20 @@ paths:
                         facilityType:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "82242000"
-                              display: Children's hospital
+                              code: "46111000"
+                              display: Secondary care hospital
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "788002001"
-                              display: Adult mental health service
+                              code: "409971007"
+                              display: Emergency medical services
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
                               value: "200000000610"
                   - resource:
                       resourceType: DocumentReference
-                      id: Y05868-1234567891
-                      meta:
-                        profile:
-                          - http://fhir.nhs.net/StructureDefinition/nrls-documentreference-1-0
+                      id: Y05868-837826318432
                       masterIdentifier:
                         system: urn:ietf:rfc:3986
                         value: urn:oid:1.3.6.1.4.1.21367.2005.3.7
@@ -897,9 +775,9 @@ paths:
                             display: End of life care coordination summary
                       category:
                         - coding:
-                            - system: http://loinc.org
-                              code: 55112-7
-                              display: Document summary
+                            - system: http://snomed.info/sct
+                              code: "734163000"
+                              display: Care plan
                       subject:
                         identifier:
                           system: https://fhir.nhs.uk/Id/nhs-number
@@ -908,52 +786,36 @@ paths:
                       author:
                         - identifier:
                             system: https://fhir.nhs.uk/Id/ods-organization-code
-                            value: Organization/Y05868
-                      authenticator:
-                        identifier:
-                          value: Organization/Y05868
+                            value: Y05868
                       custodian:
                         identifier:
                           system: https://fhir.nhs.uk/Id/ods-organization-code
                           value: Y05868
-                      description: Physical
-                      securityLabel:
-                        - coding:
-                            - system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality
-                              code: V
-                              display: very restricted
+                      description: Example DocRef for EOL care coordination summary
                       content:
                         - attachment:
                             contentType: application/pdf
-                            language: en-US
+                            language: en-UK
                             url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
-                            size: 3654
-                            hash: 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-                            title: Physical
+                            title: EOL care coordination plan summary
                             creation: "2022-12-21T10:45:41+11:00"
                           format:
-                            system: urn:oid:1.3.6.1.4.1.19376.1.2.3
-                            code: urn:ihe:pcc:cm:2008
-                            display: Care Management
+                            system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
+                            code: urn:nhs-ic:unstructured
+                            display: Unstructured Document
+                          extension:
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability,
+                                    code: static
+                                    display: Static
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                       context:
-                        event:
-                          - coding:
-                              - system: http://snomed.info/sct
-                                code: "445627002"
-                                display: Assessment using adult early warning scoring system
-                        period:
-                          start: "2022-12-20T09:00:41+11:00"
-                          end: "2022-12-20T09:45:41+11:00"
-                        facilityType:
-                          coding:
-                            - system: http://snomed.info/sct
-                              code: "82242000"
-                              display: Children's hospital
                         practiceSetting:
                           coding:
                             - system: http://snomed.info/sct
-                              code: "788002001"
-                              display: Adult mental health service
+                              code: "395092004"
+                              display: Specialist palliative care
                         related:
                           - identifier:
                               system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -970,15 +832,12 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 403         | ACCESS_DENIED_LEVEL        | Access has been denied because you need higher level permissions                                                                           |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -987,14 +846,14 @@ paths:
                 resourceType: OperationOutcome
                 issue:
                   - severity: error
-                    code: value
+                    code: invalid
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
+                          code: INVALID_PARAMETER
+                          display: Invalid parameter
+                    diagnostics: "Invalid query parameter"
       description: |
         Search through document pointers.
 
@@ -1014,7 +873,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/id"
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       responses:
@@ -1036,9 +894,9 @@ paths:
                       display: Emergency health care plan
                 category:
                   - coding:
-                      - system: http://loinc.org
-                        code: 68552-9
-                        display: Emergency medicine Emergency department Admission evaluation note
+                      - system: http://snomed.info/sct
+                        code: "734163000"
+                        display: Care plan
                 subject:
                   identifier:
                     system: https://fhir.nhs.uk/Id/nhs-number
@@ -1047,38 +905,29 @@ paths:
                 author:
                   - identifier:
                       system: https://fhir.nhs.uk/Id/ods-organization-code
-                      value: Organization/Y05868
-                authenticator:
-                  identifier:
-                    value: Organization/Y05868
+                      value: Y05868
                 custodian:
                   identifier:
                     system: https://fhir.nhs.uk/Id/ods-organization-code
                     value: Y05868
-                securityLabel:
-                  - coding:
-                      - system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality
-                        code: V
-                        display: very restricted
                 content:
                   - attachment:
                       contentType: application/pdf
-                      language: en-US
-                      url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EmergencyCarPlan.pdf
+                      language: en-UK
+                      url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EmergencyCarePlan.pdf
                       creation: "2022-12-22T09:45:41+11:00"
                     format:
-                      system: urn:oid:1.3.6.1.4.1.19376.1.2.3
-                      code: urn:ihe:pcc:handp:2008
-                      display: History and Physical Specification
+                      system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
+                      code: "urn:nhs-ic:unstructured"
+                      display: Unstructured Document
+                    extension:
+                      - valueCodeableConcept:
+                          coding:
+                            - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability,
+                              code: static
+                              display: Static
+                        url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                 context:
-                  event:
-                    - coding:
-                        - system: http://snomed.info/sct
-                          code: "445627002"
-                          display: Assessment using adult early warning scoring system
-                  period:
-                    start: "2022-12-20T09:00:41+11:00"
-                    end: "2022-12-20T09:45:41+11:00"
                   facilityType:
                     coding:
                       - system: http://snomed.info/sct
@@ -1087,8 +936,8 @@ paths:
                   practiceSetting:
                     coding:
                       - system: http://snomed.info/sct
-                        code: "788002001"
-                        display: Adult mental health service
+                        code: "224891009"
+                        display: Healthcare services
                   related:
                     - identifier:
                         system: https://fhir.nhs.uk/Id/nhsSpineASID
@@ -1105,14 +954,11 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -1121,51 +967,29 @@ paths:
                 resourceType: OperationOutcome
                 issue:
                   - severity: error
-                    code: value
+                    code: forbidden
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
+                          code: AUTHOR_CREDENTIALS_ERROR
+                          display: Author credentials error
                     diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
       description: |
         Read a single document pointer by specifying the `DocumentReference.id`.  Note that you will only be able to
         retrieve document pointers that have been created by the organisation specified in the `ODS-End-User-Organisation-ODS`
-        header, and agreed during [onboarding](#onbaroding).
+        header, and agreed during [onboarding](#onboarding).
     put:
       summary: Update a single document pointer
       operationId: updateDocumentReference
       parameters:
         - $ref: "#/components/parameters/id"
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       responses:
         "200":
           description: Successful response
-          $ref: "#/components/responses/Success"
-          content:
-            application/fhir+json;version=1:
-              example:
-                resourceType: OperationOutcome
-                id: fc39effb-144c-4342-bdf2-4214f0cb728b
-                meta:
-                  profile:
-                    - https://fhir.nhs.uk/StructureDefinition/NHSDigital-OperationOutcome
-                issue:
-                  - severity: information
-                    code: informational
-                    details:
-                      coding:
-                        - system: https://fhir.nhs.uk/CodeSystem/NRLF-SuccessCode
-                          code: RESOURCE_UPDATED
-                          display: Resource updated
-                    diagnostics: Resource updated
-        "201":
-          description: Successful response
-          $ref: "#/components/responses/Success"
           content:
             application/fhir+json;version=1:
               example:
@@ -1190,14 +1014,13 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
-            | 400         | INVALID_RESOURCE_ID        | Invalid resource ID                                                                                                                        |
+            | 400         | MESSAGE_NOT_WELL_FORMED    | Message not well formed                                                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
             | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
-            | 409         | INVALID_VALUE              | Invalid value                                                                                                                              |
+            | 422         | UNPROCESSABLE_ENTITY       | Unprocessable Entity                                                                                                                       |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -1206,32 +1029,28 @@ paths:
                 resourceType: OperationOutcome
                 issue:
                   - severity: error
-                    code: value
+                    code: invalid
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
+                          code: MESSAGE_NOT_WELL_FORMED
+                          display: Message not well formed
+                    diagnostics: "Request body could not be parsed"
       requestBody:
         $ref: "#/components/requestBodies/DocumentReference"
       description: |
         Update a single pointer you created.
 
-        Note that the following fields cannot change:
+        Note that the following fields cannot be changed with an update operation:
         * `id`
         * `subject`
         * `custodian`
         * `type`
         * `masterIdentifier`
-        * `identifier`
-        * `status`
         * `date`
-        * `relatesTo`
-        * `author`
 
-        Note that unlike NRL STU3 changing the `status` field does NOT delete document pointers.  To delete document
+        Note that unlike in NRL 2.8, changing the `status` field does NOT delete document pointers.  To delete document
         pointers use the `DELETE` endpoint.
     delete:
       summary: Delete a single document pointer
@@ -1239,32 +1058,10 @@ paths:
       parameters:
         - $ref: "#/components/parameters/id"
         - $ref: "#/components/parameters/odsCode"
-        - $ref: "#/components/parameters/odsCodeExtension"
         - $ref: "#/components/parameters/requestId"
         - $ref: "#/components/parameters/correlationId"
       responses:
-        "204":
-          description: Successful response
-          $ref: "#/components/responses/Success"
-          content:
-            application/fhir+json;version=1:
-              example:
-                resourceType: OperationOutcome
-                id: c6113a50-70bf-436e-b417-7c8024d2e8bf
-                meta:
-                  profile:
-                    - https://fhir.nhs.uk/StructureDefinition/NHSDigital-OperationOutcome
-                issue:
-                  - severity: information
-                    code: informational
-                    details:
-                      coding:
-                        - system: https://fhir.nhs.uk/CodeSystem/NRLF-SuccessCode
-                          code: RESOURCE_REMOVED
-                          display: Resource removed
-                    diagnostics: Resource removed
         "200":
-          $ref: "#/components/responses/Success"
           description: Successful response
           content:
             application/fhir+json;version=1:
@@ -1290,12 +1087,10 @@ paths:
             | HTTP status | Error code                 | Description                                                                                                                                |
             | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
             | 400         | BAD_REQUEST                | Bad Request                                                                                                                                |
-            | 400         | VALIDATION_ERROR           | A parameter or value has resulted in a validation error                                                                                    |
             | 401         | ACCESS_DENIED              | Access Denied                                                                                                                              |
             | 403         | ACCESS_DENIED              | Forbidden                                                                                                                                  |
-            | 404         | RESOURCE_NOT_FOUND         | Resource not found                                                                                                                         |
 
-            The Error Code comes from https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1
+            The Error Code comes from https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode
           content:
             application/fhir+json;version=1:
               schema:
@@ -1304,14 +1099,14 @@ paths:
                 resourceType: OperationOutcome
                 issue:
                   - severity: error
-                    code: value
+                    code: forbidden
                     details:
                       coding:
-                        - system: "https://fhir.nhs.uk/STU3/CodeSystem/Spine-ErrorOrWarningCode-1"
+                        - system: "https://fhir.nhs.uk/CodeSystem/Spine-ErrorOrWarningCode"
                           version: "1"
-                          code: VALIDATION_ERROR
-                          display: A parameter or value has resulted in a validation error
-                    diagnostics: "The requested document pointer cannot be read because it belongs to another organisation"
+                          code: ACCESS_DENIED
+                          display: Access Denied
+                    diagnostics: "The requested document pointer cannot be deleted because it belongs to another organisation"
       description: |
         Delete a single document pointer that you created.
 components:
@@ -1323,7 +1118,6 @@ components:
             $ref: "#/components/schemas/DocumentReference"
           example:
             resourceType: DocumentReference
-            id: Y05868-00000000-make-unique-for-sandbox-request
             status: current
             docStatus: final
             type:
@@ -1349,38 +1143,38 @@ components:
                 system: https://fhir.nhs.uk/Id/ods-organization-code
                 value: Y05868
             description: Physical document mental health crisis plan
-            securityLabel:
-              - coding:
-                  - system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality
-                    code: V
-                    display: very restricted
             content:
               - attachment:
                   contentType: application/pdf
-                  language: en-US
+                  language: en-UK
                   url: https://spine-proxy.national.ncrs.nhs.uk/https%3A%2F%2Fp1.nhs.uk%2FMentalhealthCrisisPlanReport.pdf
-                  size: 3654
-                  hash: 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
                   title: Mental health crisis plan report
                   creation: "2022-12-21T10:45:41+11:00"
                 format:
                   system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
                   code: "urn:nhs-ic:unstructured"
                   display: Unstructured Document
+                extension:
+                  - url: "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability"
+                    valueCodeableConcept:
+                      coding:
+                        - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability
+                          code: static
+                          display: Static 
             context:
               event:
                 - coding:
                     - system: http://snomed.info/sct
-                      code: "445627002"
-                      display: Assessment using adult early warning scoring system
+                      code: "867871000000100"
+                      display: Review of mental health care plan
               period:
                 start: "2022-12-20T09:00:41+11:00"
                 end: "2022-12-20T09:45:41+11:00"
               facilityType:
                 coding:
                   - system: http://snomed.info/sct
-                    code: "82242000"
-                    display: Children's hospital
+                    code: "443750004"
+                    display: Nonacute hospital
               practiceSetting:
                 coding:
                   - system: http://snomed.info/sct
@@ -1473,10 +1267,10 @@ components:
         id:
           type: string
           pattern: "^(?=.{1,64}$)[A-Za-z0-9\\.]+-[A-Za-z0-9]+[A-Za-z0-9\\_\\-]*$"
-          description: The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.
+          description: The logical id of the resource, as used in the URL for the resource. Once assigned by the NRL, this value never changes.
         meta:
           $ref: "#/components/schemas/Meta"
-          description: The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.
+          description: The metadata about the resource. This is content that is maintained by the NRL.
         implicitRules:
           type: string
           pattern: \S*
@@ -1485,12 +1279,9 @@ components:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
           description: The base language in which the resource is written.
-        text:
-          $ref: "#/components/schemas/Narrative"
-          description: A human&ndash;readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it "clinically safe" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.
         masterIdentifier:
           $ref: "#/components/schemas/Identifier"
-          description: Document identifier as assigned by the source of the document. This identifier is specific to this version of the document. This unique identifier may be used elsewhere to identify this version of the document.
+          description: An optional identifier generated by the provider; it can be thought of as a business identifier but must be unique within the boundary of the NRL for a given custodian.
         identifier:
           type: array
           items:
@@ -1505,15 +1296,15 @@ components:
           pattern: "^(entered-in-error|amended|preliminary|final)$"
           description: The status of the underlying document.
         type:
-          $ref: "#/components/schemas/CodeableConcept"
-          description: Specifies the particular kind of document referenced  (e.g. History and Physical, Discharge Summary, Progress Note). This usually equates to the purpose of making the document referenced. Bound to value set England-NRLRecordType.
+          $ref: "#/components/schemas/TypeCategoryCodeableConcept"
+          description: The clinical type of information referenced. Used to support searching to allow consumers to find documents relevant to them. Bound to value set England-NRLRecordType.
         category:
           type: array
           items:
-            $ref: "#/components/schemas/CodeableConcept"
-            description: A categorization for the type of document referenced &ndash; helps for indexing and searching. This may be implied by or derived from the code specified in the DocumentReference.type. Bound to value set England-NRLRecordCategory.
+            $ref: "#/components/schemas/TypeCategoryCodeableConcept"
+            description: High-level kind of clinical document, from a set of supported categories, e.g. Care Records or Observations. Bound to value set England-NRLRecordCategory.
         subject:
-          $ref: "#/components/schemas/Reference"
+          $ref: "#/components/schemas/SubjectReference"
           description: The patient to whom the document pertains, referenced by NHS number.
         date:
           type: string
@@ -1522,16 +1313,16 @@ components:
         author:
           type: array
           items:
-            $ref: "#/components/schemas/Reference"
-            description: Identifies the organization or group who is responsible for adding the information to the document, referenced by ODS code.
+            $ref: "#/components/schemas/OdsCodeReference"
+            description: The organization or group who is responsible for adding the information in the document, referenced by ODS code.
           minItems: 1
           maxItems: 1
         authenticator:
           $ref: "#/components/schemas/Reference"
           description: Which person or organization authenticates that this document is valid.
         custodian:
-          $ref: "#/components/schemas/Reference"
-          description: Identifies the organization or group who is responsible for ongoing maintenance of and access to the document, referenced by ODS code.
+          $ref: "#/components/schemas/OdsCodeReference"
+          description: The organization or group who is responsible for ongoing maintenance of and access to the document, referenced by ODS code.
         relatesTo:
           type: array
           items:
@@ -1564,6 +1355,7 @@ components:
         - context
         - category
         - type
+        - subject
     Bundle:
       type: object
       properties:
@@ -1763,7 +1555,7 @@ components:
           $ref: "#/components/schemas/CodeableConcept"
           description: The kind of facility where the patient was seen.
         practiceSetting:
-          $ref: "#/components/schemas/CodeableConcept"
+          $ref: "#/components/schemas/TypeCategoryCodeableConcept"
           description: This property may convey specifics about the practice setting where the content was created, often reflecting the clinical specialty. Bound to value set England-NRLPracticeSetting.
         sourcePatientInfo:
           $ref: "#/components/schemas/Reference"
@@ -1781,10 +1573,9 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         attachment:
           $ref: "#/components/schemas/Attachment"
-          description: The document or URL of the document along with critical metadata to prove content has integrity.
+          description: The URL of the document along with critical metadata.
         format:
           $ref: "#/components/schemas/NRLFormatCode"
           description: An identifier of the document encoding, structure, and template that the document conforms to beyond the base format indicated in the mimeType.
@@ -1805,24 +1596,95 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         code:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
           description: The type of relationship that this document has with anther document.
         target:
           $ref: "#/components/schemas/Reference"
-          description: The target document of this relationship.
+          description: The unique id of the target document of this relationship.
       required:
         - code
         - target
+    OdsCodeReference:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        identifier:
+          $ref: "#/components/schemas/OdsCodeIdentifier"
+          description: An identifier for the target resource. This is used when there is no way to reference the other resource directly, either because the entity it represents is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference.
+        display:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: Plain text name of the organisation referenced.
+      required:
+        - identifier
+    SubjectReference:
+      type: object
+      description: The patient to whom the document pertains, referenced by NHS number.
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        identifier:
+          $ref: "#/components/schemas/SubjectIdentifier"
+      required:
+        - identifier
+    OdsCodeIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        use:
+          type: string
+          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          description: The purpose of this identifier.
+        system:
+          type: string
+          enum:
+            - "https://fhir.nhs.uk/Id/ods-organization-code"
+          description: Must be the ODS code URL.
+        value:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: The ODS code of the organisation.
+        period:
+          $ref: "#/components/schemas/Period"
+          description: Time period during which identifier is/was valid for use.
+      required:
+        - system
+        - value
+    SubjectIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        use:
+          type: string
+          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          description: The purpose of this identifier.
+        system:
+          type: string
+          enum:
+            - "https://fhir.nhs.uk/Id/nhs-number"
+          description: Must be the NHS number URL.
+        value:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: Must be a valid NHS number.
+      required:
+        - system
+        - value
     Attachment:
       type: object
       properties:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         contentType:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
@@ -1864,7 +1726,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         coding:
           type: array
           items:
@@ -1873,7 +1734,24 @@ components:
         text:
           type: string
           pattern: "[ \\r\\n\\t\\S]+"
-          description: A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user.
+          description: A human language representation of the concept.
+    TypeCategoryCodeableConcept:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        coding:
+          type: array
+          items:
+            $ref: "#/components/schemas/TypeCategoryCoding"
+            description: A reference to a code defined by a terminology system.
+        text:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: A human language representation of the concept.
+      required:
+       - coding
     Coding:
       type: object
       properties:
@@ -1900,6 +1778,36 @@ components:
         userSelected:
           type: boolean
           description: Indicates that this coding was chosen by a user directly &ndash; e.g. off a pick list of available items (codes or displays).
+    TypeCategoryCoding:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "[A-Za-z0-9\\-\\.]{1,64}"
+        system:
+          type: string
+          enum:
+            - "http://snomed.info/sct"
+          description: The URL of the system that defines the code.
+        version:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: The version of the code system which was used when choosing this code.
+        code:
+          type: string
+          pattern: "[^\\s]+(\\s[^\\s]+)*"
+          description: The code value in the syntax defined by the system.  
+        display:
+          type: string
+          pattern: "[ \\r\\n\\t\\S]+"
+          description: The textual representation of the meaning of the code in the system, following the rules of the system. 
+        userSelected:
+          type: boolean
+          description: Indicates whether this coding was chosen by a user directly &ndash; e.g. off a pick list of codes or displays.
+      required: 
+       - system
+       - code
+       - display
     Extension:
       type: object
       properties:
@@ -1949,6 +1857,7 @@ components:
             code:
               type: string
               enum: ["static", "dynamic"]
+              description: Indicates whether or not the content is dynamically generated at the time of the request. 
             display:
               type: string
               enum: ["Static", "Dynamic"]
@@ -1988,7 +1897,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         use:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
@@ -2016,7 +1924,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         start:
           type: string
           pattern: ([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?
@@ -2031,7 +1938,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         value:
           type: number
           description: The value of the measured amount. The value includes an implicit precision in the presentation of the value.
@@ -2057,7 +1963,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         reference:
           type: string
           pattern: "[ \\r\\n\\t\\S]+"
@@ -2081,7 +1986,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         type:
           type: array
           items:
@@ -2155,7 +2059,6 @@ components:
         id:
           type: string
           pattern: "[A-Za-z0-9\\-\\.]{1,64}"
-          description: Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.
         status:
           type: string
           pattern: "[^\\s]+(\\s[^\\s]+)*"
@@ -2203,8 +2106,6 @@ components:
         type: string
         example: "http://snomed.info/sct|734163000"
     RequestHeaderOdsCode:
-      type: string
-    RequestHeaderOrganisationExtensionCode:
       type: string
     RequestHeaderRequestId:
       type: string
@@ -2288,9 +2189,12 @@ components:
         SNOMED_CODES_SUMMARY_RECORD:
           summary: Summary record
           value: http://snomed.info/sct|824321000000109
-        SNOME_CODES_PERSONALISED_CARE_AND_SUPPORT_PLAN:
+        SNOMED_CODES_PERSONALISED_CARE_AND_SUPPORT_PLAN:
           summary: Personalised Care and Support Plan
           value: http://snomed.info/sct|2181441000000107
+        SNOMED_CODES_APPOINTMENT:
+          summary: Appointment
+          value: http://snomed.info/sct|749001000000101
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2318,6 +2222,9 @@ components:
         SNOMED_CODES_DIAGNOSTIC_PROCEDURE:
           summary: Diagnostic procedure
           value: http://snomed.info/sct|103693007
+        SNOMED_CODES_RECORD_ARTIFACT:
+          summary: Record artifact
+          value: http://snomed.inf/sct|419891008
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2335,12 +2242,6 @@ components:
         invalid:
           summary: Unknown
           value: XYZ
-    odsCodeExtension:
-      name: NHSD-End-User-Organisation
-      description: Organisation extension code
-      in: header
-      schema:
-        $ref: "#/components/schemas/RequestHeaderOrganisationExtensionCode"
     requestId:
       name: X-Request-ID
       description: |

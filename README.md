@@ -51,6 +51,19 @@ There are `make` commands that alias some of this functionality:
  * `serve` -- Serves a preview of the specification in human-readable format
 
 ### Testing
+# Local Testing:
+In order to test locally there are a few tweaks needed. Firstly you'll need to amend the producer.yaml file to include you're PR API proxy (this gets built and release for a Github PR for your branch). Once you have a PR and the workflows are passing meaning it has been built you're ready to test. All PR endpoints will look like the below example with the PR number added onto the URL.
+
+1. Under the servers in the yaml add you're API proxy endpoint like so:
+  `- url: https://internal-dev-sandbox.api.service.nhs.uk/record-locator/producer-pr-193/FHIR/R4`
+    `description: Local test environment.`
+
+2. Once this has been added you'll want to run a `make publish` command which will output the yaml file as a JSON into the `build/` directory.
+
+3. Once the JSON file exists you can run a `docker` command to run the Swagger in your localhost with this command `make run`
+
+4. Once that is done you should see the documentation appear when you go to your browser and go to `localhost:8080`. Once here when you reach the API endpoints at the bottom you will see a dropdown called Servers. Select the URL that you added in step 1 and it will now use your PR API Proxy Endpoint. Congrats you have earned yourself more fun by learning to locally test the API Proxy, have fun!
+
 Each API and team is unique. We encourage you to use a `test/` folder in the root of the project, and use whatever testing frameworks or apps your team feels comfortable with. It is important that the URL your test points to be configurable. We have included some stubs in the Makefile for running tests.
 
 ### VS Code Plugins
@@ -145,7 +158,7 @@ Useful make targets to get started including: installing dependencies and runnin
 
 #### `ecs-proxies-containers.yml ` and `ecs-proxies-deploy.yml`:
 
-These files are required to deploy containers alongside your Apigee proxy during the Azure Devops `azure-build-pipeline`. 
+These files are required to deploy containers alongside your Apigee proxy during the Azure Devops `azure-build-pipeline`.
 
 `ecs-proxies-containers.yml`: The path to a container's Dockerfile is defined here. This path needs to be defined to allow containers to be pushed to our repository during the `azure-build-pipeline`.
 
