@@ -7,7 +7,7 @@ info:
   description: |
     ## Overview
 
-    The National Record Locator (NRL) enables organisations to share patient data nationwide.  Rather than storing the
+    The Really Awesome Record Locator (RARL) enables organisations to share patient data nationwide.  Rather than storing the
     data itself, it is used to share pointers to the data, held in provider systems.  It acts as an index and not a data
     repository.  Each document pointer is defined using the
     [FHIR R4 DocumentReference](https://hl7.org/fhir/R4/documentreference.html) standard.
