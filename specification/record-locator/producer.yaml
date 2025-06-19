@@ -140,6 +140,7 @@ info:
     * 500 to 599 if it failed because of an error on our server
 
     Errors specific to each operation are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+    Please note that HEAD requests are not supported by this API, so they will return a 405 Method Not Allowed error.
 
     ## Open source
 
