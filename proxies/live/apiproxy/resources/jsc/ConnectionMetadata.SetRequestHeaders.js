@@ -54,14 +54,10 @@
     //This will trigger RaiseFault.403MissingNRLAppID.xml - see targets/targets.xml
     return;
   }
-  var odsCodeExtension = context.getVariable(
-    "request.header.NHSD-End-User-Organisation"
-  );
 
   // Build the response
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
-    "nrl.ods-code-extension": odsCodeExtension,
     "nrl.app-id": nrlAppID
   };
   if (nrlPermissions != null) {
