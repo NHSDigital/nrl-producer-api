@@ -43,13 +43,8 @@ const permissions = [];
     return;
   }
 
-  var odsCodeExtension = context.getVariable(
-    "request.header.NHSD-End-User-Organisation"
-  );
-
   var connectionMetadata = {
     "nrl.ods-code": odsCode,
-    "nrl.ods-code-extension": odsCodeExtension,
     "nrl.pointer-types": nrlPointerTypes,
     "nrl.permissions": permissions,
     "nrl.app-id": "NRL-SANDBOX-APP",
