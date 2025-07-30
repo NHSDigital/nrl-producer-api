@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - feature/axkr1-NRL-1544-automatic-build-artifacts # TODO: Remove this line after testing
 
 jobs:
   create_release:
@@ -40,8 +39,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test-${{ env.SPEC_VERSION }}
-          release_name: test-${{ env.SPEC_VERSION }}
+          tag_name: ${{ env.SPEC_VERSION }}
+          release_name: ${{ env.SPEC_VERSION }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
