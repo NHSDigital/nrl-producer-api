@@ -2217,6 +2217,9 @@ components:
         SNOMED_CODES_APPOINTMENT:
           summary: Appointment
           value: http://snomed.info/sct|749001000000101
+        SNOMED_CODES_SHCR:
+          summary: Clinical summary
+          value: http://snomed.info/sct|887181000000106
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2247,6 +2250,9 @@ components:
         SNOMED_CODES_RECORD_ARTIFACT:
           summary: Record artifact
           value: http://snomed.inf/sct|419891008
+        SNOMED_CODES_RECORD_HEADINGS:
+          summary: Record headings
+          value: http://snomed.inf/sct|716931000000107
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
