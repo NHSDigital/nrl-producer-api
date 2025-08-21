@@ -2249,10 +2249,10 @@ components:
           value: http://snomed.info/sct|103693007
         SNOMED_CODES_RECORD_ARTIFACT:
           summary: Record artifact
-          value: http://snomed.inf/sct|419891008
+          value: http://snomed.info/sct|419891008
         SNOMED_CODES_RECORD_HEADINGS:
           summary: Record headings
-          value: http://snomed.inf/sct|716931000000107
+          value: http://snomed.info/sct|716931000000107
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
