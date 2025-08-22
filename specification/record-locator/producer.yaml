@@ -43,6 +43,8 @@ info:
     | Observation       ([1102421000000108](https://termbrowser.nhs.uk/?perspective=full&conceptId1=1102421000000108)) | Royal College of Physicians NEWS2 (National Early Warning Score 2) chart  ([1363501000000100](https://termbrowser.nhs.uk/?perspective=full&conceptId1=1363501000000100)) | [contact details](https://developer.nhs.uk/apis/nrl/retrieval_contact_details.html) & [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html) |
     | Clinical note     ([823651000000106](https://termbrowser.nhs.uk/?perspective=full&conceptId1=823651000000106))   | Summary record                                                            ([824321000000109](https://termbrowser.nhs.uk/?perspective=full&conceptId1=824321000000109))   | [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html)                                                                                       |
     | Record artifact   ([419891008](https://termbrowser.nhs.uk/?perspective=full&conceptId1=419891008))               | Appointment                                                               ([749001000000101](https://termbrowser.nhs.uk/?perspective=full&conceptId1=749001000000101))   |                                                                                                                                                                                        |
+    | Record headings   ([716931000000107](https://termbrowser.nhs.uk/?perspective=full&conceptId1=716931000000107))   | Clinical summary                                                          ([887181000000106](https://termbrowser.nhs.uk/?perspective=full&conceptId1=887181000000106))   |                                                                                                                                                                                        |
+
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -2215,6 +2217,9 @@ components:
         SNOMED_CODES_APPOINTMENT:
           summary: Appointment
           value: http://snomed.info/sct|749001000000101
+        SNOMED_CODES_SHCR:
+          summary: Clinical summary
+          value: http://snomed.info/sct|887181000000106
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2244,7 +2249,10 @@ components:
           value: http://snomed.info/sct|103693007
         SNOMED_CODES_RECORD_ARTIFACT:
           summary: Record artifact
-          value: http://snomed.inf/sct|419891008
+          value: http://snomed.info/sct|419891008
+        SNOMED_CODES_RECORD_HEADINGS:
+          summary: Record headings
+          value: http://snomed.info/sct|716931000000107
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
