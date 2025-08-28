@@ -1659,7 +1659,6 @@ components:
               - $ref: "#/components/schemas/Extension"
             description: Additional extensions which include Content Stability and Retrieval Mechanism.
           minItems: 1
-          maxItems: 1
       required:
         - attachment
         - format
