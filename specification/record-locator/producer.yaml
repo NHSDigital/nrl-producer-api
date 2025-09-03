@@ -97,7 +97,7 @@ info:
     
     Any requests to share information via NHS Digital services, the source and consumer of that information, are reviewed by the Interoperability Working Group (IWG) and a recommendation provided by the group as to the appropriate sharing pattern(s) and sharing capability(ies) which meet end user needs. Where NRL is the recommended capability, the controller catalogue will be updated to reflect this.
     
-    The <a href="https://github.com/NHSDigital/NRLF/raw/develop/resources/nrl-authorised-organisations-and-actors-catalogue.xlsx" >Controller Catalogue</a> is made up of the following sections:
+    The [Controller Catalogue](https://github.com/NHSDigital/NRLF/raw/develop/resources/nrl-authorised-organisations-and-actors-catalogue.xlsx) is made up of the following sections:
     
     |Section|Description|
     |-------|-----------|
