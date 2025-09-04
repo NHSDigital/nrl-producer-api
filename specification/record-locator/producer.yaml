@@ -95,7 +95,7 @@ info:
 
     The purpose of the Controller Catalogue is to document the health and social care organisations authorised to share records using the National Record Locator (NRL) service.
     
-    Any requests to share information via NHS Digital services, the source and consumer of that information, are reviewed by the Interoperability Working Group (IWG) and a recommendation provided by the group as to the appropriate sharing pattern(s) and sharing capability(ies) which meet end user needs. Where NRL is the recommended capability, the controller catalogue will be updated to reflect this.
+    Any requests to share information via NHS England services, the source and consumer of that information, are reviewed by the Interoperability Working Group (IWG) and a recommendation provided by the group as to the appropriate sharing pattern(s) and sharing capability(ies) which meet end user needs. Where NRL is the recommended capability, the controller catalogue will be updated to reflect this.
     
     The [Controller Catalogue](https://github.com/NHSDigital/NRLF/raw/develop/resources/nrl-authorised-organisations-and-actors-catalogue.xlsx) is made up of the following sections:
     
