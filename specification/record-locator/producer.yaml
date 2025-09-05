@@ -1980,7 +1980,7 @@ components:
             display:
               type: string
               enum:
-                ["Spine Secure Proxy", "Direct", "Large Document Repository"]
+                ["Spine Secure Proxy", "Direct", "Large Document Retrieval"]
           required:
             - system
             - code
