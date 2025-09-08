@@ -1990,11 +1990,16 @@ components:
                 - "https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism"
             code:
               type: string
-              enum: ["SSP", "Direct", "LDR"]
+              enum: ["SSP", "Direct", "LDR", "InContext"]
             display:
               type: string
               enum:
-                ["Spine Secure Proxy", "Direct", "Large Document Retrieval"]
+                [
+                  "Spine Secure Proxy",
+                  "Direct",
+                  "Large Document Retrieval",
+                  "Direct using In-Context"
+                ]
           required:
             - system
             - code
