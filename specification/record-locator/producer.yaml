@@ -383,7 +383,7 @@ paths:
         * `content[]` MUST include an `attachment` entry.
         * `content[]` MUST include a `format` entry. (https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode)
         * `content[]` MUST include the content stability extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability).
-        * `content[]` SHOULD include the retrieval mechanism extension (https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism).
+        * `content[]` SHOULD include the retrieval mechanism extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism).
         * `content[].attachment` MUST include a `url` to the document.
         * `content[].attachment` MUST include a `contentType` and be a valid MIME type, specifically `application/pdf` for documents or `text/html` for contact details.
         * `content[].format` MUST indicate whether the data is structured or not
@@ -415,11 +415,11 @@ paths:
                   }
                 },
                 {
-                  "url": "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism",
+                  "url": "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism",
                   "valueCodeableConcept": {
                     "coding": [
                       {
-                        "system": "https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism",
+                        "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism",
                         "code": "SSP",
                         "display": "Spine Secure Proxy"
                       }
@@ -574,10 +574,10 @@ paths:
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                             - valueCodeableConcept:
                                 coding:
-                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                                     code: SSP
                                     display: Spine Secure Proxy
-                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         event:
                           - coding:
@@ -656,10 +656,10 @@ paths:
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                             - valueCodeableConcept:
                                 coding:
-                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                                     code: SSP
                                     display: Spine Secure Proxy
-                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         practiceSetting:
                           coding:
@@ -797,7 +797,7 @@ paths:
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                             - valueCodeableConcept:
                                 coding:
-                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                                     code: SSP
                                     display: Spine Secure Proxy
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England
@@ -879,10 +879,10 @@ paths:
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                             - valueCodeableConcept:
                                 coding:
-                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                                     code: SSP
                                     display: Spine Secure Proxy
-                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         practiceSetting:
                           coding:
@@ -1002,10 +1002,10 @@ paths:
                         url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                       - valueCodeableConcept:
                           coding:
-                            - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                            - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                               code: SSP
                               display: Spine Secure Proxy
-                        url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism
+                        url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                 context:
                   facilityType:
                     coding:
@@ -1242,7 +1242,7 @@ components:
                     url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
                   - valueCodeableConcept:
                       coding:
-                        - system: https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism
+                        - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                           code: SSP
                           display: Spine Secure Proxy
                     url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England
@@ -1669,7 +1669,7 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/ContentStabilityExtension"
-              - $ref: "#/components/schemas/RetrievalMechanismExtension"
+              - $ref: "#/components/schemas/NRLRetrievalMechanismExtension"
               - $ref: "#/components/schemas/Extension"
             description: Additional extensions which include Content Stability and Retrieval Mechanism.
           minItems: 1
@@ -1952,7 +1952,7 @@ components:
             - system
             - code
             - display
-    RetrievalMechanismExtension:
+    NRLRetrievalMechanismExtension:
       allOf:
         - $ref: "#/components/schemas/Extension"
         - type: object
@@ -1960,13 +1960,13 @@ components:
             url:
               type: string
               enum:
-                - "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-RetrievalMechanism"
+                - "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism"
             valueCodeableConcept:
-              $ref: "#/components/schemas/RetrievalMechanismExtensionValueCodeableConcept"
+              $ref: "#/components/schemas/NRLRetrievalMechanismExtensionValueCodeableConcept"
           required:
             - url
             - valueCodeableConcept
-    RetrievalMechanismExtensionValueCodeableConcept:
+    NRLRetrievalMechanismExtensionValueCodeableConcept:
       allOf:
         - $ref: "#/components/schemas/CodeableConcept"
         - type: object
@@ -1974,12 +1974,12 @@ components:
             coding:
               type: array
               items:
-                $ref: "#/components/schemas/RetrievalMechanismExtensionCoding"
+                $ref: "#/components/schemas/NRLRetrievalMechanismExtensionCoding"
               minItems: 1
               maxItems: 1
           required:
             - coding
-    RetrievalMechanismExtensionCoding:
+    NRLRetrievalMechanismExtensionCoding:
       allOf:
         - $ref: "#/components/schemas/Coding"
         - type: object
@@ -1987,7 +1987,7 @@ components:
             system:
               type: string
               enum:
-                - "https://fhir.nhs.uk/England/CodeSystem/England-RetrievalMechanism"
+                - "https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism"
             code:
               type: string
               enum: ["SSP", "Direct", "LDR", "InContext"]
