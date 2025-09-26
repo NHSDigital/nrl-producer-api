@@ -800,7 +800,7 @@ paths:
                                   - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                                     code: SSP
                                     display: Spine Secure Proxy
-                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         event:
                           - coding:
@@ -1245,7 +1245,7 @@ components:
                         - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
                           code: SSP
                           display: Spine Secure Proxy
-                    url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England
+                    url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
             context:
               event:
                 - coding:
