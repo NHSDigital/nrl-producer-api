@@ -238,14 +238,16 @@ info:
 
     NRL is primarily concerned with the registering and retrieval of pointers. As per the [registry/repository pattern] (https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
     To connect to the Spine Secure Proxy (SSP), you will need:
-    *An ASID for your organisation
-    *A FQDN and CSR for your endpoint/application
-    *Document Content Permissions for your ASID
-    *Internet Catbag Permissions for SSP (if your endpoint is internet facing)
+    * An ASID for your organisation
+    * A FQDN and CSR for your endpoint/application
+    * Document Content Permissions for your ASID
+    * Internet Catbag Permissions for SSP (if your endpoint is internet facing)
 
     If you have any questions on how to get an FQDN or how to generate a CSR, please email [ITOC](mailto:itoc.supportdesk@nhs.net). An example FQDN would be spine.example.record-locator.nhs.uk
 
-    In order to get an ASID, please complete this [form](https://digital.nhs.uk/services/path-to-live-environments/path-to-live-forms/combined-endpoint-and-service-registration-request)
+    Please note that for third-party suppliers, in production, your FQDN will need to match the format of nrl-ODSCODE.ORGNAME.thirdparty.nhs.uk.
+
+    In order to get an ASID, please complete this [form](https://digital.nhs.uk/services/path-to-live-environments/path-to-live-forms/combined-endpoint-and-service-registration-request). 
     You will need to tick "create an endpoint including certificate " in section 2, use FQDN in section 3 and section 4, tick 'CMA endpoint' in section 5 (manufacturer's details are not mandatory here), and leave sections 6 and 7 blank.
     You should receive an email with your ASID and generated Certificate upon completing this form.
 
@@ -385,7 +387,7 @@ paths:
         * `content[]` MUST include the content stability extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability).
         * `content[]` SHOULD include the retrieval mechanism extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism).
         * `content[].attachment` MUST include a `url` to the document.
-        * `content[].attachment` MUST include a `contentType` and be a valid MIME type, specifically `application/pdf` for documents or `text/html` for contact details.
+        * `content[].attachment` MUST include a `contentType` and be a valid MIME type. We typically expect `application/pdf` for unstructured documents, `application/fhir+json` for structured data, or `text/html` for contact details.
         * `content[].format` MUST indicate whether the data is structured or not
         * Example of the content section:
           ```
