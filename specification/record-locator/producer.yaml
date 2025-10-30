@@ -39,10 +39,12 @@ info:
     | Care Plan         ([734163000](https://termbrowser.nhs.uk/?perspective=full&conceptId1=734163000))               | Advance care plan                                                         ([736366004](https://termbrowser.nhs.uk/?perspective=full&conceptId1=736366004))               | [contact details](https://developer.nhs.uk/apis/nrl/retrieval_contact_details.html) & [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html) |
     | Care Plan         ([734163000](https://termbrowser.nhs.uk/?perspective=full&conceptId1=734163000))               | Treatment escalation plan                                                 ([735324008](https://termbrowser.nhs.uk/?perspective=full&conceptId1=735324008))               | [contact details](https://developer.nhs.uk/apis/nrl/retrieval_contact_details.html) & [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html) |
     | Care Plan         ([734163000](https://termbrowser.nhs.uk/?perspective=full&conceptId1=734163000))               | Personalised Care and Support Plan                                        ([2181441000000107](https://termbrowser.nhs.uk/?perspective=full&conceptId1=2181441000000107)) | [contact details](https://developer.nhs.uk/apis/nrl/retrieval_contact_details.html) & [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html) |
-    | Care Plan         ([734163000](https://termbrowser.nhs.uk/?perspective=full&conceptId1=734163000))               | Lloyd George record folder                                                ([16521000000101](https://termbrowser.nhs.uk/?perspective=full&conceptId1=16521000000101))     | unstructured PDF - NDR retrieval proxy                                                                                                                                                 |
+    | Care Plan         ([734163000](https://termbrowser.nhs.uk/?perspective=full&conceptId1=734163000))               | Lloyd George record folder                                                ([16521000000101](https://termbrowser.nhs.uk/?perspective=full&conceptId1=16521000000101))     | unstructured PDF - LDR retrieval proxy                                                                                                                                                 |
     | Observation       ([1102421000000108](https://termbrowser.nhs.uk/?perspective=full&conceptId1=1102421000000108)) | Royal College of Physicians NEWS2 (National Early Warning Score 2) chart  ([1363501000000100](https://termbrowser.nhs.uk/?perspective=full&conceptId1=1363501000000100)) | [contact details](https://developer.nhs.uk/apis/nrl/retrieval_contact_details.html) & [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html) |
     | Clinical note     ([823651000000106](https://termbrowser.nhs.uk/?perspective=full&conceptId1=823651000000106))   | Summary record                                                            ([824321000000109](https://termbrowser.nhs.uk/?perspective=full&conceptId1=824321000000109))   | [unstructured PDF - SSP](https://developer.nhs.uk/apis/nrl/retrieval_unstructured_document.html)                                                                                       |
     | Record artifact   ([419891008](https://termbrowser.nhs.uk/?perspective=full&conceptId1=419891008))               | Appointment                                                               ([749001000000101](https://termbrowser.nhs.uk/?perspective=full&conceptId1=749001000000101))   |                                                                                                                                                                                        |
+    | Record headings   ([716931000000107](https://termbrowser.nhs.uk/?perspective=full&conceptId1=716931000000107))   | Clinical summary                                                          ([887181000000106](https://termbrowser.nhs.uk/?perspective=full&conceptId1=887181000000106))   |                                                                                                                                                                                        |
+
 
     You can also retrieve booking and referral pointers however you can not currently do this by directly integrating with
     the National Record Locator, you must instead onboard to the [Booking and Referral - FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
@@ -88,6 +90,20 @@ info:
     Connecting parties must have an appointed Clinical Safety Officer and undertake a Clinical Safety Assessment.
 
     You must do this before you can go live (see ‘[Onboarding](#api-description__onboarding)’ below).
+
+     ## Controller Catalogue
+
+    The purpose of the Controller Catalogue is to document the health and social care organisations authorised to share records using the National Record Locator (NRL) service.
+    
+    Any requests to share information via NHS England services, the source and consumer of that information, are reviewed by the Interoperability Working Group (IWG) and a recommendation provided by the group as to the appropriate sharing pattern(s) and sharing capability(ies) which meet end user needs. Where NRL is the recommended capability, the controller catalogue will be updated to reflect this.
+    
+    The [Controller Catalogue](https://github.com/NHSDigital/NRLF/raw/develop/resources/nrl-authorised-organisations-and-actors-catalogue.xlsx) is made up of the following sections:
+    
+    |Section|Description|
+    |-------|-----------|
+    | Records & Stakeholders | Lists record types shared on the NRL and stakeholders who are providing, consuming or both providing and consuming the records. |
+    | Purpose & Lawful Basis | Describes the purpose and lawful basis for the sharing of records with the stakeholders. |
+    | End User Organisations | Lists the organisations using the NRL and indicates which record types an organisation is providing, consuming or both providing and consuming. |
 
     ## API status and roadmap
 
@@ -222,14 +238,16 @@ info:
 
     NRL is primarily concerned with the registering and retrieval of pointers. As per the [registry/repository pattern] (https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
     To connect to the Spine Secure Proxy (SSP), you will need:
-    *An ASID for your organisation
-    *A FQDN and CSR for your endpoint/application
-    *Document Content Permissions for your ASID
-    *Internet Catbag Permissions for SSP (if your endpoint is internet facing)
+    * An ASID for your organisation
+    * A FQDN and CSR for your endpoint/application
+    * Document Content Permissions for your ASID
+    * Internet Catbag Permissions for SSP (if your endpoint is internet facing)
 
     If you have any questions on how to get an FQDN or how to generate a CSR, please email [ITOC](mailto:itoc.supportdesk@nhs.net). An example FQDN would be spine.example.record-locator.nhs.uk
 
-    In order to get an ASID, please complete this [form](https://digital.nhs.uk/services/path-to-live-environments/path-to-live-forms/combined-endpoint-and-service-registration-request)
+    Please note that for third-party suppliers, in production, your FQDN will need to match the format of nrl-ODSCODE.ORGNAME.thirdparty.nhs.uk.
+
+    In order to get an ASID, please complete this [form](https://digital.nhs.uk/services/path-to-live-environments/path-to-live-forms/combined-endpoint-and-service-registration-request). 
     You will need to tick "create an endpoint including certificate " in section 2, use FQDN in section 3 and section 4, tick 'CMA endpoint' in section 5 (manufacturer's details are not mandatory here), and leave sections 6 and 7 blank.
     You should receive an email with your ASID and generated Certificate upon completing this form.
 
@@ -367,8 +385,9 @@ paths:
         * `content[]` MUST include an `attachment` entry.
         * `content[]` MUST include a `format` entry. (https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode)
         * `content[]` MUST include the content stability extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability).
+        * `content[]` SHOULD include the retrieval mechanism extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism).
         * `content[].attachment` MUST include a `url` to the document.
-        * `content[].attachment` MUST include a `contentType` and be a valid MIME type, specifically `application/pdf` for documents or `text/html` for contact details.
+        * `content[].attachment` MUST include a `contentType` and be a valid MIME type. We typically expect `application/pdf` for unstructured documents, `application/fhir+json` for structured data, or `text/html` for contact details.
         * `content[].format` MUST indicate whether the data is structured or not
         * Example of the content section:
           ```
@@ -393,6 +412,18 @@ paths:
                         "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability",
                         "code": "static",
                         "display": "Static"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "url": "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism",
+                        "code": "SSP",
+                        "display": "Spine Secure Proxy"
                       }
                     ]
                   }
@@ -530,7 +561,7 @@ paths:
                         - attachment:
                             contentType: application/pdf
                             language: en-UK
-                            url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
+                            url: ssp://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
                             creation: "2022-12-22T09:45:41+11:00"
                           format:
                             system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
@@ -543,6 +574,12 @@ paths:
                                     code: static
                                     display: Static
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                                    code: SSP
+                                    display: Spine Secure Proxy
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         event:
                           - coding:
@@ -605,7 +642,7 @@ paths:
                         - attachment:
                             contentType: application/pdf
                             language: en-UK
-                            url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
+                            url: ssp://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
                             title: EOL care coordination plan summary
                             creation: "2022-12-21T10:45:41+11:00"
                           format:
@@ -619,6 +656,12 @@ paths:
                                     code: static
                                     display: Static
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                                    code: SSP
+                                    display: Spine Secure Proxy
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         practiceSetting:
                           coding:
@@ -741,7 +784,7 @@ paths:
                         - attachment:
                             contentType: application/pdf
                             language: en-UK
-                            url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
+                            url: ssp://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/PhysicianNote.pdf
                             creation: "2022-12-22T09:45:41+11:00"
                           format:
                             system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
@@ -754,6 +797,12 @@ paths:
                                     code: static
                                     display: Static
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                                    code: SSP
+                                    display: Spine Secure Proxy
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         event:
                           - coding:
@@ -816,7 +865,7 @@ paths:
                         - attachment:
                             contentType: application/pdf
                             language: en-UK
-                            url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
+                            url: ssp://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EOLSummaryReport.pdf
                             title: EOL care coordination plan summary
                             creation: "2022-12-21T10:45:41+11:00"
                           format:
@@ -830,6 +879,12 @@ paths:
                                     code: static
                                     display: Static
                               url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                            - valueCodeableConcept:
+                                coding:
+                                  - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                                    code: SSP
+                                    display: Spine Secure Proxy
+                              url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                       context:
                         practiceSetting:
                           coding:
@@ -934,7 +989,7 @@ paths:
                   - attachment:
                       contentType: application/pdf
                       language: en-UK
-                      url: https://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EmergencyCarePlan.pdf
+                      url: ssp://spine-proxy.national.ncrs.nhs.uk/p1.nhs.uk/EPAACS/EmergencyCarePlan.pdf
                       creation: "2022-12-22T09:45:41+11:00"
                     format:
                       system: https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode
@@ -947,6 +1002,12 @@ paths:
                               code: static
                               display: Static
                         url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                      - valueCodeableConcept:
+                          coding:
+                            - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                              code: SSP
+                              display: Spine Secure Proxy
+                        url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
                 context:
                   facilityType:
                     coding:
@@ -1167,7 +1228,7 @@ components:
               - attachment:
                   contentType: application/pdf
                   language: en-UK
-                  url: https://spine-proxy.national.ncrs.nhs.uk/https%3A%2F%2Fp1.nhs.uk%2FMentalhealthCrisisPlanReport.pdf
+                  url: ssp://spine-proxy.national.ncrs.nhs.uk/https%3A%2F%2Fp1.nhs.uk%2FMentalhealthCrisisPlanReport.pdf
                   title: Mental health crisis plan report
                   creation: "2022-12-21T10:45:41+11:00"
                 format:
@@ -1175,12 +1236,18 @@ components:
                   code: "urn:nhs-ic:unstructured"
                   display: Unstructured Document
                 extension:
-                  - url: "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability"
-                    valueCodeableConcept:
+                  - valueCodeableConcept:
                       coding:
                         - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability
                           code: static
-                          display: Static 
+                          display: Static
+                    url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-ContentStability
+                  - valueCodeableConcept:
+                      coding:
+                        - system: https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism
+                          code: SSP
+                          display: Spine Secure Proxy
+                    url: https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism
             context:
               event:
                 - coding:
@@ -1602,10 +1669,12 @@ components:
         extension:
           type: array
           items:
-            $ref: "#/components/schemas/ContentStabilityExtension"
-            description: Additional extension for content stability.
+            oneOf:
+              - $ref: "#/components/schemas/ContentStabilityExtension"
+              - $ref: "#/components/schemas/NRLRetrievalMechanismExtension"
+              - $ref: "#/components/schemas/Extension"
+            description: Additional extensions which include Content Stability and Retrieval Mechanism.
           minItems: 1
-          maxItems: 1
       required:
         - attachment
         - format
@@ -1881,6 +1950,58 @@ components:
             display:
               type: string
               enum: ["Static", "Dynamic"]
+          required:
+            - system
+            - code
+            - display
+    NRLRetrievalMechanismExtension:
+      allOf:
+        - $ref: "#/components/schemas/Extension"
+        - type: object
+          properties:
+            url:
+              type: string
+              enum:
+                - "https://fhir.nhs.uk/England/StructureDefinition/Extension-England-NRLRetrievalMechanism"
+            valueCodeableConcept:
+              $ref: "#/components/schemas/NRLRetrievalMechanismExtensionValueCodeableConcept"
+          required:
+            - url
+            - valueCodeableConcept
+    NRLRetrievalMechanismExtensionValueCodeableConcept:
+      allOf:
+        - $ref: "#/components/schemas/CodeableConcept"
+        - type: object
+          properties:
+            coding:
+              type: array
+              items:
+                $ref: "#/components/schemas/NRLRetrievalMechanismExtensionCoding"
+              minItems: 1
+              maxItems: 1
+          required:
+            - coding
+    NRLRetrievalMechanismExtensionCoding:
+      allOf:
+        - $ref: "#/components/schemas/Coding"
+        - type: object
+          properties:
+            system:
+              type: string
+              enum:
+                - "https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism"
+            code:
+              type: string
+              enum: ["SSP", "Direct", "LDR", "InContext"]
+            display:
+              type: string
+              enum:
+                [
+                  "Spine Secure Proxy",
+                  "Direct",
+                  "Large Document Retrieval",
+                  "Direct using In-Context"
+                ]
           required:
             - system
             - code
@@ -2215,6 +2336,9 @@ components:
         SNOMED_CODES_APPOINTMENT:
           summary: Appointment
           value: http://snomed.info/sct|749001000000101
+        SNOMED_CODES_SHCR:
+          summary: Clinical summary
+          value: http://snomed.info/sct|887181000000106
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
@@ -2244,7 +2368,10 @@ components:
           value: http://snomed.info/sct|103693007
         SNOMED_CODES_RECORD_ARTIFACT:
           summary: Record artifact
-          value: http://snomed.inf/sct|419891008
+          value: http://snomed.info/sct|419891008
+        SNOMED_CODES_RECORD_HEADINGS:
+          summary: Record headings
+          value: http://snomed.info/sct|716931000000107
         invalid:
           summary: Unknown
           value: http://snomed.info/sct|410970009
