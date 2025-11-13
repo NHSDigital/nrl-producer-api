@@ -251,7 +251,17 @@ info:
     You will need to tick "create an endpoint including certificate " in section 2, use FQDN in section 3 and section 4, tick 'CMA endpoint' in section 5 (manufacturer's details are not mandatory here), and leave sections 6 and 7 blank.
     You should receive an email with your ASID and generated Certificate upon completing this form.
 
-    Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net)
+    Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net).
+
+    ## Auditing
+
+    All Producers and consumers must maintain an audit trail of requests to and responses from the National Record Locator (NRL) API. In addition, the NRL also keep an audit trail of requests and responses that flow through these services and providers may request audit trail data from NHS Digital for any pointers they own or maintain.
+
+    Each request from a Producer must include a valid JSON Web Token (JWT) in the Authorization header.
+    The JWT provides essential identifiers such as ASID, ODS Code and User ID which must also be recorded in the audit log.
+
+    Audit logs must be retained in line with organisational retention policies and NHS data governance requirements.
+    Logs must be provided to NHS England on request for the purposes of investigation, assurance, or conformance checking.
 
     ## Change log
 
