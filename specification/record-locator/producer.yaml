@@ -253,6 +253,19 @@ info:
 
     Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net).
 
+    ## Spine Secure Proxy (SSP) Retrival
+    
+    Information retrieval is an interaction between a consumer and a provider; routing and receiving requests via the SSP allows both parties to be ignorant of each other’s authentication and authorisation mechanisms, as the SSP handles the other side of the transaction.
+    The SSP is a content agnostic forward proxy, which is used to control and protect access to health systems. It provides a single security point for both authentication and authorisation for systems. See the [SSP specification](https://developer.nhs.uk/apis/spine-core/ssp_overview.html) for more details.
+
+    **Requesting Information via the SSP**
+    Endpoints which allow retrieval of information via the SSP MUST do so with a [HTTPS GET](https://www.rfc-editor.org/rfc/rfc9110.html) request, to the URL contained within the NRL pointer.
+    The provider endpoint MUST NOT require any custom parameters to be passed with the request, unless explicitly stated in the relevant format specification.
+    
+    For a consumer to retrieve information via the SSP, the consumer MUST percent encode the content.attachment.url property from the NRL pointer and prefix it with the SSP server URL as follows: GET https://[proxy_server]/[percent_encoded_provider_endpoint_url]
+    For example: GET https://[proxy_server]/https%3A%2F%2Fp1.nhs.uk%2FMentalHealthCrisisPlans%2Fda2b6e8a-3c8f-11e8-baae-6c3be5a609f5
+    > **Note:** When creating pointers, providers MUST NOT prefix the pointer URL property with the SSP server URL and MUST NOT percent encode it. In other words, consumers are fully responsible for constructing the Spine proxy URL from the pointer URL.
+
     ## Auditing
 
     All Providers and Consumers must maintain an audit trail of requests to and responses related to the retrieval of records and documents.
