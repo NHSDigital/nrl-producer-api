@@ -266,8 +266,9 @@ info:
     ## Auditing
 
     ### Overview
-    This section outlines the audit and provenance requirements for all data exchanged over NRL interfaces.
-    Both Providers and Consumers MUST maintain a full audit trail of all requests sent to, and responses received from, the NRL API.
+    This section outlines the audit and provenance requirements for data exchanged over NRL interfaces.
+    Both Providers and Consumers MUST maintain a full audit trail of all requests sent to, and responses received from, the NRL API. Providers MUST keep an audit trail of requests received from consumers (to retrieve records/documents etc) and their corresponding responses.
+    It is not necessary for a provider to keep an audit trail of the response payload returned to consumers. However, providers MUST be able to provide details of the record returned if requested for medico-legal purposes. Audit logs must be retained in line with organisational retention policies and NHS data governance requirements. Logs must be provided to NHS England on request for the purposes of investigation, assurance, or conformance checking.
     Additionally, the NRL is responsible for logging all requests and responses that flows through its services. Providers can request access to audit log information held by NHS England for any pointers they own or manage.
     
     Two types of audit trail data may be requested:
@@ -283,7 +284,7 @@ info:
     
     ### Audit Logs
     
-    This section describes the audit logging requirements that each actor (Provider and Consumer) must record in their respective audit logs.
+    This section describes the audit logging requirements that a Provider must record in their respective audit logs.
     For detailed definitions of each referenced element, refer to the Audit Log Attributes section below.
 
     **Provider Pointer Maintenance**
@@ -295,7 +296,7 @@ info:
     * HTTP Request URL
     * HTTP Verb
     * ODS Code
-    * NSH Number
+    * NHS Number
     * Request Datetime
     * User ID (if supplied)
 
@@ -303,23 +304,6 @@ info:
     * HTTP Response Body
     * HTTP Status Code
     * Pointer Logical ID
-    * Response Datetime
-
-    **Consumer Pointer Search/Read**
-    Consumers MUST record and store the following information in audit logs for each NRL search interactions (GET):
-
-    **For requests to the NRL**
-    * ASID 
-    * HTTP Request URL
-    * HTTP Verb
-    * NHS Number
-    * ODS Code
-    * Request Datetime
-    * User ID
-    
-    **For responses from the NRL**
-    * HTTP Response Body
-    * HTTP Status Code
     * Response Datetime
 
     **Audit Log Attributes**
