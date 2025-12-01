@@ -236,7 +236,7 @@ info:
 
     ## Related APIs
 
-    NRL is primarily concerned with the registering and retrieval of pointers. Providers MUST NOT include any patient-identifiable data (PID), such as the NHS number, within the retrieval URL. As per the [registry/repository pattern](https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
+    NRL is primarily concerned with the registering and retrieval of pointers. As per the [registry/repository pattern](https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
     You can also refer to the [NRL Content Stability](https://fhir.nhs.uk/STU3/ValueSet/NRL-ContentStability-1) for information on the stability of the content of a target document or record linked by an NRL pointers.
     To connect to the Spine Secure Proxy (SSP), you will need:
     * An ASID for your organisation
@@ -253,6 +253,15 @@ info:
     You should receive an email with your ASID and generated Certificate upon completing this form.
 
     Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net).
+
+    ## Spine Secure Proxy (SSP)
+
+    Information retrieval is an interaction between a consumer and a provider; routing and receiving requests via the SSP allows both parties to be ignorant of each other’s authentication and authorisation mechanisms, as the SSP handles the other side of the transaction.
+    The SSP is a content agnostic forward proxy, which is used to control and protect access to health systems. It provides a single security point for both authentication and authorisation for systems. See the [SSP specification](https://developer.nhs.uk/apis/spine-core/ssp_overview.html) for more details.
+
+    **Note:** When creating pointers, providers MUST NOT prefix the pointer URL property with the SSP server URL, and MUST NOT percent encode it. In other words, consumers are fully responsible for constructing the Spine proxy URL from the pointer URL.
+    Providers MUST NOT include any patient-identifiable data (PID), such as the NHS number, within the retrieval URL.
+    You can also populate the [NRL Content Stability](https://fhir.nhs.uk/STU3/ValueSet/NRL-ContentStability-1) section of a pointer/document reference with information on the stability of the content of a target document or record linked by an NRL pointers.
 
     ## Auditing
 
