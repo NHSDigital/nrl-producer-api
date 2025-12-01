@@ -89,7 +89,7 @@ info:
 
     Connecting parties must have an appointed Clinical Safety Officer and undertake a Clinical Safety Assessment.
 
-    You must do this before you can go live (see [Onboarding](#api-description__onboarding) below).
+    You must do this before you can go live (see '[Onboarding](#api-description__onboarding)' below).
 
      ## Controller Catalogue
 
@@ -211,7 +211,7 @@ info:
 
     ## Onboarding
 
-    You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
+    You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it's worth planning well ahead.
 
     As part of this process, you need to demonstrate that you can manage risks and that your software conforms technically with the requirements for this API.
 
@@ -236,7 +236,8 @@ info:
 
     ## Related APIs
 
-    NRL is primarily concerned with the registering and retrieval of pointers. As per the [registry/repository pattern] (https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
+    NRL is primarily concerned with the registering and retrieval of pointers. As per the [registry/repository pattern](https://digital.nhs.uk/developer/architecture/integration-patterns-book/patterns#registry-repository), following the retrieval of a pointer, the retrieval of an associated document/record may take place. In some circumstances information (or documents) are held in disparate systems. The registry-repository pattern resolves this by providing pointers with details that can be used to contact the organisation where the record is held, or directly retrieve the record from source, if authorised to do so. Most documents NRL pointers point to are retrievable using the Spine Secure Proxy [(SSP)](https://digital.nhs.uk/services/gp-connect/develop-gp-connect-services/integrate-with-spine/spine-secure-proxy). For example, all pointers of the category 'care plan' currently point to unstructured PDF documents, retrievable using SSP.
+    You can also refer to the [NRL Content Stability](https://fhir.nhs.uk/STU3/ValueSet/NRL-ContentStability-1) for information on the stability of the content of a target document or record linked by an NRL pointers.
     To connect to the Spine Secure Proxy (SSP), you will need:
     * An ASID for your organisation
     * A FQDN and CSR for your endpoint/application
@@ -248,10 +249,79 @@ info:
     Please note that for third-party suppliers, in production, your FQDN will need to match the format of nrl-ODSCODE.ORGNAME.thirdparty.nhs.uk.
 
     In order to get an ASID, please complete this [form](https://digital.nhs.uk/services/path-to-live-environments/path-to-live-forms/combined-endpoint-and-service-registration-request). 
-    You will need to tick "create an endpoint including certificate " in section 2, use FQDN in section 3 and section 4, tick 'CMA endpoint' in section 5 (manufacturer's details are not mandatory here), and leave sections 6 and 7 blank.
+    You will need to tick "create an endpoint including certificate" in section 2, use FQDN in section 3 and section 4, tick 'CMA endpoint' in section 5 (manufacturer's details are not mandatory here), and leave sections 6 and 7 blank.
     You should receive an email with your ASID and generated Certificate upon completing this form.
 
-    Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net)
+    Once you have done this, you will need to ask for the 'internet' Catbag (if your endpoint is internet facing) and 'Document Content' interaction permissions to be added to your ASID. You can request these permissions by emailing [ITOC](mailto:itoc.supportdesk@nhs.net).
+
+    ## Spine Secure Proxy (SSP)
+
+    Information retrieval is an interaction between a consumer and a provider; routing and receiving requests via the SSP allows both parties to be ignorant of each other’s authentication and authorisation mechanisms, as the SSP handles the other side of the transaction.
+    The SSP is a content agnostic forward proxy, which is used to control and protect access to health systems. It provides a single security point for both authentication and authorisation for systems. See the [SSP specification](https://developer.nhs.uk/apis/spine-core/ssp_overview.html) for more details.
+
+    **Note:** When creating pointers, providers MUST NOT prefix the pointer URL property with the SSP server URL, and MUST NOT percent encode it. In other words, consumers are fully responsible for constructing the Spine proxy URL from the pointer URL.
+    Providers MUST NOT include any patient-identifiable data (PID), such as the NHS number, within the retrieval URL.
+    You can also populate the [NRL Content Stability](https://fhir.nhs.uk/STU3/ValueSet/NRL-ContentStability-1) section of a pointer/document reference with information on the stability of the content of a target document or record linked by an NRL pointers.
+
+    ## Auditing
+
+    ### Overview
+    This section outlines the audit and provenance requirements for data exchanged over NRL interfaces.
+    Both Providers and Consumers MUST maintain a full audit trail of all requests sent to, and responses received from, the NRL API. Providers MUST keep an audit trail of requests received from consumers (to retrieve records/documents etc) and their corresponding responses.
+    It is not necessary for a provider to keep an audit trail of the response payload returned to consumers. However, providers MUST be able to provide details of the record returned if requested for medico-legal purposes. Audit logs must be retained in line with organisational retention policies and NHS data governance requirements. Logs must be provided to NHS England on request for the purposes of investigation, assurance, or conformance checking.
+    Additionally, the NRL is responsible for logging all requests and responses that flows through its services. Providers can request access to audit log information held by NHS England for any pointers they own or manage.
+    
+    Two types of audit trail data may be requested:
+    * All audit trails for a given patient, identified by their NHS number.
+    * All audit trails for all pointers owned by the provider.
+    In either case, the provider is only permitted to view the audit trail information for pointers that it owns and manages.
+
+    ### Access Token (JWT)
+    
+    Providers and Consumers MUST generate and supply a valid JWT access token with every request they initiate. This token must be supplied via the standard Authorization HTTP header for auditing purposes.
+    Any request submitted without an Authorization header that meets the specified JWT requirements will be rejected.
+    Refer to the JSON Web Token Guidance for detailed specifications.
+    
+    ### Audit Logs
+    
+    This section describes the audit logging requirements that a Provider must record in their respective audit logs.
+    For detailed definitions of each referenced element, refer to the Audit Log Attributes section below.
+
+    **Provider Pointer Maintenance**
+    Providers MUST record and store the following information in audit logs for each NRL maintenance interaction (POST, PATCH, DELETE):
+    
+    **For requests to the NRL**
+    * ASID
+    * HTTP Request Body (For POST and PATCH only)
+    * HTTP Request URL
+    * HTTP Verb
+    * ODS Code
+    * NHS Number
+    * Request Datetime
+    * User ID (if supplied)
+
+    **For responses from the NRL**
+    * HTTP Response Body
+    * HTTP Status Code
+    * Pointer Logical ID
+    * Response Datetime
+
+    **Audit Log Attributes**
+    The table below defines each audit log attribute and identifies the source from which its value must be obtained.
+    | Attribute | Source |
+    |------------|---------|
+    | ASID | The requesting_system from JWT. Use only the ASID portion, for example: https://fhir.nhs.uk/Id/accredited-system\|[ASID]. |
+    | HTTP Request Body | HTTP request body (where applicable, i.e. POST or PATCH). |
+    | HTTP Request URL | The URL of the NRL service taht was called. |
+    | HTTP Response Body | The body of the response message returned. |
+    | HTTP Status Code | Describes the response outcome: 2xx (Success), 4xx or 5xx (Failure). |
+    | HTTP Verb | POST, PATCH, GET, OR DELETE. |
+    | NHS number | The patient identifier used in the pointer subject reference (for example, https://demographics.spineservices.nhs.uk/STU3/Patient/[nhsNumber]) or in a search query parameter. |
+    | ODS Code | The requesting_organization from JWT (only the ODSCode portion is required, for example, https://fhir.nhs.uk/Id/ods-organization-code\|[odsCode]). |
+    | Pointer Logical ID | The logical ID of the pointer (generated by the NRL), contained in the Location response header. |
+    | Request Datetime | Timestamp when the audit log entry was created. |
+    | Response Datetime | Timestamp when the response was received from the NHS England service. |
+    | User ID | The requesting_user from JWT. This is not mandatory where the request is completed as a non-interactive process. |
 
     ## Change log
 
