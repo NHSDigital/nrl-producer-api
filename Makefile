@@ -2,6 +2,7 @@ SHELL=/bin/bash -euo pipefail
 
 #Installs dependencies using poetry.
 install-python:
+	rm -rf .venv
 	python --version
 	poetry --version
 	poetry install
