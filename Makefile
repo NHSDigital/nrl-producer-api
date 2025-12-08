@@ -2,6 +2,8 @@ SHELL=/bin/bash -euo pipefail
 
 #Installs dependencies using poetry.
 install-python:
+	python --version
+	poetry --version
 	poetry install
 
 #Installs dependencies using npm.
