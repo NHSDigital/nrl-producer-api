@@ -2,3 +2,4 @@ variables:
   service_name: nrl-producer-api
   short_service_name: nrlp
   service_base_path: record-locator/producer
+  python_version: 3.9
