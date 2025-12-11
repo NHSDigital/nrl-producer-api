@@ -36,7 +36,11 @@ extends:
       - environment: internal-dev
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+            parameters:
+              python_version: ${{ variables.python_version }}
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
+            parameters:
+              python_version: ${{ variables.python_version }}
