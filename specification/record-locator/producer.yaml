@@ -127,6 +127,8 @@ info:
 
     It includes some country-specific FHIR extensions, which conform to [FHIR UK Core](https://digital.nhs.uk/services/fhir-uk-core), specifically [fhir.r4.ukcore.stu1 0.5.1](https://simplifier.net/packages/fhir.r4.ukcore.stu1/0.5.1).
 
+    Draft FHIR resources specific to this API can be found [here](https://github.com/NHSDigital/NRLF/blob/develop/resources/fhir).
+
     You do not need to know much about FHIR to use this API - FHIR APIs are just RESTful APIs that follow specific rules.
 
     In particular:
