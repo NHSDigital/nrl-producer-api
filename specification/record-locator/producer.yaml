@@ -1286,7 +1286,7 @@ components:
             subject:
               identifier:
                 system: https://fhir.nhs.uk/Id/nhs-number
-                value: "6700028191"
+                value: "9999999999"
             author:
               - identifier:
                   system: https://fhir.nhs.uk/Id/ods-organization-code
