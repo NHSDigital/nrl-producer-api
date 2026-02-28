@@ -213,6 +213,12 @@ info:
 
     ## Onboarding
 
+    ### NRL 3.0 supplier onboarding flow
+   
+    The diagram below outlines the key stages in the NRL v3.0 digital onboarding (DOS) process.
+
+  ![NRL 3.0 supplier onboarding flow](https://raw.githubusercontent.com/NHSDigital/nrl-producer-api/feature/chsnw6-Add-v3.0-Supplier-Onboarding-flow-to-API-spec/specification/NRL-v3.0-supplier-onboarding-flow.png)
+
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it's worth planning well ahead.
 
     As part of this process, you need to demonstrate that you can manage risks and that your software conforms technically with the requirements for this API.
