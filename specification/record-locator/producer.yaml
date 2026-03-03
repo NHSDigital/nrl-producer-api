@@ -12,7 +12,7 @@ info:
     repository.  Each document pointer is defined using the
     [FHIR R4 DocumentReference](https://hl7.org/fhir/R4/documentreference.html) standard.
 
-    ![National Record Locator](https://raw.githubusercontent.com/NHSDigital/nrl-producer-api/master/specification/nrl.png)
+    ![National Record Locator](https://raw.githubusercontent.com/NHSDigital/nrl-producer-api/master/specification/nrl-provider-consumer.png)
 
     Users of the service fall into the categories of:
 
