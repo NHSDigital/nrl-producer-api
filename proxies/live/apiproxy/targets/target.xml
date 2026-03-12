@@ -16,8 +16,10 @@
       <Step>
           <Name>Javascript.AddNrlAppIdHeader</Name>
       </Step>
+      <Step>
           <Condition>request.header.NHSD-NRL-App-ID = null</Condition>
           <Name>RaiseFault.403MissingNRLAppID</Name>
+      </Step>
       <Step>
           <Name>Javascript.AddConnectionMetadataHeader</Name>
       </Step>
