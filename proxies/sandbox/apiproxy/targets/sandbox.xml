@@ -17,9 +17,6 @@
               <Name>Javascript.AddClientRPDetailsHeader</Name>
           </Step>
           <Step>
-              <Name>Javascript.AddNrlAppIdHeader</Name>
-          </Step>
-          <Step>
               <Name>Javascript.AddConnectionMetadataHeader</Name>
           </Step>
           <Step>
