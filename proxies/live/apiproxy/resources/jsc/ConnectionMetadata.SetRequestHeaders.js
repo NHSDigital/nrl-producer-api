@@ -1,23 +1,8 @@
 /*
- * This script reads a Custom Attribute from the APIGEE app and sends it to the API
- * as the `NHSD-Connection-Metadata` header.
+ * This script reads Custom Attributes from the APIGEE app and sends them to the API
+ * in the `NHSD-Connection-Metadata` header.
  *
  * The Http Header 'NHSD-End-User-Organisation-ODS' is expected.
- * The Custom Attribute `nrl-ods-<ods_code>` is transformed from:
- *
- * e.g.
- *
- * HTTP Request Header          = ods_code: RJ11
- * APIGEE App Custom Attribute  = nrl-ods-RJ11: http://snomed.info/sct|736253001\nhttp://snomed.info/sct|736253002\n
- *
- * Http Response Header = NHSD-Connection-Metadata:
- *  {
- *      "nrl.ods-code": "RJ11",
- *      "nrl.pointer-types": [
- *          "http://snomed.info/sct|736253001",
- *          "http://snomed.info/sct|736253002"
- *      ]
- *  }
  */
 
 (function () {
