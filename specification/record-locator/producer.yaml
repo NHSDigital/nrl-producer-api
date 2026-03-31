@@ -555,7 +555,7 @@ paths:
         * `content[]` MUST include a `format` entry. (https://fhir.nhs.uk/England/CodeSystem/England-NRLFormatCode)
         * `content[]` MUST include the content stability extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLContentStability).
         * `content[]` SHOULD include the retrieval mechanism extension (https://fhir.nhs.uk/England/CodeSystem/England-NRLRetrievalMechanism).
-        * `content[].attachment` MUST include a `url` to the document.
+        * `content[].attachment` MUST include a `url` to the document. For unstructured documents retrieved via SSP, `content[].attachment.url` MUST begin with `ssp://`. `https://` MUST NOT be used where retrieval is intended to occur via the Secure Spine Proxy.
         * `content[].attachment` MUST include a `contentType` and be a valid MIME type. We typically expect `application/pdf` for unstructured documents, `application/fhir+json` for structured data, or `text/html` for contact details.
         * `content[].format` MUST indicate whether the data is structured or not
         * Example of the content section:
@@ -564,7 +564,7 @@ paths:
             {
               "attachment": {
                 "contentType": "application/pdf",
-                "url": "https://provider-ods-code.thirdparty.nhs.uk/path/to/document.pdf",
+                "url": "ssp://provider-ods-code.thirdparty.nhs.uk/path/to/document.pdf",
                 "creation": "2022-12-22T09:45:41+11:00"
               },
               "format": {
