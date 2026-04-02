@@ -11,11 +11,12 @@
   "author": "NHS Digital",
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/nrl-producer-api",
-  "dependencies": {
-  },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.20.2",
     "license-checker": "^25.0.1",
     "minimist": "^1.2.7"
+  },
+  "overrides": {
+    "axios": "1.14.0"
   }
 }
