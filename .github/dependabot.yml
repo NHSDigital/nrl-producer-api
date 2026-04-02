@@ -14,10 +14,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      intervale: "weekly"
+      interval: "weekly"
     commit-message:
       prefix: "npm"
-    open-pull-request-limit: 10
+    open-pull-requests-limit: 10
     cooldown:
       default-days: 7
   
