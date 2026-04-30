@@ -2406,6 +2406,8 @@ components:
           $ref: "#/components/schemas/RequestQueryType"
         category:
           $ref: "#/components/schemas/RequestQueryCategory"
+      required:
+        - subject:identifier
     RequestQuerySubject:
       type: string
       pattern: ^https\:\/\/fhir\.nhs\.uk\/Id\/nhs-number\|(\d+)$
@@ -2445,6 +2447,7 @@ components:
       in: query
       schema:
         $ref: "#/components/schemas/RequestQuerySubject"
+      required: true
       examples:
         none:
           summary: None
