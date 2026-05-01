@@ -201,7 +201,7 @@ Example using the product deployed for GitHub pull request 15:
 
 The public sandbox ("Try this API") endpoints come with:
 
-* Pre-loaded data: see [cron/seed_sandbox/data/document-pointer.json](https://github.com/NHSDigital/NRLF/blob/main/cron/seed_sandbox/data/document-pointer.json)
+* Pre-loaded data
 * Pre-configured organization permissions: [ConnectionMetadata.SetRequestHeaders.js](proxies/sandbox/apiproxy/resources/jsc/ConnectionMetadata.SetRequestHeaders.js)
 
 Developers should make sure that these align according to any user journeys that they envisage.

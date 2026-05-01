@@ -109,7 +109,7 @@ info:
     
     Any requests to share information via NHS England services, the source and consumer of that information, are reviewed by the Interoperability Working Group (IWG) and a recommendation provided by the group as to the appropriate sharing pattern(s) and sharing capability(ies) which meet end user needs. Where NRL is the recommended capability, the controller catalogue will be updated to reflect this.
     
-    The [Controller Catalogue](https://github.com/NHSDigital/NRLF/raw/develop/resources/nrl-authorised-organisations-and-actors-catalogue.xlsx) is made up of the following sections:
+    The [Controller Catalogue](https://github.com/NHSDigital/nrlf-public-resources/raw/main/controller-catalogue/nrl-authorised-organisations-and-actors-catalogue.xlsx) is made up of the following sections:
     
     |Section|Description|
     |-------|-----------|
@@ -141,7 +141,7 @@ info:
 
     It includes some country-specific FHIR extensions, which conform to [FHIR UK Core](https://digital.nhs.uk/services/fhir-uk-core), specifically [fhir.r4.ukcore.stu1 0.5.1](https://simplifier.net/packages/fhir.r4.ukcore.stu1/0.5.1).
 
-    Draft FHIR resources specific to this API can be found [here](https://github.com/NHSDigital/NRLF/blob/develop/resources/fhir).
+    Draft FHIR resources specific to this API can be found [here](https://github.com/NHSDigital/nrlf-public-resources/blob/main/fhir).
 
     You do not need to know much about FHIR to use this API - FHIR APIs are just RESTful APIs that follow specific rules.
 
@@ -178,15 +178,7 @@ info:
 
     ## Open source
 
-    You might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:
-
-    | Resource                  | Description                                               | Links                                                             |
-    |---------------------------|-----------------------------------------------------------|-------------------------------------------------------------------|
-    | NRL v3 API                | Source code for the core API and sandbox                  | [GitHub repo](https://github.com/NHSDigital/nrlf)                 |
-    | NRL v3 Producer API       | Source code for the producer API proxy and specification. | [GitHub repo](https://github.com/NHSDigital/nrl-producer-api)     |
-    | NRL v3 Consumer API       | Source code for the consumer API proxy and specification. | [GitHub repo](https://github.com/NHSDigital/nrl-consumer-api)     |
-
-    We currently don't have any open source client libraries or sample code for this API. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/107439/client-libraries-and-reference-implementations).
+    We currently don't have any open source resources for this API. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/107439/client-libraries-and-reference-implementations).
 
     The source code for the PDS FHIR back end (the Core Spine source code) is not currently in the open. If you think this would be useful, you can [upvote the suggestion on our Interactive Product Backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/466692/open-source-core-spine-including-pds-eps-scr-and-more).
 
@@ -212,7 +204,7 @@ info:
 
     Right click the icon and save link as... to save the Postman collection to your device
 
-    [![Right click and save link as...](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/NRLF/raw/develop/postman_collection.json)
+    [![Right click and save link as...](https://run.pstmn.io/button.svg)](https://github.com/NHSDigital/nrlf-public-resources/raw/main/postman/postman_collection.json)
 
     ### Integration testing
 
@@ -423,10 +415,6 @@ info:
     ## Frequently Asked Questions
     
     Answers to frequently asked questions can be found on the [developer community](https://developer.community.nhs.uk/c/national-record-locator-nrl/52).
-    
-    ## Change log
-
-    For details of how this API has changed over time, see the [release history](https://github.com/NHSDigital/NRLF/releases)
 
   version: 1.0.0
   license:
